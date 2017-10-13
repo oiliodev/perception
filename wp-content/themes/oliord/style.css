@@ -1,0 +1,381 @@
+/*!
+Theme Name:   	Olio RD
+Theme URI:    	https://www.perceptionsystem.com/
+Author:         Team Perception
+Author URI:     https://www.perceptionsystem.com/
+Description:  	Storefront is the perfect theme for your next WooCommerce project. Designed and developed by WooCommerce Core developers, it features a bespoke integration with WooCommerce itself plus many of the most popular customer facing WooCommerce extensions. There are several layout & color options to personalise your shop, multiple widget regions, a responsive design and much more. Developers will love it's lean and extensible codebase making it a joy to customize and extend. Looking for a WooCommerce theme? Look no further!
+Version:      	1.1.0
+Text Domain:  	oliord
+Tags:         	e-commerce, responsive, theme-options
+*/
+
+@font-face {
+    font-family: 'arialregular';
+    src: url('assets/fonts/arial_0-webfont.woff2') format('woff2'),
+         url('assets/fonts/arial_0-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'arialbold';
+    src: url('assets/fonts/arialbd_0-webfont.woff2') format('woff2'),
+         url('assets/fonts/arialbd_0-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.content-area.container {padding-top:0px;}
+.as-pagination-buttons{display:none;}
+.dimond_members{
+
+}
+.dimond-products{
+margin:36px 0;
+}
+.dimaond_product_price.col-md-4 {
+    padding: 0;
+}
+header.site-header {
+    background: #E6ECE8;
+}
+.header-bottom-txt {
+  background: #d1d1d1 none repeat scroll 0 0;
+  float: left;
+  margin: 10px auto;
+  padding: 10px 0;
+  width: 100%;
+}
+.menu-item.current_page_item {
+    background: #fff;
+    color: #000;
+}
+.padding-x-20 {
+    padding: 0 20px;
+}
+.padding-y-20 {
+    padding: 40px 0;
+}
+.progress{
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    background: none;
+    margin: 0 auto;
+    box-shadow: none;
+    position: relative;
+}
+.progress:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 12px solid #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.progress > span{
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.progress .progress-left{
+    left: 0;
+}
+.progress .progress-bar{
+    width: 100%;
+    height: 100%;
+    background: none;
+    border-width: 12px;
+    border-style: solid;
+    position: absolute;
+    top: 0;
+}
+.progress .progress-left .progress-bar{
+    left: 100%;
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+    border-left: 0;
+    -webkit-transform-origin: center left;
+    transform-origin: center left;
+}
+.progress .progress-right{
+    right: 0;
+}
+.progress .progress-right .progress-bar{
+    left: -100%;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    border-right: 0;
+    -webkit-transform-origin: center right;
+    transform-origin: center right;
+    animation: loading-1 1.8s linear forwards;
+}
+.progress .progress-value{
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: #44484b;
+    font-size: 24px;
+    color: #fff;
+    line-height: 135px;
+    text-align: center;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+.progress.blue .progress-bar{
+    border-color: #049dff;
+}
+.progress.blue .progress-left .progress-bar{
+    animation: loading-2 1.5s linear forwards 1.8s;
+}
+.progress.yellow .progress-bar{
+    border-color: #fdba04;
+}
+.progress.yellow .progress-left .progress-bar{
+    animation: loading-3 1s linear forwards 1.8s;
+}
+.progress.pink .progress-bar{
+    border-color: #ed687c;
+}
+.progress.green .progress-bar{
+    border-color: green;
+}
+.progress.pink .progress-left .progress-bar{
+    animation: loading-4 0.4s linear forwards 1.8s;
+}
+.progress.green .progress-bar{
+    border-color: #1abc9c;
+}
+.progress.green .progress-left .progress-bar{
+    animation: loading-5 1.2s linear forwards 1.8s;
+}
+.language-drop select {
+    border: none;
+    padding: 10px;
+}
+.header-search input[type="search"] {
+    width: 80%;
+}
+input[type="search"] {
+    border: 1px solid #d0d0d0;
+    padding: 5px 7px;
+}
+.search-submit {
+    border: 1px solid #d0d0d0;
+    padding: 5px 10px;
+}
+.footer-content {
+    background: #f1f1f1
+}
+.copy-right-txt {
+    border-top: 1px solid #8C8C8C;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+.col-sm-12 .pull-right {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1
+}
+
+.col-sm-12.pull-right .pull-right {
+    position: fixed;
+    bottom: 10px;
+    right: 70px;
+}
+@keyframes loading-1{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+@keyframes loading-2{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(144deg);
+        transform: rotate(144deg);
+    }
+}
+@keyframes loading-3{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+}
+@keyframes loading-4{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(36deg);
+        transform: rotate(36deg);
+    }
+}
+@keyframes loading-5{
+    0%{
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(126deg);
+        transform: rotate(126deg);
+    }
+}
+@media only screen and (max-width: 990px){
+    .progress{ margin-bottom: 20px; }
+}
+
+
+
+
+
+
+
+/*
+.gallery-part{border:1px solid #dedede; box-sizing:border-box; display:block; float:left; margin:50px auto; padding:10px; width:100%; border-radius:3px; box-shadow: 0 0 13px #d0d0d0;}*/
+.gallery-part {
+  border: 1px solid #c3c3c3;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: block;
+  height: 175px;
+  margin: 10px auto 0;
+  max-width: 1136px;
+  overflow: hidden;
+  width: 100%;
+}
+.gallery-part ul{margin:0; padding:0; list-style:none;}
+.gallery-part li:first-child{margin-left:0px;}
+.gallery-part li:first-child .parentimage{box-shadow:none;}
+.gallery-part li.gallery-221{width:221px;}
+/*.gallery-part li.gallery-260 img { width: 100%;}*/
+
+.gallery-part li.gallery-200{width:200px;}
+/*.gallery-part li.gallery-220 img {height: 175px; width: 100%;}*/
+.gallery-part li.gallery-one{z-index:2;}
+.gallery-part li.gallery-three{z-index:0;}
+.gallery-part li.gallery-five{margin-left:-160px;}
+.gallery-part li.gallery-five img{height: 156px;}
+.gallery-part li.gallery-for{width:260px;}
+.gallery-part li.gallery-six{z-index: 3;}
+
+
+.gallery-part li {/*border: 1px solid #d3d3d3;*/ float: left; margin-left: -30px; width:160px; z-index: 1; position:relative;}
+.gallery-part li img{border-radius:15px; height: 175px; width: 100%;}
+.gallery-part .parentimage { 
+/*width: 300px;
+height: 300px; */ max-width:100%;
+-webkit-transition: all .6s ease-out;
+-moz-transition: all .6s ease-out;
+-o-transition: all .6s ease-out;
+transition: all .6s ease-out; box-shadow:-10px 0 14px -10px #7d7d7d;
+} 
+.gallery-part .parentimage:hover {
+-moz-transform: scale(1.2);
+-webkit-transform: scale(1.2);
+-o-transform: scale(1.2);
+-ms-transform: scale(1.2);
+transform: scale(1.2);
+
+}	
+.gallery-part li:hover{z-index:999;}
+
+
+
+
+
+
+
+
+.dimond_members > h3 {
+    font-size: 14pt;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.dimond-products {
+    border: 1px solid gray;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0;
+	background: #ededed;
+}
+.right-space {
+       padding-bottom: 10px;
+    padding-right: 0;
+}
+.product-content {
+    border-radius: 10px;
+    display: inline-block;
+    padding: 10px 0;
+	background: #fff;
+}
+.dimond-products .product-img{
+	width:100%;
+	border-top-left-radius: 10px; 
+	border-top-right-radius: 10px;
+	height: 170px;
+}
+.progress-bar-rate {
+     padding-left: 0;
+    width: 35px;
+	margin-top: 12px;
+}
+
+.product-content > h3 {
+    font-size: 12pt;
+    margin: 6px;
+    padding: 0;
+}
+.home-Member-pad .dimond_members h3{margin-top:0;}
+.home-Member-pad .product-content .view-details a {
+  background: #000;
+  border-radius: 12px;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  min-width: 82px;
+  padding: 4px 2px;
+  text-align: center;
+}
+.home-Member-pad .product-content .dimaond_product_price,
+.home-Member-pad .product-content .dimaond_product_qty{width:35%; float:left;}
+.home-Member-pad .product-content .view-details{float:right; width:30%;}
+.home-Member-pad .dimond_members .dimond-products-list h3 {
+  margin: 5px 12px 10px;
+}
+
+
+.menu-header {
+  background: #fff;
+  border: 1px solid #a3a3a3;
+  box-sizing: border-box;
+  float: left;
+  padding: 6px 10px;
+  width: 100%;
+}
+.menu-header .navbar-nav{display:block;}
+.menu-header li{float:left; margin-right:30px;}
+.menu-header li a{font-family: 'arialregular'; color: #404040;}	
+	
