@@ -15,53 +15,13 @@
 get_header();
 $unique_id = esc_attr( uniqid( 'search-form-' ) ); 
  ?>
-<script>
-/*$('.search-submit').click(function(e){
-			e.preventDefault();
-			if($('.search-field').hasClass('stoggle')){
-					if($('.search-field').val()!=""){
-						$('.search-form').submit();
-						}else{
-								$('.search-field').removeClass('stoggle');
-							}
-				}else{
-						$('.search-field').addClass('stoggle');
-					}
-			
-			});*/
-</script>
 
-<style> 
-.search-form {
-	position: relative;
-}
-
-.search-form .search-submit {
-	bottom: 3px;
-	padding: 0.5em 1em;
-	position: absolute;
-	right: 3px;
-	top: 3px;
-}
-
-.search-form .search-submit .icon {
-	height: 24px;
-	top: -2px;
-	width: 24px;
-}
-</style>
 
 
 	<div id="primary" class="content-area container home-Member-pad">
 		<main id="main" class="site-main" role="main">	
 			<div class="row">
-				
-<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 
-	<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
-	<input type="search"  id="<?php echo $unique_id; ?>" class="search-field" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" value="<?php echo get_search_query(); ?>" name="s" required/>
-
-</form>
 				
 			<?php echo do_shortcode('[my_products]'); ?>
 	

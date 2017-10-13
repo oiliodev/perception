@@ -22,6 +22,21 @@
 <script>
 			
 $(function(){
+
+
+$('.search-submit').click(function(e){
+			e.preventDefault();
+			if($('.search-field-custom').hasClass('stoggle')){				
+					if($('.search-field-custom').val()!=""){
+						$('.search-form').submit();
+						}else{
+							$('.search-field-custom').removeClass('stoggle');
+						}
+				}else{
+						$('.search-field-custom').addClass('stoggle');
+					}
+			
+			});
 	
 	$(".progress-bar").loading();
 	
@@ -47,7 +62,7 @@ $(function(){
 	<header class="site-header" role="banner">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-2 logo">
+				<div class="col-sm-2">
 					<?php
 						$custom_logo_id = get_theme_mod( 'custom_logo' );
 						$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
@@ -58,9 +73,14 @@ $(function(){
 						}
 					?>
 				</div>
-			<div class="col-sm-10">
+              <div class="col-sm-10">
+			  <div class="header-right-part">
 				<div class="search">
-					<?php echo get_search_form(); ?>
+									
+<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+	<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+	<input type="search"  id="<?php echo $unique_id; ?>" class="search-field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" name="s" required/>
+</form>
 				</div>
 
 				<div class="language-drop">
@@ -96,6 +116,7 @@ $(function(){
 					<?php } ?>
 				</div>
 				</div>
+				</div>
 			</div>
 
 			<div class="row">
@@ -106,16 +127,14 @@ $(function(){
 					?>
 				</nav>
 			</div>
-
-			<div class="row">
-				<div class="header-bottom-txt">
+			
+			<div class="row col-md-12">
 					<div class="col-sm-9 text-left">
 						<p><?php _e( 'Information about conventions last event and up coming convention.', 'oliord' ); ?></p>
 					</div>
 					<div class="col-sm-3 text-right">
 						<a href="#"><?php _e( 'Get More Info', 'oliord' ); ?></a>
 					</div>
-				</div>	
 			</div>
 		</div>
 	</header>
