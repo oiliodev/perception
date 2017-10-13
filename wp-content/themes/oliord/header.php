@@ -14,13 +14,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
-
 <?php wp_head(); ?>
-
+<!--
 <script async="async" src="https://www.google.com/adsense/search/ads.js"></script>
+-->
 
 <script>
-			
+	
+window.onload = function() {
+   jQuery(".progress-bar-custom").loading();
+};
+
 $(function(){
 
 
@@ -38,7 +42,6 @@ $('.search-submit').click(function(e){
 			
 			});
 	
-	$(".progress-bar").loading();
 	
   $("a[href='#top']").click(function() {
      $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -62,60 +65,63 @@ $('.search-submit').click(function(e){
 	<header class="site-header" role="banner">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-2">
-					<?php
-						$custom_logo_id = get_theme_mod( 'custom_logo' );
-						$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-						if ( has_custom_logo() ) {
-							echo '<a href="'.get_site_url().'"><img src="'. esc_url( $logo[0] ) .'" width="100%"></a>';
-						} else {
-							echo '<a href="'.get_site_url().'"><h1>'. get_bloginfo( 'name' ) .'</h1></a>';
-						}
-					?>
-				</div>
-              <div class="col-sm-10">
-			  <div class="header-right-part">
-				<div class="search">
-									
-<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-	<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
-	<input type="search"  id="<?php echo $unique_id; ?>" class="search-field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" name="s" required/>
-</form>
-				</div>
-
-				<div class="language-drop">
-					<i class="fa fa-globe fa-2x"></i>
-					<select name="languages">
-						<option value="English">English</option>
-						<option value="Chinese">Chinese</option>
-					</select>
-					
-				</div>
-
-				<div class="user-profile">
-					<i class="fa fa-user fa-2x"></i>
-					<?php 
-						if(is_user_logged_in()) { 
-							global $current_user;
-							get_currentuserinfo();
-      						echo $current_user->user_login.' | ';
-      						echo '<a href="'. wp_logout_url() .'">'. __("Log Out") .'</a>';
-						} else { 
-							echo '<a href="'. wp_login_url(get_permalink()) .'">'. __("Log In") .'</a>';
-						}
-					?>
-				</div>
-
-				<div class="product-cart">
-					<i class="fa fa-shopping-cart fa-2x"></i>
-					<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-							?>
-						<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
-							<?php echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
-						</a>
-					<?php } ?>
-				</div>
-				</div>
+				<div class="row header-full">
+				  <div class="col-sm-2">
+						<div class="logo">
+						<?php
+							$custom_logo_id = get_theme_mod( 'custom_logo' );
+							$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+							if ( has_custom_logo() ) {
+								echo '<a href="'.get_site_url().'"><img src="'. esc_url( $logo[0] ) .'" width="100%"></a>';
+							} else {
+								echo '<a href="'.get_site_url().'"><h1>'. get_bloginfo( 'name' ) .'</h1></a>';
+							}
+						?>
+						</div>
+					</div>
+				  <div class="col-sm-10">
+				  <div class="header-right-part">
+					<div class="search">
+										
+	<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+		<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+		<input type="search"  id="<?php echo $unique_id; ?>" class="search-field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" name="s" required/>
+	</form>
+					</div>
+	
+					<div class="language-drop">
+						<i class="fa fa-globe fa-2x"></i>
+						<ul class="languages">
+							<li>English</li>
+							<li>Chinese</li>
+						</ul>
+						
+					</div>
+	
+					<div class="user-profile">					
+						<?php 
+							if(is_user_logged_in()) { 
+								global $current_user;
+								get_currentuserinfo();
+								echo $current_user->user_login.' | ';
+								echo '<a href="'. wp_logout_url() .'">'. __("Log Out") .'</a>';
+							} else { 
+								echo '<a href="'. wp_login_url(get_permalink()) .'"><i class="fa fa-user fa-2x"></i></a>';
+							}
+						?>
+					</div>
+	
+					<div class="product-cart">
+						<i class="fa fa-shopping-cart fa-2x"></i>
+						<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+								?>
+							<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
+								<?php echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
+							</a>
+						<?php } ?>
+					</div>
+					</div>
+					</div>
 				</div>
 			</div>
 
@@ -128,13 +134,15 @@ $('.search-submit').click(function(e){
 				</nav>
 			</div>
 			
-			<div class="row col-md-12">
+			<div class="row">
+				<div class="information">
 					<div class="col-sm-9 text-left">
 						<p><?php _e( 'Information about conventions last event and up coming convention.', 'oliord' ); ?></p>
 					</div>
-					<div class="col-sm-3 text-right">
+					<div class="col-sm-3 text-left get-more-info">
 						<a href="#"><?php _e( 'Get More Info', 'oliord' ); ?></a>
 					</div>
+				</div>
 			</div>
 		</div>
 	</header>

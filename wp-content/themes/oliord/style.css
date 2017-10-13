@@ -27,6 +27,10 @@ Tags:         	e-commerce, responsive, theme-options
 
 }
 
+.container {
+  max-width: 100%;
+  width: 1280px;
+}
 .content-area.container {padding-top:0px;}
 .as-pagination-buttons{display:none;}
 .dimond_members{
@@ -39,7 +43,7 @@ margin:36px 0;
     padding: 0;
 }
 header.site-header {
-    background: #E6ECE8;
+    background: #f8f8f8;
 }
 .header-bottom-txt {
   background: #d1d1d1 none repeat scroll 0 0;
@@ -173,7 +177,7 @@ input[type="search"] {
     padding: 5px 10px;
 }
 .footer-content {
-    background: #f1f1f1
+    background: #f1f1f1; padding-top:20px;
 }
 .copy-right-txt {
     border-top: 1px solid #8C8C8C;
@@ -248,31 +252,12 @@ input[type="search"] {
 
 
 
-
-
-
-
-/*
-.gallery-part{border:1px solid #dedede; box-sizing:border-box; display:block; float:left; margin:50px auto; padding:10px; width:100%; border-radius:3px; box-shadow: 0 0 13px #d0d0d0;}*/
-.gallery-part {
-  border: 1px solid #c3c3c3;
-  border-radius: 10px;
-  box-sizing: border-box;
-  display: block;
-  height: 175px;
-  margin: 10px auto 0;
-  max-width: 1136px;
-  overflow: hidden;
-  width: 100%;
-}
+.gallery-part {border: 1px solid #c3c3c3; border-radius: 10px; box-sizing: border-box; display: block; height: 175px; margin: 10px auto 0; max-width: 1280px; overflow: hidden; width: 100%;}
 .gallery-part ul{margin:0; padding:0; list-style:none;}
 .gallery-part li:first-child{margin-left:0px;}
 .gallery-part li:first-child .parentimage{box-shadow:none;}
-.gallery-part li.gallery-221{width:221px;}
-/*.gallery-part li.gallery-260 img { width: 100%;}*/
-
+.gallery-part li.gallery-221{width:269px;}
 .gallery-part li.gallery-200{width:200px;}
-/*.gallery-part li.gallery-220 img {height: 175px; width: 100%;}*/
 .gallery-part li.gallery-one{z-index:2;}
 .gallery-part li.gallery-three{z-index:0;}
 .gallery-part li.gallery-five{margin-left:-160px;}
@@ -280,177 +265,94 @@ input[type="search"] {
 .gallery-part li.gallery-for{width:260px;}
 .gallery-part li.gallery-six{z-index: 3;}
 
-
 .gallery-part li {/*border: 1px solid #d3d3d3;*/ float: left; margin-left: -30px; width:160px; z-index: 1; position:relative;}
 .gallery-part li img{border-radius:15px; height: 175px; width: 100%;}
-.gallery-part .parentimage { 
-/*width: 300px;
-height: 300px; */ max-width:100%;
--webkit-transition: all .6s ease-out;
--moz-transition: all .6s ease-out;
--o-transition: all .6s ease-out;
-transition: all .6s ease-out; box-shadow:-10px 0 14px -10px #7d7d7d;
-} 
-.gallery-part .parentimage:hover {
--moz-transform: scale(1.2);
--webkit-transform: scale(1.2);
--o-transform: scale(1.2);
--ms-transform: scale(1.2);
-transform: scale(1.2);
-
-}	
+.gallery-part .parentimage {max-width:100%; -webkit-transition: all .6s ease-out; -moz-transition: all .6s ease-out; -o-transition: all .6s ease-out; transition: all .6s ease-out; box-shadow:-10px 0 14px -10px #7d7d7d;} 
+.gallery-part .parentimage:hover {-moz-transform: scale(1.2); -webkit-transform: scale(1.2); -o-transform: scale(1.2); -ms-transform: scale(1.2); transform: scale(1.2);}	
 .gallery-part li:hover{z-index:999;}
-
-
-
-
-
-
-
-
-.dimond_members > h3 {
-    font-size: 14pt;
-    font-weight: bold;
-    padding: 10px 0;
-}
-
-.dimond-products {
-    border: 1px solid gray;
-    border-radius: 10px;
-    display: inline-block;
-    margin: 0;
-	background: #ededed;
-}
-.right-space {
-       padding-bottom: 10px;
-    padding-right: 0;
-}
-.product-content {
-    border-radius: 10px;
-    display: inline-block;
-    padding: 10px 0;
-	background: #fff;
-}
-.dimond-products .product-img{
-	width:100%;
-	border-top-left-radius: 10px; 
-	border-top-right-radius: 10px;
-	height: 170px;
-}
-.progress-bar-rate {
-     padding-left: 0;
-    width: 35px;
-	margin-top: 12px;
-}
-
-.product-content > h3 {
-    font-size: 12pt;
-    margin: 6px;
-    padding: 0;
-}
+.dimond_members > h3 {font-size: 14pt; font-weight: bold; padding: 10px 0;}
+.dimond-products {border: 1px solid gray; border-radius: 10px; display: inline-block; margin: 0; background: #ededed;}
+.right-space {padding-bottom: 10px; padding-right: 0;}
+.product-content {border-radius: 10px; display: inline-block; padding:10px; background: #fff; font-family: 'arialregular'; width:100%; box-sizing: border-box;}
+.dimond-products .product-img {border-top-left-radius: 10px; border-top-right-radius: 10px; max-width: 100%;}
+.progress-bar-rate {width: 35px;}
+.product-content > h3 {font-size: 12pt; margin: 6px; padding: 0;}
 .home-Member-pad .dimond_members h3{margin-top:0;}
-.home-Member-pad .product-content .view-details a {
-  background: #000;
-  border-radius: 12px;
-  color: #fff;
-  display: inline-block;
-  font-size: 12px;
-  min-width: 82px;
-  padding: 4px 2px;
-  text-align: center;
-}
-.home-Member-pad .product-content .dimaond_product_price,
-.home-Member-pad .product-content .dimaond_product_qty{width:35%; float:left;}
+.home-Member-pad .product-content .view-details a{background:#000; border-radius:12px; color:#fff; display:inline-block; font-size:10px; min-width:68px; padding:2px; text-align: center;}
+.home-Member-pad .product-content .dimaond_product_price, 
+.home-Member-pad .product-content .dimaond_product_qty {color: #939393; float: left;  font-size: 11px; width: 35%;}
+.home-Member-pad .product-content .dimaond_product_price {width:28%;}
+.home-Member-pad .product-content .dimaond_product_qty {width:40%;}
+.dimond-products .dimaond_product_qty b {font-weight: normal;}
+.dimond-products .woocommerce-Price-amount {color: #000; display: block;}
 .home-Member-pad .product-content .view-details{float:right; width:30%;}
-.home-Member-pad .dimond_members .dimond-products-list h3 {
-  margin: 5px 12px 10px;
-}
-
-
-.menu-header {
-  background: #fff;
-  border: 1px solid #a3a3a3;
-  box-sizing: border-box;
-  float: left;
-  padding: 6px 10px;
-  width: 100%;
-}
+.home-Member-pad .dimond_members .dimond-products-list h3 {color: #101010;  font-size: 14px;  margin: 5px 0 10px;}
+.menu-header { background: #fff; border: 1px solid #a3a3a3; box-sizing: border-box; float: left; padding:6px 10px 8px; width: 100%;}
 .menu-header .navbar-nav{display:block;}
-.menu-header li{float:left; margin-right:30px;}
-.menu-header li a{font-family: 'arialregular'; color: #404040;}	
-.header-right-part{float:right; padding: 30px 0;}
+.menu-header li{float:left; margin-right:30px; line-height: normal;}
+.menu-header li.menu-item-has-children{position:relative;}
+.menu-header li.menu-item-has-children::before {
+  background: url("images/menu-arrow.png") no-repeat scroll 0 0;
+  content: "";
+  display: block;
+  height: 10px;
+  position: absolute;
+  right: -18px;
+  top: 12px;
+  width: 10px;
+}
+.menu-header li.menu-item-has-children ul.sub-menu {background: #fff; border: 1px solid #bbb; left: -11px; list-style:none; padding: 10px; position: absolute; top: 31px; width: 190px; z-index: 99999;}
+.menu-header li.menu-item-has-children ul.sub-menu{display:none;}	
+.menu-header li.menu-item-has-children:hover ul.sub-menu{display:block;}	
+.menu-header li a {color: #939393; font-family: "arialregular"; font-size: 14px; text-decoration: none;}
+.header-right-part{float:right; padding: 40px 0;}
 .header-right-part .search,
 .header-right-part .language-drop,
 .header-right-part .user-profile,
-.header-right-part .product-cart{float:left; margin-left:30px;}	
-.header-right-part .language-drop select {
-  border:none;-webkit-appearance:none; -moz-appearance:none; appearance:none; 
-   cursor: pointer;
-  font-size: 0;
-  margin-top: 13px;
-  padding: 4px 2px;
-  vertical-align: top;
-  background:url(images/languages-ico.png) no-repeat;
-}
-.header-right-part .language-drop select option{}
-
+.header-right-part .product-cart{float:left; margin-left:40px; position: relative;}	
+/*.header-right-part .language-drop select {border:none;-webkit-appearance:none; -moz-appearance:none; appearance:none; cursor: pointer; font-size: 0;  background:url(images/languages-ico.png) no-repeat; border: medium none; cursor: pointer; font-size: 0; margin-left: 6px; margin-top: 12px; padding: 0 2px; position: absolute; top: 0px;  vertical-align: top;}*/
+.header-right-part .language-drop select option {font-size: 14px; padding: 3px;}
 /****/
+.search-form .search-submit {background: transparent none repeat scroll 0 0; color: #142950; float: right; padding: 0; position: static;}
+input.search-field-custom.stoggle {border-width: 1px; width: 87%;}
+.search-field-custom {border-color: #142950; border-radius: 0; border-width: 0; float: right; margin-right: 6px; padding: 0; transition: all 0.3s ease 0s; width: 0;}
+.search-form {position: relative;}
+.search-form .search-submit {border: 0 none; bottom: 3px; height: 37px; line-height: 1px; outline: medium none navy; padding: 0 8px; position: absolute; right: 3px; top: 0;}
+.search-form .search-submit .fa-search {color: #000000; font-size: 32px;}
+.search-form .search-submit .icon {height: 24px;top: -2px;width: 24px;}
+.header-right-part .search-field-custom {background:none; border:none;}
+.header-right-part .search-field-custom.stoggle {background: #fff; border: 1px solid #000000; padding: 6px 15px;}
+.header-right-part .user-profile a {color: #000;}
+.header-right-part .product-cart a {background: #818181; border-radius: 40px; color: #000; display: inline-block; height: 24px; line-height: 1.4; position: absolute; right: -10px; text-align: center; top: -8px; width: 24px;}
+.header-right-part .language-drop{margin-right:25px;}
 
-	.search-form .search-submit {
-    background: transparent none repeat scroll 0 0;
-    color: #142950;
-    float: right;
-    padding: 0;
-    position: static;
-}
+.header-right-part .language-drop ul.languages{background: #fff; border: 1px solid #bbb; left: -11px; list-style:none; padding: 5px 10px 10px; position: absolute; top: 38px; width: 160px; z-index: 99999;}
+.header-right-part .language-drop ul.languages{display:none;}	
+.header-right-part .language-drop:hover ul.languages{display:block;}
+.header-right-part .language-drop::before {background: url(images/menu-arrow.png) no-repeat; content: ""; display: block; height: 10px; position: absolute; right: -19px;  top: 14px; width: 10px;}
+.information {background: #d1d1d1; border: 1px solid #a3a3a3; display: flex; line-height: 2; margin: 10px auto; padding: 22px 0; width: 100%;}
+.information .text-left p {color: #000; font-size: 17px; margin-bottom: 0;}
+.information .get-more-info a {color: #838383; font-size: 17px;}
+.site-header .logo {background: #fff ; border: 1px solid #000; margin: 30px auto; text-align: center;}
+.header-full {display: flex; width: 100%;}
+.dimond-products .progress-bar-l{width:65%; float:left; margin-top: 5px;}
+.dimond-products .progress-bar-l .progress-bar-rate{float:left;}
+.dimond-products .progress-bar-r{width:33%; float:right; margin-top: 5px;}
+.dimond-products .progress-bar-r .progress-bar-rate{float:left;}
+.dimond-products .progress-bar-r .progress-bar75 {color: #939393; float: right; font-size: 13px; margin-top: 6px;}
 
-	input.search-field-custom.stoggle {
-    border-width: 1px;
-    width: 87%;
-}
-	.search-field-custom {
-  border-color: #142950;
-  border-radius: 0;
-  border-width: 0;
-  float: right;
-  margin-right: 6px;
-  padding: 0;
-  transition: all 0.3s ease 0s;
-  width: 0;
-}
 
-.search-form {
-	position: relative;
-}
-
-.search-form .search-submit {
-  border: 0 none;
-  bottom: 3px;
-  height: 37px;
-  line-height: 1px;
-  outline: medium none navy;
-  padding: 0 1em;
-  position: absolute;
-  right: 3px;
-  top: 0;
-}
-.search-form .search-submit .fa-search {
-  color: #000000;
-  font-size: 32px;
-}
-
-.search-form .search-submit .icon {
-	height: 24px;
-	top: -2px;
-	width: 24px;
-}
-.header-right-part .search-field-custom {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: 0 none;
-}
-
-.header-right-part .search-field-custom.stoggle {
-  background: #fff;
-  border: 1px solid #000000;
-  padding: 6px 15px;
-}
+.dimond-products-list .right-space.product_6,
+.dimond-products-list .right-space.product_7{margin-top: -110px;}
+.dimond-products-list .right-space.product_12 .dimond-products{width: 100%;}
+.footer-content .widget-title{font-family: 'arialbold'; font-size: 20px;}
+.dimond-products-list .right-space .product-content{-webkit-transition: height 2s; /* For Safari 3.1 to 6.0 */
+    transition: height 2s;  -webkit-transition: all .6s ease-out; -moz-transition: all .6s ease-out; -o-transition: all .6s ease-out; transition: all .6s ease-out; }
+.dimond-products-list .right-space:hover .product-content{margin-top: -40px; padding-top: 50px;}
+.dimond-products-list .right-space.product_1:hover .product-content,
+.dimond-products-list .right-space.product_4:hover .product-content,
+.dimond-products-list .right-space.product_6:hover .product-content,
+.dimond-products-list .right-space.product_7:hover .product-content{margin-top: -80px !important; padding-top: 90px !important;}
+	
+.dimond-products-list .right-space .product-content .col-md-12{padding:0px;}
+	
