@@ -1,4 +1,4 @@
-var javascript_version = "2.2.3";
+var javascript_version = "2.2.5";
 var ignore_key = true;
 var start = 1;
 var end = 16;
@@ -24,6 +24,10 @@ var AI_AFTER_PARAGRAPH  = 6;
 var AI_BEFORE_EXCERPT   = 7;
 var AI_AFTER_EXCERPT    = 8;
 var AI_BETWEEN_POSTS    = 9;
+var AI_BEFORE_COMMENTS  = 10;
+var AI_BETWEEN_COMMENTS = 11;
+var AI_AFTER_COMMENTS   = 12;
+var AI_FOOTER           = 13;
 
 var AI_ALIGNMENT_DEFAULT        = 0;
 var AI_ALIGNMENT_LEFT           = 1;
@@ -809,7 +813,7 @@ jQuery(document).ready(function($) {
 
   function configure_editor (block) {
 
-    if (debug) console.log ("configure_editor: " + block);
+    if (debug) console.log ("configure_editor:", block);
 
     if (syntax_highlighting) {
       var syntax_highlighter = new SyntaxHighlight ('#block-' + block, block, shSettings);
@@ -1108,6 +1112,8 @@ jQuery(document).ready(function($) {
 
   function configure_tab (tab) {
 
+//    if (debug) console.log ("configure_tab:", tab);
+
     $('#tab-' + tab).addClass ('configured');
 
     $('#tab-' + tab + ' input[type=submit], #tab-' + tab + ' button').button().show ();
@@ -1128,7 +1134,7 @@ jQuery(document).ready(function($) {
       var block = $(this).attr('id').replace ("block-alignment-", "");
       var alignment = $("select#block-alignment-"+block+" option:selected").attr('value');
       if (alignment == AI_ALIGNMENT_STICKY_LEFT || alignment == AI_ALIGNMENT_STICKY_RIGHT || alignment == AI_ALIGNMENT_STICKY_TOP || alignment == AI_ALIGNMENT_STICKY_BOTTOM) {
-        $("select#display-type-"+block).val (AI_AFTER_POST).change ();
+        $("select#display-type-"+block).val (AI_FOOTER).change ();
       }
       process_display_elements (block);
     });
@@ -1689,7 +1695,7 @@ jQuery(document).ready(function($) {
     }
   }
 
-  function update_rating (parameter = '') {
+  function update_rating (parameter) {
     var rating_bar = $('#ai-rating-bar');
     var nonce = rating_bar.attr ('nonce');
     $("#rating-value span").load (ajaxurl+"?action=ai_ajax_backend&rating=" + parameter + "&ai_check=" + nonce, function() {
@@ -1728,12 +1734,14 @@ jQuery(document).ready(function($) {
   start         = parseInt ($('#ai-form').attr('start'));
   end           = parseInt ($('#ai-form').attr('end'));
 
-  active_tab    = 1;
+  active_tab    = start;
   active_tab_0  = 0;
   try {
     var active_tabs = JSON.parse ($("#ai-active-tab").attr ("value"));
     if (typeof active_tabs !== "undefined" && active_tabs.constructor === Array && Number.isInteger (active_tabs [0]) && Number.isInteger (active_tabs [1])) {
       active_tab    = parseInt (active_tabs [0]);
+      if (active_tab != 0)
+        if (active_tab < start || active_tab > end) active_tab = start;
       active_tab_0  = parseInt (active_tabs [1]);
     }
   } catch (e) {}
@@ -1752,6 +1760,7 @@ jQuery(document).ready(function($) {
 
   var plugin_version = $('#ai-data').attr ('version').split ('-') [0];
   if (javascript_version != plugin_version) {
+    console.log ('AD INSERTER: plugin version: ' + plugin_version + ', loaded Javascript version: ' + javascript_version);
 
     // Check page HTML
     var javascript_version_parameter = $("script[src*='ad-inserter.js']").attr('src');
@@ -1761,6 +1770,7 @@ jQuery(document).ready(function($) {
         $("#javascript-version-parameter-missing").show ();
       }
       else if (javascript_version_parameter_string != plugin_version) {
+        console.log ('AD INSERTER: plugin version: ' + plugin_version + '- Javascript file version: ' + javascript_version_parameter_string);
         $("#javascript-version-parameter").show ();
       }
     }
@@ -1772,6 +1782,7 @@ jQuery(document).ready(function($) {
   var css_version = $('#ai-data').css ('font-family').replace(/[\"\']/g, '');
   if (css_version.indexOf ('.') == - 1) $("#blocked-warning").show (); else
     if (css_version != plugin_version) {
+      console.log ('AD INSERTER: plugin version:', plugin_version, 'loaded CSS version:', css_version);
 
       // Check page HTML
       var css_version_parameter = $("link[href*='ad-inserter.css']").attr('href');
@@ -1781,6 +1792,7 @@ jQuery(document).ready(function($) {
           $("#css-version-parameter-missing").show ();
         }
         else if (css_version_parameter_string != plugin_version) {
+          console.log ('AD INSERTER: plugin version:', plugin_version, '- CSS file version:', css_version_parameter_string);
           $("#css-version-parameter").show ();
         }
       }
@@ -1872,7 +1884,7 @@ jQuery(document).ready(function($) {
       $("#ai-rating-bar").css ('display', 'inline-block');
       $('#ai-stars').hide ();
     }
-    update_rating ('update');
+    update_rating ('update', '');
   });
 
   $("#ai-rating-bar").click (function () {

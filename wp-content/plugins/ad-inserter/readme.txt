@@ -2,11 +2,11 @@
 
 Contributors: spacetime
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LHGZEMRTR7WB4
-Tags: ads, adsense, ad management, advertising manager, advanced contextual ads, ad rotation, ad injection, adverts, sticky widgets, sticky sidebar, amazon, banners, automatic insertion, amp, geo targeting, multisite, shortcodes, PHP, Javascript, HTML, header, footer, tracking, ad blocking, custom fields
+Tags: ads, adsense, ad management, advertising manager, advanced contextual ads, ad rotation, ad injection, adverts, sticky widgets, sticky sidebar, hook, amazon, banners, automatic insertion, amp, geo targeting, multisite, shortcodes, PHP, Javascript, HTML, header, footer, tracking, ad blocking, custom fields
 Requires at least: 4.0
 Tested up to: 4.8.2
 Requires PHP: 5.2.4
-Stable tag: 2.2.2
+Stable tag: 2.2.4
 License: GPLv3
 
 Insert and manage ads: AdSense, Amazon, banners, ad rotation, sticky ad widgets, shortcodes, AMP, PHP, HTML, CSS, form, tracking, header, footer code
@@ -35,9 +35,11 @@ Ad Inserter is more than just ad manager plugin. It provides many advanced optio
 > *   Insert between posts on blog pages (in-feed AdSense ads)
 > *   Insert between excerpts on blog pages
 > *   Insert between comments
+> *   Insert at custom hook positions (e.g. using <a href="https://genesistutorials.com/visual-hook-guide/" target="_blank">Genesis Theme Framework Hook Guide</a>)
 > *   Clearance options to avoid insertion near images or headers
 > *   Insertion exceptions for posts and pages
 > *   Insert header and footer code
+> *   Insert raw HTTP response header lines
 > *   Insert Google Analytics, Piwik or any other web analytics code
 > *   Insert HTML, CSS, Javascript or PHP code
 > *   Manual insertion: widgets, shortcodes, PHP function call
@@ -51,7 +53,7 @@ Ad Inserter is more than just ad manager plugin. It provides many advanced optio
 > *   Ad rotation (server-side and client-side - works with caching)
 > *   Ad blocking detection - popup message, page redirection
 > *   Desktop/mobile device detection (server-side and client-side - works with caching)
-> *   Black/White-list categories, tags, taxonomies, post IDs, urls, url query parameters, referers
+> *   Black/White-list categories, tags, taxonomies, post IDs, urls, url query parameters, cookies, referers
 > *   Simple troubleshooting with many debugging functions
 > *   Function to visualize inserted code blocks
 > *   Function to visualize available insertion positions
@@ -70,7 +72,8 @@ And Ad Inserter Pro - all-in-one <a href="http://adinserter.pro/" target="_blank
 > *   Ad blocking statistics
 > *   Multisite options to limit settings on the sites
 > *   Post/page exception management
-> *   6 custom viewports for client-side desktop/mobile device detection
+> *   more custom viewports for client-side desktop/mobile device detection
+> *   more custom hooks for custom theme insertions
 > *   Export and import of settings
 > *   Support via email
 
@@ -96,6 +99,7 @@ Ad Inserter is not just another plugin for WordPress ads. Do you enjoy finding t
 *   to insert ads between comments
 *   to insert ads on AMP pages
 *   to insert different ads for mobile devices
+*   to insert ads at custom action hooks (e.g. using <a href="https://genesistutorials.com/visual-hook-guide/" target="_blank">Genesis Theme Framework Hook Guide</a>)
 *   to hide ads on specific pages
 *   for ad rotation
 *   for PHP code widgets
@@ -189,7 +193,8 @@ activate it and then click "Enter License Key" and enter license key you got in 
 
 If you deactivate and delete Ad Inserter, the settings will stay in the database. To completely remove the plugin and settings do the following:
 
-1. Go to Ad Inserter Settings (tab *) and click on Reset All Settings
+1. Go to Ad Inserter general settings (tab *) and click on Reset All Settings
+1. Go to Ad Inserter general settings (tab *) and click on Clear All Statistics Data
 2. Deactivate Ad Inserter
 3. Delete Ad Inserter plugin
 
@@ -238,6 +243,8 @@ Automatic Insertion Options:
 *   Insert Before Comments (on posts)
 *   Insert Between Comments (on posts)
 *   Insert After Comments (on posts)
+*   Insert into HTML Footer (before `</body>` tag)
+*   Insert at custom hook positions (define them on the tab * / tab Hooks)
 
 For single posts or static pages insertion position Before Post usually means position above the post/page title, for blog pages Before Post position means position above all the posts on the blog page.
 
@@ -447,6 +454,9 @@ amzn_assoc_linkid = "cf1873f027a57f63cede634cfd444bea";
 <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>`
 
 Use your own tracking id! Please note `[adinserter data='smart_tag']` as default search phrase. This makes this widget contextual. It will show products related to the tags for this post.
+
+You can also use <a href="https://codex.wordpress.org/Custom_Fields" target="_blank">custom fields</a> to make the widget contextual. For example, if you define in posts custom field named `amazon-keyword` you can use `[adinserter custom-field='amazon-keyword']' for `amzn_assoc_default_search_phrase` variable.
+
 You can also try with `[adinserter data='tag']', `[adinserter data='short-title']`, `[adinserter data='category']` or `[adinserter data='short-category']`. For more options check <a href="http://adinserter.pro/documentation#code-block-options" target="_blank">Ad Inserter documentation page</a>.
 
 
@@ -731,6 +741,18 @@ AD CODE RIGHT
 
 == Changelog ==
 
+= 2.2.5 =
+- Fix for issue with Ajax requests
+
+= 2.2.4 =
+- Added support to insert raw HTTP response header lines
+- Added support to check for individual exceptions for shortcodes
+- Added support to trigger ad blocking detection action only on individual pages
+- Added support for automatic insertion position Footer
+- Added support for custom hooks
+- Url parameter list now checks url parameters ($_GET) and cookies ($_COOKIE)
+- Fix for |count| separator not processed
+
 = 2.2.3 =
 - Added support to insert custom fields via shortcode [adinserter custom-field='CUSTOM_FIELD_NAME']
 - Added support for user:USERNAME and user-role:USER_ROLE taxonomy list items
@@ -838,6 +860,18 @@ AD CODE RIGHT
 - Bug fix for IP database update cron event (Pro only)
 
 == Upgrade Notice ==
+
+= 2.2.5 =
+Fix for issue with Ajax requests
+
+= 2.2.4 =
+Added support to insert raw HTTP response header lines;
+Added support to check for individual exceptions for shortcodes;
+Added support to trigger ad blocking detection action only on individual pages;
+Added support for automatic insertion position Footer;
+Added support for custom hooks;
+Url parameter list now checks url parameters ($_GET) and cookies ($_COOKIE);
+Fix for |count| separator not processed;
 
 = 2.2.3 =
 Added support to insert custom fields via shortcode;

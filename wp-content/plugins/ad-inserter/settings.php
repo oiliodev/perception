@@ -4,7 +4,7 @@ require_once AD_INSERTER_PLUGIN_DIR.'constants.php';
 
 function generate_settings_form (){
   global $ai_db_options, $block_object, $ai_wp_data, $ai_db_options_extract;
-  global $rating_value, $rating_string, $rating_css;
+  global $rating_value, $rating_string, $rating_css, $ai_custom_hooks;
 
   $save_url = $_SERVER ['REQUEST_URI'];
   if (isset ($_GET ['tab'])) {
@@ -23,11 +23,11 @@ function generate_settings_form (){
 
   if (isset ($_POST ['ai-active-tab'])) {
     $active_tabs = json_decode ($_POST ['ai-active-tab']);
-    if ($active_tabs == null) $active_tabs = array (1, 0);
+    if ($active_tabs == null) $active_tabs = array ($start, 0);
   }
 
   if (isset ($_GET ['tab'])) $active_tab = $_GET ['tab']; else
-    $active_tab = isset ($active_tabs [0]) ? $active_tabs [0] : 1;
+    $active_tab = isset ($active_tabs [0]) ? $active_tabs [0] : $start;
   if (!is_numeric ($active_tab)) $active_tab = 1;
   if ($active_tab != 0)
     if ($active_tab < $start || $active_tab > $end) $active_tab = $start;
@@ -119,11 +119,11 @@ function generate_settings_form (){
       <h2 id="plugin_name" style="display: inline-block; margin: 5px 0;"><?php echo AD_INSERTER_NAME . ' ' . AD_INSERTER_VERSION ?></h2>
     </div>
     <div id="header-buttons">
-      <a style="text-decoration: none;" href="http://adinserter.pro/documentation" target="_blank"><button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" title="<?php echo AD_INSERTER_NAME; ?> Documentation">Doc</button></a>
-      <a style="text-decoration: none;" href="https://wordpress.org/support/plugin/ad-inserter" target="_blank"><button type="button" style="display: none; margin: 0 10px 0 0; width: 68px;" title="<?php echo AD_INSERTER_NAME; ?> support forum">Support</button></a>
-      <a style="text-decoration: none;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LHGZEMRTR7WB4" target="_blank"><button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" title="Support Free Ad Inserter development. If you are making money with Ad Inserter consider donating some small amount. Even 1 dollar counts. Thank you!">Donate</button></a>
-      <a style="text-decoration: none;" href="https://wordpress.org/support/plugin/ad-inserter/reviews/" target="_blank"><button type="button" title="If you like Ad Inserter and have a moment, please help me spread the word by reviewing the plugin on WordPres" style="display: none; margin: 0 10px 0 0; width: 62px;">Review</button></a>
-      <a style="text-decoration: none;" href="http://adinserter.pro/" target="_blank"><button type="button" title="Need more code blocks, GEO targeting, impression and click tracking? Upgrade to Ad Inserter Pro" style="display: none; margin: 0 10px 0 0; width: 62px;">Go&nbsp;Pro</button></a>
+      <button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" onclick="window.open('http://adinserter.pro/documentation')" title="<?php echo AD_INSERTER_NAME; ?> Documentation">Doc</button>
+      <button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" onclick="window.open('https://wordpress.org/support/plugin/ad-inserter')" title="<?php echo AD_INSERTER_NAME; ?> support forum">Support</button>
+      <button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" onclick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LHGZEMRTR7WB4')" title="Support Free Ad Inserter development. If you are making money with Ad Inserter consider donating some small amount. Even 1 dollar counts. Thank you!">Donate</button>
+      <button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" onclick="window.open('https://wordpress.org/support/plugin/ad-inserter/reviews/')" title="If you like Ad Inserter and have a moment, please help me spread the word by reviewing the plugin on WordPres">Review</button>
+      <button type="button" style="display: none; margin: 0 10px 0 0; width: 62px;" onclick="window.open('http://adinserter.pro/')" title="Need more code blocks, GEO targeting, impression and click tracking? Upgrade to Ad Inserter Pro">Go&nbsp;Pro</button>
     </div>
 
     <div style="clear: both;"></div>
@@ -155,10 +155,10 @@ function generate_settings_form (){
   </div>
 
   <div id="blocked-warning" class="ai-form warning-enabled rounded">
-    <h2 class="blocked-warning-text" style="float: left; color: red;" title="Error loading page">PAGE BLOCKED</h2>
-    <div style="float: right; text-align: right; width: 600px; margin: 8px 5px 0px 0;">
-       This page was <a href="https://adinserter.pro/documentation#page-blocked" class="simple-link" target="_blank">not loaded properly</a>. Make sure your theme doesn't add async or defer tags to javascript files.
-       Check also browser and ad blocking plugins that may block CSS/js files or images for this page.
+    <h2 class="blocked-warning-text" style="float: left; color: red; margin: 7px 0;" title="Error loading page">WARNING</h2>
+    <div style="float: right; text-align: right; width: 630px; margin: 8px 5px 0px 0;">
+       Page may <a href="https://adinserter.pro/documentation#page-blocked" class="simple-link" target="_blank">not be loaded properly</a>.
+       Check ad blocking software that may block CSS, Javascript or image files.
     </div>
     <div style="clear: both;"></div>
   </div>
@@ -273,6 +273,7 @@ function generate_settings_form (){
   if ($adH->get_enable_manual () && $adH->get_ad_data() != "") $title_hfa .= ", Header code";
   if ($adF->get_enable_manual () && $adF->get_ad_data() != "") $title_hfa .= ", Footer code";
 
+  $enabled_k = count ($ai_custom_hooks) != 0;
   $enabled_h = $adH->get_enable_manual () && $adH->get_ad_data() != "";
   $enabled_f = $adF->get_enable_manual () && $adF->get_ad_data() != "";
   if ($enabled_h || $enabled_f) $class_hfa = " on"; else $class_hfa = "";
@@ -425,34 +426,38 @@ function generate_settings_form (){
     <div style="float: left;">
       Automatic Insertion:
       <select style="margin-bottom: 3px;" id="display-type-<?php echo $ad_number; ?>" name="<?php echo AI_OPTION_AUTOMATIC_INSERTION, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_automatic_insertion(); ?>" style="width:200px;">
-         <option data-img-src="<?php echo plugins_url ('images/disabled.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_DISABLED; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_DISABLED) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_DISABLED; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/before-post.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_POST; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_POST) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_POST; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/before-content.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_CONTENT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_CONTENT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_CONTENT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/before-paragraph.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_PARAGRAPH; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_PARAGRAPH) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_PARAGRAPH; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/after-paragraph.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_PARAGRAPH; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_PARAGRAPH) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_PARAGRAPH; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/after-content.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_CONTENT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_CONTENT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_CONTENT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/after-post.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_POST; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_POST) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_POST; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/before-excerpt.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_EXCERPT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_EXCERPT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_EXCERPT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/after-excerpt.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_EXCERPT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_EXCERPT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_EXCERPT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/between-posts.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BETWEEN_POSTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BETWEEN_POSTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BETWEEN_POSTS; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/before-comments.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_COMMENTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_COMMENTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_COMMENTS; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/between-comments.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_BETWEEN_COMMENTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BETWEEN_COMMENTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BETWEEN_COMMENTS; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/after-comments.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_COMMENTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_COMMENTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_COMMENTS; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion disabled" value="<?php echo AI_AUTOMATIC_INSERTION_DISABLED; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_DISABLED) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_DISABLED; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion before-post" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_POST; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_POST) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_POST; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion before-content" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_CONTENT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_CONTENT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_CONTENT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion before-paragraph" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_PARAGRAPH; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_PARAGRAPH) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_PARAGRAPH; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion after-paragraph" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_PARAGRAPH; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_PARAGRAPH) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_PARAGRAPH; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion after-content" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_CONTENT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_CONTENT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_CONTENT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion after-post" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_POST; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_POST) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_POST; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion before-excerpts" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_EXCERPT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_EXCERPT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_EXCERPT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion after-excerpts" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_EXCERPT; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_EXCERPT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_EXCERPT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion between-posts" value="<?php echo AI_AUTOMATIC_INSERTION_BETWEEN_POSTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BETWEEN_POSTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BETWEEN_POSTS; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion before-comments" value="<?php echo AI_AUTOMATIC_INSERTION_BEFORE_COMMENTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BEFORE_COMMENTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BEFORE_COMMENTS; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion between-comments" value="<?php echo AI_AUTOMATIC_INSERTION_BETWEEN_COMMENTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_BETWEEN_COMMENTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_BETWEEN_COMMENTS; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion after-comments" value="<?php echo AI_AUTOMATIC_INSERTION_AFTER_COMMENTS; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_AFTER_COMMENTS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_AFTER_COMMENTS; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion footer" value="<?php echo AI_AUTOMATIC_INSERTION_FOOTER; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_FOOTER) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_FOOTER; ?></option>
+<?php foreach ($ai_custom_hooks as $hook_index => $custom_hook) { ?>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion custom-hook" value="<?php echo AI_AUTOMATIC_INSERTION_CUSTOM_HOOK + $custom_hook ['index'] - 1; ?>" <?php echo ($automatic_insertion == AI_AUTOMATIC_INSERTION_CUSTOM_HOOK + $custom_hook ['index'] - 1) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo $custom_hook ['name']; ?></option>
+<?php } ?>
       </select>
     </div>
 
     <div style="float: right;">
       Alignment and Style:&nbsp;&nbsp;&nbsp;
       <select style="width:120px;" id="block-alignment-<?php echo $ad_number; ?>" name="<?php echo AI_OPTION_ALIGNMENT_TYPE, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_alignment_type(); ?>">
-         <option data-img-src="<?php echo plugins_url ('images/default.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_DEFAULT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_DEFAULT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_DEFAULT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/align-left.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_LEFT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_LEFT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_LEFT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/center.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_CENTER; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_CENTER) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_CENTER; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/align-right.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_RIGHT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_RIGHT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_RIGHT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/float-left.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_FLOAT_LEFT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_FLOAT_LEFT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_FLOAT_LEFT; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/float-right.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_FLOAT_RIGHT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_FLOAT_RIGHT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_FLOAT_RIGHT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion default" value="<?php echo AI_ALIGNMENT_DEFAULT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_DEFAULT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_DEFAULT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion align-left" value="<?php echo AI_ALIGNMENT_LEFT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_LEFT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_LEFT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion center" value="<?php echo AI_ALIGNMENT_CENTER; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_CENTER) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_CENTER; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion align-right" value="<?php echo AI_ALIGNMENT_RIGHT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_RIGHT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_RIGHT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion float-left" value="<?php echo AI_ALIGNMENT_FLOAT_LEFT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_FLOAT_LEFT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_FLOAT_LEFT; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion float-right" value="<?php echo AI_ALIGNMENT_FLOAT_RIGHT; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_FLOAT_RIGHT) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_FLOAT_RIGHT; ?></option>
 <?php $css_code_height = 260; if (function_exists ('ai_style_options')) $css_code_height = ai_style_options ($obj); ?>
-         <option data-img-src="<?php echo plugins_url ('images/custom-css.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_CUSTOM_CSS; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_CUSTOM_CSS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_CUSTOM_CSS; ?></option>
-         <option data-img-src="<?php echo plugins_url ('images/no-wrapping.png', __FILE__); ?>" data-img-class="automatic-insertion" value="<?php echo AI_ALIGNMENT_NO_WRAPPING; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_NO_WRAPPING) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_NO_WRAPPING; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion custom-css" value="<?php echo AI_ALIGNMENT_CUSTOM_CSS; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_CUSTOM_CSS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_CUSTOM_CSS; ?></option>
+         <option data-img-src="<?php echo plugins_url ('css/images/blank.png', __FILE__); ?>" data-img-class="automatic-insertion no-wrapping" value="<?php echo AI_ALIGNMENT_NO_WRAPPING; ?>" <?php echo ($obj->get_alignment_type() == AI_ALIGNMENT_NO_WRAPPING) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_NO_WRAPPING; ?></option>
       </select>
       &nbsp;
       <button id="show-css-button-<?php echo $ad_number; ?>" type="button" style="min-width: 60px; margin-right: 0px;">Show</button>
@@ -487,13 +492,13 @@ function generate_settings_form (){
           <input type="hidden" name="<?php echo AI_OPTION_DISPLAY_ON_POSTS, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="0" />
           <input type="checkbox" name="<?php echo AI_OPTION_DISPLAY_ON_POSTS, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="1" default="<?php echo $default->get_display_settings_post(); ?>" id="display-posts-<?php echo $ad_number; ?>" title="Enable or disable insertion on posts" <?php if ($obj->get_display_settings_post()==AI_ENABLED) echo 'checked '; ?> />
 
-          <select style="margin: 0 0 0 10px;" title="Individual post exceptions (if enabled here) can be configured in post editor. Leave blank for no individual post exceptions." id="enabled-on-which-posts-<?php echo $ad_number; ?>" name="<?php echo AI_OPTION_ENABLED_ON_WHICH_POSTS, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_ad_enabled_on_which_posts(); ?>" style="width:160px">
+          <select style="margin: 0 0 0 10px;" id="enabled-on-which-posts-<?php echo $ad_number; ?>" name="<?php echo AI_OPTION_ENABLED_ON_WHICH_POSTS, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_ad_enabled_on_which_posts(); ?>" style="width:160px">
              <option value="<?php echo AI_NO_INDIVIDUAL_EXCEPTIONS; ?>" <?php echo ($obj->get_ad_enabled_on_which_posts()==AI_NO_INDIVIDUAL_EXCEPTIONS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_NO_INDIVIDUAL_EXCEPTIONS; ?></option>
              <option value="<?php echo AI_INDIVIDUALLY_DISABLED; ?>" <?php echo ($obj->get_ad_enabled_on_which_posts()==AI_INDIVIDUALLY_DISABLED) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_INDIVIDUALLY_DISABLED; ?></option>
              <option value="<?php echo AI_INDIVIDUALLY_ENABLED; ?>" <?php echo ($obj->get_ad_enabled_on_which_posts()==AI_INDIVIDUALLY_ENABLED) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_INDIVIDUALLY_ENABLED; ?></option>
           </select>
           &nbsp;
-          <label for="display-posts-<?php echo $ad_number; ?>">Posts</label>
+          <label for="display-posts-<?php echo $ad_number; ?>" title="Individual post exceptions (if enabled here) can be configured in post editor. Leave blank for no individual post exceptions.">Posts</label>
 
 <?php
   if (!empty ($block_exceptions [$ad_number])) {
@@ -523,13 +528,13 @@ function generate_settings_form (){
           <input type="hidden" name="<?php echo AI_OPTION_DISPLAY_ON_PAGES, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="0" />
           <input type="checkbox" name="<?php echo AI_OPTION_DISPLAY_ON_PAGES, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" value="1" default="<?php echo $default->get_display_settings_page(); ?>" id="display-pages-<?php echo $ad_number; ?>" title="Enable or disable insertion on static pages" <?php if ($obj->get_display_settings_page()==AI_ENABLED) echo 'checked '; ?> />
 
-          <select style="margin: 0 0 0 10px;" title="Individual static page exceptions (if enabled here) can be configured in page editor. Leave blank for no individual page exceptions." id="enabled-on-which-pages-<?php echo $ad_number; ?>" name="<?php echo AI_OPTION_ENABLED_ON_WHICH_PAGES, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_ad_enabled_on_which_pages(); ?>" style="width:160px">
+          <select style="margin: 0 0 0 10px;" id="enabled-on-which-pages-<?php echo $ad_number; ?>" name="<?php echo AI_OPTION_ENABLED_ON_WHICH_PAGES, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_ad_enabled_on_which_pages(); ?>" style="width:160px">
              <option value="<?php echo AI_NO_INDIVIDUAL_EXCEPTIONS; ?>" <?php echo ($obj->get_ad_enabled_on_which_pages()==AI_NO_INDIVIDUAL_EXCEPTIONS) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_NO_INDIVIDUAL_EXCEPTIONS; ?></option>
              <option value="<?php echo AI_INDIVIDUALLY_DISABLED; ?>" <?php echo ($obj->get_ad_enabled_on_which_pages()==AI_INDIVIDUALLY_DISABLED) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_INDIVIDUALLY_DISABLED; ?></option>
              <option value="<?php echo AI_INDIVIDUALLY_ENABLED; ?>" <?php echo ($obj->get_ad_enabled_on_which_pages()==AI_INDIVIDUALLY_ENABLED) ? AD_SELECT_SELECTED : AD_EMPTY_VALUE; ?>><?php echo AI_TEXT_INDIVIDUALLY_ENABLED; ?></option>
           </select>
           &nbsp;
-          <label for="display-pages-<?php echo $ad_number; ?>">Static pages</label>
+          <label for="display-pages-<?php echo $ad_number; ?>" title="Individual static page exceptions (if enabled here) can be configured in page editor. Leave blank for no individual page exceptions.">Static pages</label>
         </td>
         <td style="padding-left: 8px;">
         </td>
@@ -858,7 +863,9 @@ function generate_settings_form (){
             Urls
           </td>
           <td style="padding-right: 7px;">
-            <input style="width: 100%;" title="SPACE separated urls (page addresses) starting with / after domain name (e.g. /permalink-url, use only when you need to taget a specific url not accessible by other means). You can also use partial urls with * (/url-start*. *url-pattern*, *url-end)" type="text" name="<?php echo AI_OPTION_URL_LIST, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_ad_url_list(); ?>" value="<?php echo $url_list; ?>" size="54" maxlength="500"/>
+            <input style="width: 100%;" type="text" name="<?php echo AI_OPTION_URL_LIST, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_ad_url_list(); ?>" value="<?php echo $url_list; ?>" size="54" maxlength="500" title="SPACE separated urls (page addresses) starting with / after domain name (e.g. /permalink-url, use only when you need to taget a specific url not accessible by other means). You can also use partial urls with * (/url-start*. *url-pattern*, *url-end)" />
+            <br />
+<!--            <textarea id="urls2-<?php echo $ad_number; ?>" style="width: 100%; height: 100px; font-family: Courier, 'Courier New', monospace; font-weight: bold;" name="XX_<?php echo AI_OPTION_CODE, WP_FORM_FIELD_POSTFIX, $ad_number; ?>"><?php echo esc_textarea (str_replace (' ', "\n", $url_list)); ?></textarea>-->
           </td>
           <td style="padding-right: 7px;">
             <input type="radio" name="<?php echo AI_OPTION_URL_LIST_TYPE, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" id="url-blacklist-<?php echo $ad_number; ?>" default="<?php echo $default->get_ad_url_list_type() == AD_BLACK_LIST; ?>" value="<?php echo AD_BLACK_LIST; ?>" <?php if ($obj->get_ad_url_list_type() == AD_BLACK_LIST) echo 'checked '; ?> />
@@ -874,7 +881,7 @@ function generate_settings_form (){
             Url parameters
           </td>
           <td style="padding-right: 7px;">
-            <input style="width: 100%;" title="Comma separated url query parameters with optional values (use either 'prameter' or 'prameter=value')" type="text" name="<?php echo AI_OPTION_URL_PARAMETER_LIST, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_url_parameter_list(); ?>" value="<?php echo $url_parameter_list; ?>" size="54" maxlength="500"/>
+            <input style="width: 100%;" title="Comma separated url query parameters or cookies with optional values (use 'prameter', 'prameter=value', 'cookie' or 'cookie=value')" type="text" name="<?php echo AI_OPTION_URL_PARAMETER_LIST, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" default="<?php echo $default->get_url_parameter_list(); ?>" value="<?php echo $url_parameter_list; ?>" size="54" maxlength="500"/>
           </td>
           <td style="padding-right: 7px;">
             <input type="radio" name="<?php echo AI_OPTION_URL_PARAMETER_LIST_TYPE, WP_FORM_FIELD_POSTFIX, $ad_number; ?>" id="url-parameter-blacklist-<?php echo $ad_number; ?>" default="<?php echo $default->get_url_parameter_list_type() == AD_BLACK_LIST; ?>" value="<?php echo AD_BLACK_LIST; ?>" <?php if ($obj->get_url_parameter_list_type() == AD_BLACK_LIST) echo 'checked '; ?> />
@@ -1170,7 +1177,7 @@ function generate_settings_form (){
     <h3 style="margin: 0; float: left;"><?php echo AD_INSERTER_NAME ?> Settings <?php if (isset ($ai_db_options [AI_OPTION_GLOBAL]['VERSION'])) echo (int) ($ai_db_options [AI_OPTION_GLOBAL]['VERSION'][0].$ai_db_options [AI_OPTION_GLOBAL]['VERSION'][1]), '.',
                                         (int) ($ai_db_options [AI_OPTION_GLOBAL]['VERSION'][2].$ai_db_options [AI_OPTION_GLOBAL]['VERSION'][3]), '.',
                                         (int) ($ai_db_options [AI_OPTION_GLOBAL]['VERSION'][4].$ai_db_options [AI_OPTION_GLOBAL]['VERSION'][5]); ?></h3>
-    <h4 style="margin: 0px; float: right;" title="Settings timestamp"><?php echo isset ($ai_db_options [AI_OPTION_GLOBAL]['TIMESTAMP']) ? date ("Y-m-d H:i:s", $ai_db_options [AI_OPTION_GLOBAL]['TIMESTAMP'] + get_option ('gmt_offset') * 3600) : ""; ?></h4>
+    <h4 style="margin: 0px; float: right;<?php if (defined ('AI_GENERATE_EXTRACT')) echo ' color: #00f;'; ?>" title="Settings timestamp"><?php echo isset ($ai_db_options [AI_OPTION_GLOBAL]['TIMESTAMP']) ? date ("Y-m-d H:i:s", $ai_db_options [AI_OPTION_GLOBAL]['TIMESTAMP'] + get_option ('gmt_offset') * 3600) : "";?></h4>
     <div style="clear: both;"></div>
   </div>
 
@@ -1191,10 +1198,11 @@ function generate_settings_form (){
 <?php
   if (function_exists ('ai_global_settings')) ai_global_settings ();
 
+  if ($enabled_k) $style_k = "font-weight: bold; color: #66f;"; else $style_k = "";
   if ($enabled_h) $style_h = "font-weight: bold; color: #66f;"; else $style_h = "";
   if ($enabled_f) $style_f = "font-weight: bold; color: #66f;"; else $style_f = "";
   if (defined ('AI_ADBLOCKING_DETECTION') && AI_ADBLOCKING_DETECTION) {
-    $adb_action = get_adb_action();
+    $adb_action = get_adb_action (true);
     if ($enabled_a) $style_a = "font-weight: bold; color: " . ($adb_action == AI_ADB_ACTION_NONE ? "#66f;" : "#f00;"); else $style_a = "";
   }
   if (false) $style_d = "font-weight: bold; color: #e44;"; else $style_d = "";
@@ -1204,6 +1212,7 @@ function generate_settings_form (){
     <ul id="ai-plugin-settings-tabs" style="display: none;">
       <li id="ai-g" class="ai-plugin-tab"><a href="#tab-general">General</a></li>
       <li id="ai-v" class="ai-plugin-tab"><a href="#tab-viewports">Viewports</a></li>
+      <li id="ai-k" class="ai-plugin-tab"><a href="#tab-hooks"><span style="<?php echo $style_k ?>">Hooks</span></a></li>
       <li id="ai-h" class="ai-plugin-tab"><a href="#tab-header"><span style="<?php echo $style_h ?>">Header</span></a></li>
       <li id="ai-f" class="ai-plugin-tab"><a href="#tab-footer"><span style="<?php echo $style_f ?>">Footer</span></a></li>
 <?php if (function_exists ('ai_plugin_settings_tab')) ai_plugin_settings_tab ($exceptions); ?>
@@ -1350,13 +1359,13 @@ function generate_settings_form (){
 
     <div id="tab-viewports" class="rounded">
       <div style="margin: 0 0 8px 0;">
-        Viewport Settings used for client-side device detection
+        <strong>Viewport Settings used for client-side device detection</strong>
       </div>
 <?php
   for ($viewport = 1; $viewport <= AD_INSERTER_VIEWPORTS; $viewport ++) {
-    $bottom_margin = $viewport == AD_INSERTER_VIEWPORTS ? 0 : 8;
+    $bottom_margin = $viewport == AD_INSERTER_VIEWPORTS ? 0 : 4;
 ?>
-      <div style="margin: 8px 0 <?php echo $bottom_margin; ?>px 0;">
+      <div style="margin: 4px 0 <?php echo $bottom_margin; ?>px 0;">
           Viewport <?php echo $viewport; ?> name&nbsp;&nbsp;&nbsp;
             <input style="margin-left: 0px;" type="text" name="viewport-name-<?php echo $viewport; ?>" value="<?php echo get_viewport_name ($viewport); ?>" default="<?php echo defined ("DEFAULT_VIEWPORT_NAME_" . $viewport) ? constant ("DEFAULT_VIEWPORT_NAME_" . $viewport) : ""; ?>" size="15" maxlength="40" />
             <?php if ($viewport == AD_INSERTER_VIEWPORTS) echo '<span style="display: none;">' ?>
@@ -1367,6 +1376,47 @@ function generate_settings_form (){
 <?php
   }
 ?>
+    </div>
+
+    <div id="tab-hooks" class="rounded">
+      <div style="margin: 0 0 8px 0;">
+        <strong>Custom Hooks</strong>
+      </div>
+
+      <table>
+        <tbody>
+<?php
+  for ($hook = 1; $hook <= AD_INSERTER_HOOKS; $hook ++) {
+?>
+          <tr>
+            <td style="padding: 0 0 2px 0;">
+              <input type="hidden"   name="hook-enabled-<?php echo $hook; ?>" value="0" />
+              <input type="checkbox" name="hook-enabled-<?php echo $hook; ?>" value="1" default="<?php echo AI_DISABLED; ?>" id="hook-enabled-<?php echo $hook; ?>" title="Enable or disable hook" <?php if (get_hook_enabled ($hook) == AI_ENABLED) echo 'checked '; ?> />
+            </td>
+            <td style="white-space: nowrap;">
+              <label for="hook-enabled-<?php echo $hook; ?>" title="Enable or disable hook">Hook <?php echo $hook; ?> name</label>
+            </td>
+            <td style="width: 25%;">
+              <input style="width: 100%;" title="Hook name for automatic insertion selection" type="text" name="hook-name-<?php echo $hook; ?>" default="" value="<?php echo get_hook_name ($hook); ?>" size="30" maxlength="80" />
+            </td>
+            <td style="padding-left: 7px;">
+              action
+            </td>
+            <td style="">
+              <input style="width: 100%;" title="Action tag as used in the do_action () function" type="text" name="hook-action-<?php echo $hook; ?>" default="" value="<?php echo get_hook_action ($hook); ?>" size="30" maxlength="80" />
+            </td>
+            <td style="padding-left: 7px;">
+              priority
+            </td>
+            <td>
+              <input title="Priority for the hook (default is 10)" type="text" name="hook-priority-<?php echo $hook; ?>" default="<?php echo DEFAULT_CUSTOM_HOOK_PRIORITY; ?>" value="<?php echo get_hook_priority ($hook); ?>" size="5" maxlength="7" />
+            </td>
+          </tr>
+<?php
+  }
+?>
+        </tbody>
+      </table>
     </div>
 
     <div id="tab-header" style="margin: 0px 0; padding: 0; ">
@@ -1662,7 +1712,7 @@ function generate_settings_form (){
           </td>
           <td>
             <input type="hidden" name="javascript_debugging" value="0" />
-            <input type="checkbox" name="javascript_debugging"id="javascript-debugging" value="1" default="<?php echo DEFAULT_JAVASCRIPT_DEBUGGING; ?>" <?php if (get_javascript_debugging ()==AI_ENABLED) echo 'checked '; ?> />
+            <input type="checkbox" name="javascript_debugging" id="javascript-debugging" value="1" default="<?php echo DEFAULT_JAVASCRIPT_DEBUGGING; ?>" <?php if (get_javascript_debugging ()==AI_ENABLED) echo 'checked '; ?> />
           </td>
         </tr>
         <tr class="system-debugging" style="display: none;">
@@ -1810,9 +1860,10 @@ function generate_settings_form (){
 
   function check_blocked_images () {
 
-    function replace_blocked_image (image_id, image_src, css_display = 'block') {
+    function replace_blocked_image (image_id, image_src, css_display) {
       var image_selector = "#" + image_id;
       if (!jQuery(image_selector + ":visible").length) {
+        blocking_counter ++;
         var image = jQuery(image_selector);
         image.hide ().after (image.clone ().attr ('class', '').attr ("id", image_id + '-ajax').
         attr ('src', ajaxurl+'?action=ai_ajax_backend&image=' + image_src + '&ai_check=<?php echo wp_create_nonce ('adinserter_data'); ?>').
@@ -1822,19 +1873,27 @@ function generate_settings_form (){
 
     jQuery("#blocked-warning.warning-enabled").show ();
     jQuery("#blocked-warning.warning-enabled .blocked-warning-text").css ('color', '#00f');
+<?php
+    if (!function_exists ('ai_settings_side')) {
+?>
 
-    if (!jQuery("#ai-pixel:visible").length || jQuery("#ai-pixel").width () != 1) {
-      jQuery("#blocked-warning").show ();
+    var blocking_counter = 0;
+    replace_blocked_image ('ai-media-1',    'contextual-1.gif',   'block');
+    replace_blocked_image ('ai-media-2',    'contextual-2.jpg',   'block');
+    replace_blocked_image ('ai-pro-1',      'icon-256x256.jpg',   'block');
+    replace_blocked_image ('ai-pro-2',      'ai-charts-250.png',  'block');
+    replace_blocked_image ('ai-stars-img',  'stars.png',          'inline');
+    replace_blocked_image ('ai-tw',         'twitter.png',        'inline');
+    replace_blocked_image ('ai-fb',         'facebook.png',       'inline');
+    if (blocking_counter > 5) {
+      var message = 'Ad blocking test: ' + blocking_counter + ' images not loaded';
+      console.log ('AD INSERTER:', message);
+      jQuery("#blocked-warning").attr ('title', message).show ();
       jQuery("#blocked-warning .blocked-warning-text").css ('color', '#00f');
     }
-
-    replace_blocked_image ('ai-media-1',    'contextual-1.gif');
-    replace_blocked_image ('ai-media-2',    'contextual-2.jpg');
-    replace_blocked_image ('ai-pro-1',      'icon-256x256.jpg');
-    replace_blocked_image ('ai-pro-2',      'ai-charts-250.png');
-    replace_blocked_image ('ai-stars-img',  'stars.png', 'inline');
-    replace_blocked_image ('ai-tw',         'twitter.png', 'inline');
-    replace_blocked_image ('ai-fb',         'facebook.png', 'inline');
+<?php
+    }
+?>
   }
 </script>
 
@@ -1946,6 +2005,7 @@ function sidebar_pro () { ?>
           <li><a href="http://adinserter.pro/documentation#automatic-insertion" class="simple-link" target="_blank">Automatic insertion</a> before or after post / content / <a href="http://adinserter.pro/documentation#paragraphs" class="simple-link" target="_blank">paragraph</a> / excerpt</li>
           <li><a href="http://adinserter.pro/documentation#automatic-insertion" class="simple-link" target="_blank">Automatic insertion</a> between posts on blog pages</li>
           <li><a href="http://adinserter.pro/documentation#automatic-insertion" class="simple-link" target="_blank">Automatic insertion</a> before, between and after comments</li>
+          <li>Automatic insertion at <a href="https://adinserter.pro/documentation#custom-hooks" class="simple-link" target="_blank">custom hook positions</a></li>
           <li><a href="https://adinserter.pro/exceptions" class="simple-link" target="_blank">Insertion exceptions</a> for individual posts and pages</li>
           <li><a href="http://adinserter.pro/documentation#manual-insertion" class="simple-link" target="_blank">Manual insertion</a>: widgets, shortcodes, PHP function call</li>
           <li><a href="https://adinserter.pro/alignments-and-styles" class="simple-link" target="_blank">Sticky positions</a> (left, top, right, bottom - ads stay fixed when the page scrolls)</li>
@@ -1965,13 +2025,13 @@ function sidebar_pro () { ?>
           <li>Desktop, tablet and phone server-side <a href="http://adinserter.pro/documentation#devices" class="simple-link" target="_blank">device detection</a></li>
           <li>Client-side <a href="http://adinserter.pro/documentation#devices" class="simple-link" target="_blank">mobile device detection</a> (works with caching, 6 custom viewports)</li>
           <li><a href="https://adinserter.pro/ad-blocking-detection" class="simple-link" target="_blank">Ad blocking detection</a> - popup message, ad replacement, content protection</li>
-          <li><a href="https://adinserter.pro/tracking" class="simple-link" target="_blank">Ad blocking statistics</a></li>
-          <li><a href="http://adinserter.pro/documentation#lists" class="simple-link" target="_blank">Black/White-list</a> categories, tags, taxonomies, users, post IDs, urls, referers</li>
-          <li><a href="http://adinserter.pro/documentation#lists" class="simple-link" target="_blank">Black/White-list</a> IP addresses or countries (works also with caching)</li>
+          <li><a href="https://adinserter.pro/tracking#ad-blocking-statistics" class="simple-link" target="_blank">Ad blocking statistics</a></li>
+          <li><a href="http://adinserter.pro/lists" class="simple-link" target="_blank">Black/White-list </a>categories, tags, taxonomies, users, post IDs, urls, referers</li>
+          <li><a href="http://adinserter.pro/lists#geo-targeting" class="simple-link" target="_blank">Black/White-list </a>IP addresses or countries (works also with caching)</li>
           <li><a href="http://adinserter.pro/documentation#multisite" class="simple-link" target="_blank">Multisite options</a> to limit settings on the sites</li>
           <li>Import/Export block or plugin settings</li>
           <li><a href="http://adinserter.pro/documentation#scheduling" class="simple-link" target="_blank">Scheduling</a> with fallback option</li>
-          <li>Country-level <a href="http://adinserter.pro/documentation#geo-targeting" class="simple-link" target="_blank">GEO targeting</a> (works also with caching)</li>
+          <li>Country-level <a href="http://adinserter.pro/lists#geo-targeting" class="simple-link" target="_blank">GEO targeting</a> (works also with caching)</li>
           <li>Simple troubleshooting with many <a href="http://adinserter.pro/documentation#debugging" class="simple-link" target="_blank">debugging functions</a></li>
           <li><a href="http://adinserter.pro/documentation#visualization" class="simple-link" target="_blank">Visualization</a> of inserted code blocks or ads for easier placement</li>
           <li><a href="http://adinserter.pro/documentation#visualization" class="simple-link" target="_blank">Visualization</a> of available positions for automatic ad insertion</li>
@@ -2008,7 +2068,7 @@ function sidebar_pro_small () { ?>
           <div style="float: right; margin-left: 15px;">
             <ul>
               <li><a href="https://adinserter.pro/alignments-and-styles" class="simple-link" target="_blank">Sticky positions</a></li>
-              <li><a href="http://adinserter.pro/documentation#lists" class="simple-link" target="_blank">Limit insertions</a></li>
+              <li><a href="http://adinserter.pro/lists" class="simple-link" target="_blank">Limit insertions</a></li>
               <li><a href="http://adinserter.pro/documentation#paragraphs" class="simple-link" target="_blank">Clearance</a> options</li>
             </ul>
           </div>
@@ -2033,7 +2093,7 @@ function sidebar_pro_small () { ?>
           <div style="float: right; margin-left: 15px;">
             <ul>
               <li>64 code blocks</li>
-              <li><a href="http://adinserter.pro/documentation#geo-targeting" class="simple-link" target="_blank">GEO targeting</a></li>
+              <li><a href="http://adinserter.pro/lists#geo-targeting" class="simple-link" target="_blank">GEO targeting</a></li>
               <li><a href="http://adinserter.pro/documentation#scheduling" class="simple-link" target="_blank">Scheduling</a></li>
             </ul>
           </div>

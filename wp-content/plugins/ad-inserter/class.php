@@ -490,7 +490,8 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
   }
 
   public function get_automatic_insertion_text (){
-    switch ($this->get_automatic_insertion()) {
+    $automatic_insertion = $this->get_automatic_insertion();
+    switch ($automatic_insertion) {
       case AI_AUTOMATIC_INSERTION_DISABLED:
         return AI_TEXT_DISABLED;
         break;
@@ -530,7 +531,15 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
       case AI_AUTOMATIC_INSERTION_AFTER_COMMENTS:
         return AI_TEXT_AFTER_COMMENTS;
         break;
+      case AI_AUTOMATIC_INSERTION_FOOTER:
+        return AI_TEXT_FOOTER;
+        break;
       default:
+        if ($automatic_insertion >= AI_AUTOMATIC_INSERTION_CUSTOM_HOOK && $automatic_insertion < AI_AUTOMATIC_INSERTION_CUSTOM_HOOK + AD_INSERTER_HOOKS) {
+          $hook_index = $automatic_insertion - AI_AUTOMATIC_INSERTION_CUSTOM_HOOK;
+          return get_hook_name ($hook_index + 1);
+        }
+
         return '';
         break;
     }
@@ -1117,9 +1126,9 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
         $counter_for_filter = $ad_inserter_globals [AI_BLOCK_COUNTER_NAME . $this->number];
 
         if ($counter_for_filter != 0 && $counter_for_filter <= count ($ads)) {
-          $code = $ads [$counter_for_filter - 1];
-        } else $code = '';
-      } else $code = $ads [rand (0, count ($ads) - 1)];
+          $processed_code = $ads [$counter_for_filter - 1];
+        } else $processed_code = '';
+      } else $processed_code = $ads [rand (0, count ($ads) - 1)];
     }
 
     $dynamic_blocks = get_dynamic_blocks ();
@@ -2842,7 +2851,9 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
 
     if ($parameter_list_type == AD_BLACK_LIST) $return = false; else $return = true;
 
-    if ($parameter_list == AD_EMPTY_DATA || count ($_GET) == 0) {
+    $parameters = array_merge ($_COOKIE, $_GET);
+
+    if ($parameter_list == AD_EMPTY_DATA || count ($parameters) == 0) {
       return !$return;
     }
 
@@ -2862,8 +2873,8 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
     foreach ($parameters_listed as $parameter) {
       if (strpos ($parameter, "=") !== false) {
         $parameter_value = explode ("=", $parameter);
-        if (array_key_exists ($parameter_value [0], $_GET) && $_GET [$parameter_value [0]] == $parameter_value [1]) return $return;
-      } else if (array_key_exists ($parameter, $_GET)) return $return;
+        if (array_key_exists ($parameter_value [0], $parameters) && $parameters [$parameter_value [0]] == $parameter_value [1]) return $return;
+      } else if (array_key_exists ($parameter, $parameters)) return $return;
     }
 
     return !$return;
@@ -3066,9 +3077,6 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
     global $ai_last_check, $ai_wp_data;
 
     if ($ai_wp_data [AI_WP_PAGE_TYPE] == AI_PT_POST) {
-//      $meta_value = get_post_meta (get_the_ID (), '_adinserter_block_exceptions', true);
-//      $selected_blocks = explode (",", $meta_value);
-
       $enabled_on = $this->get_ad_enabled_on_which_posts ();
       if ($enabled_on == AI_INDIVIDUALLY_DISABLED) {
         $ai_last_check = AI_CHECK_INDIVIDUALLY_DISABLED;
@@ -3079,9 +3087,6 @@ abstract class ai_CodeBlock extends ai_BaseCodeBlock {
         if (!in_array ($this->number, $selected_blocks)) return false;
       }
     } elseif ($ai_wp_data [AI_WP_PAGE_TYPE] == AI_PT_STATIC) {
-//      $meta_value = get_post_meta (get_the_ID (), '_adinserter_block_exceptions', true);
-//      $selected_blocks = explode (",", $meta_value);
-
       $enabled_on = $this->get_ad_enabled_on_which_pages ();
       if ($enabled_on == AI_INDIVIDUALLY_DISABLED) {
         $ai_last_check = AI_CHECK_INDIVIDUALLY_DISABLED;

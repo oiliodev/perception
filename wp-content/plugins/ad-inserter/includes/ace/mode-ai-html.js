@@ -33,9 +33,9 @@ exports.AiHtmlHighlightRules = AiHtmlHighlightRules;
 function add_ai_highlighting_rules (highlighter, highlight_rules) {
 
   highlighter.$ai_shortcodes  = highlighter.$lang.arrayToMap ("adinserter".split ("|"));
-  highlighter.$ai_separators1 = highlighter.$lang.arrayToMap ("rotate|count".split ("|"));
+  highlighter.$ai_separators1 = highlighter.$lang.arrayToMap ("http|rotate|count".split ("|"));
   highlighter.$ai_separators2  = highlighter.$lang.arrayToMap ("amp".split ("|"));
-  highlighter.$ai_attributes  = highlighter.$lang.arrayToMap ("block|name|ignore|debugger|adb|css|text|selectors|custom-field|data".split ("|"));
+  highlighter.$ai_attributes  = highlighter.$lang.arrayToMap ("block|name|ignore|check|debugger|adb|css|text|selectors|custom-field|data".split ("|"));
 
   //WP shortcodes
   highlighter.$rules ['start'].unshift (
@@ -77,7 +77,7 @@ function add_ai_highlighting_rules (highlighter, highlight_rules) {
                       highlighter.$ai_attributes.hasOwnProperty  (attribute.toLowerCase()) ? "entity.other.attribute-name.xml" : "text";
              },
       regex: "[a-zA-Z][-a-zA-Z0-9]*"
-    },
+    }
   );
 
 //  console.log (highlighter.$rules);
