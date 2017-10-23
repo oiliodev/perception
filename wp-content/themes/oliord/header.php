@@ -15,6 +15,7 @@
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 <?php wp_head(); ?>
+<link rel='stylesheet' id='style-css'  href='http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/style.css' type='text/css' media='all' />
 <!--
 <script async="async" src="https://www.google.com/adsense/search/ads.js"></script>
 -->
@@ -23,24 +24,30 @@
 	
 window.onload = function() {
    jQuery(".progress-bar-custom").loading();
+	jQuery(".fa-heart").click(function(){		
+		jQuery(this).css({ 'color': "red" });
+	});   
 };
 
-$(function(){
-
-
-$('.search-submit').click(function(e){
-			e.preventDefault();
-			if($('.search-field-custom').hasClass('stoggle')){				
-					if($('.search-field-custom').val()!=""){
-						$('.search-form').submit();
-						}else{
-							$('.search-field-custom').removeClass('stoggle');
-						}
-				}else{
-						$('.search-field-custom').addClass('stoggle');
-					}
+$(function(){	
+			header_sticky_eff();
+	    jQuery(window).scroll(function() {
+			header_sticky_eff();
+	    });
+	    
+//~ $('.search-submit').click(function(e){
+			//~ e.preventDefault();
+			//~ if($('.search-field-custom').hasClass('stoggle')){				
+					//~ if($('.search-field-custom').val()!=""){
+						//~ $('.search-form').submit();
+						//~ }else{
+							//~ $('.search-field-custom').removeClass('stoggle');
+						//~ }
+				//~ }else{
+						//~ $('.search-field-custom').addClass('stoggle');
+					//~ }
 			
-			});
+			//~ });
 	
 	
   $("a[href='#top']").click(function() {
@@ -48,6 +55,24 @@ $('.search-submit').click(function(e){
      return false;
   });
  });
+ 
+	
+	function header_sticky_eff(){
+		
+		var header = jQuery(".navbar-fixed-top");
+		var scroll = jQuery(window).scrollTop();
+console.log(scroll);
+		if (scroll >= 150) {			
+			header.removeClass('header-sticky').addClass("header-scroll");
+		} else {
+			header.removeClass("header-scroll").addClass('header-sticky');
+		}
+		
+		if (scroll < 60){
+			jQuery(".navbar-fixed-top").removeClass('header-scroll');
+		}
+
+	}
 </script>
 
 <!-- other head elements from your page -->
@@ -81,20 +106,18 @@ $('.search-submit').click(function(e){
 					</div>
 				  <div class="col-sm-10">
 				  <div class="header-right-part">
-					<div class="search">
-										
-	<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-		<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
-		<input type="search"  id="<?php echo $unique_id; ?>" class="search-field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" name="s" required/>
-	</form>
-					</div>
-	
+					<div class="search">		
+						<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+							<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+							<input type="search"  id="<?php echo $unique_id; ?>" class="field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" name="s" required/>
+						</form>
+					</div>	
 					<div class="language-drop">
-						<i class="fa fa-globe fa-2x"></i>
-						<ul class="languages">
+						en
+						<!--<ul class="languages">
 							<li>English</li>
 							<li>Chinese</li>
-						</ul>
+						</ul>-->
 						
 					</div>
 	
@@ -106,9 +129,13 @@ $('.search-submit').click(function(e){
 								echo $current_user->user_login.' | ';
 								echo '<a href="'. wp_logout_url() .'">'. __("Log Out") .'</a>';
 							} else { 
-								echo '<a href="'. wp_login_url(get_permalink()) .'"><i class="fa fa-user fa-2x"></i></a>';
+								echo '<a href="'. get_permalink(get_option('woocommerce_myaccount_page_id') ) .'"><i class="fa fa-user fa-2x"></i></a>';
 							}
 						?>
+						<ul class="profile-sign">
+							<li>Sign up</li>
+							<li>Logout</li>
+						</ul>
 					</div>
 	
 					<div class="product-cart">
@@ -126,7 +153,7 @@ $('.search-submit').click(function(e){
 			</div>
 
 			<div class="row">
-				<nav class="rdnav menu-header">
+				<nav class="rdnav menu-header navbar-fixed-top header-sticky">
 					<?php 
 						wp_nav_menu( array(	'theme_location' => 'top-menu', 
 											'menu_class' => 'nav navbar-nav') );
@@ -136,61 +163,77 @@ $('.search-submit').click(function(e){
 			
 			<div class="row">
 				<div class="information">
-					<div class="col-sm-9 text-left">
+					<!--<div class="col-sm-9 text-left">
 						<p><?php _e( 'Information about conventions last event and up coming convention.', 'oliord' ); ?></p>
 					</div>
 					<div class="col-sm-3 text-left get-more-info">
 						<a href="#"><?php _e( 'Get More Info', 'oliord' ); ?></a>
-					</div>
+					</div>-->
+					<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/images/banner-add.jpg" />
 				</div>
 			</div>
 		</div>
 	</header>
-<div class="clearfix">&nbsp;</div>
 <!--<div class="container"> -->
+<div class="gallery-hero-section">
 <div class="gallery-part">
 <ul>
 	<li class="gallery-221 gallery-one">
 		<a href="#">
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img1.jpg" />  
-		</a>  
+			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img01.jpg" />  
+		</a> 
+		 <div class="text-gallery">
+		 <div class="gallery-dcs-lft">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+		 <div class="gallery-dcs-rft"><img class="parentimage-big" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img-big01.jpg" /> </div>
+		</div> 
+		 
 	</li>   
 	<li>
 		<a href="#">     
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img2.jpg" /> 
+			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img02.jpg" /> 
 		</a>
+		<div class="text-gallery">
+		<div class="gallery-dcs-lft">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+		<div class="gallery-dcs-rft"><img class="parentimage-big" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img-big02.jpg" /></div>
+		</div>
+		
 	</li>
 	<li class="gallery-221 gallery-three">   
 		<a href="#">       
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img3.png" /> 
+			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img03.jpg" /> 
+		</a>
+		<div class="text-gallery">
+		<div class="gallery-dcs-lft">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+		<div class="gallery-dcs-rft"><img class="parentimage-big" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img-big03.jpg" /></div> 
+		</div>
+		
 	</li>
 	<li class="gallery-for">  
 		<a href="#">        
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img4.png" /> 
+			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img04.jpg" /> 
 		</a>
+		<div class="text-gallery">
+		<div class="gallery-dcs-lft">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+		<div class="gallery-dcs-rft"><img class="parentimage-big" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img-big04.jpg" /></div> 
+		</div>
 	</li>
 	<li class="gallery-five">    
 		<a href="#">      
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img3.png" /> 
+			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img05.jpg" /> 
 		</a>
-	</li>
-	<li class="gallery-200 gallery-six">    
-		<a href="#">      
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img2.jpg" /> 
-		</a>
+		<div class="text-gallery">
+		<div class="gallery-dcs-lft">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+		<div class="gallery-dcs-rft"><img class="parentimage-big" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/product-img-big05.jpg" /></div> 
+		</div>
 	</li>
 	
-	<li class="gallery-221">     
-		<a href="#">     
-			<img class="parentimage" src="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/slider/img1.jpg" /> 
-		</a>
-	</li>
 
 </ul>
 
 <!--</div>-->
 </div>
-<div class="clearfix">&nbsp;</div>
+</div>
+<div class="clearfix"></div>
 	<?php /*if(is_front_page()) { ?>
 	<div class="home_slider">
 		<div class="acc-slider">

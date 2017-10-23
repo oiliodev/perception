@@ -16,9 +16,10 @@ $args = array(
 );
 $wc_query = new WP_Query($args); 
 ?>
+
  <div class="col-sm-9 dimond_members">
 	 <h3>
-		<?php _e( 'Member producs display (Dimond members)' ); ?>
+		<?php _e( 'Premium Products' ); ?>
 	</h3>
 	<div class="dimond-products-list row">
      <?php if ($wc_query->have_posts()) : ?>
@@ -32,6 +33,11 @@ $wc_query = new WP_Query($args);
 				$rating_count		=	$product->get_rating_count();
 				$review_count		=	$product->get_review_count();
 				$average			=	$product->get_average_rating();
+				
+				$rating_count		=	75;
+				$review_count		=	55;
+				$average			=	30;
+				
 				//~ $image 				= 	get_the_post_thumbnail_url($product_id,'medium');
 				if($i == 1 || $i == 4 || $i == 6  || $i == 7){
 					$image	= 	get_the_post_thumbnail_url($product_id,'member_product_big');
@@ -44,8 +50,10 @@ $wc_query = new WP_Query($args);
      ?>
       <div class="col-sm-3 right-space product_<?php echo $i; ?>">
 		<div class="dimond-products">
-			<div>
-				<img class="product-img" src="<?php echo $image;?>">
+			<div class="product-overlay">
+				<a href="<?php the_permalink(); ?>">
+					<img class="product-img" src="<?php echo $image;?>">
+				</a>
 			</div>
 			<div class="product-content">
           <h3>
@@ -53,29 +61,28 @@ $wc_query = new WP_Query($args);
                <?php the_title(); ?>              
           </h3>     
           <div class="col-md-12 clearfix">
-          <div class="dimaond_product_price"><?php echo $product->get_price_html(); ?><?php _e( 'Per Pieces' ); ?></div>
-          <div class="dimaond_product_qty">
-			  <?php //if(isset($stock_quantity)){ ?>
-			  <b>MQR:</b><?php echo $stock_quantity; ?>&nbsp;<?php _e( 'Pieces' ); ?>
-			  <?php //} ?>
-			</div>
+          <div class="dimaond_product_price"><?php echo $product->get_price_html(); ?><?php _e( 'Per Piece' ); ?></div>
           <div class="view-details"><a href="<?php the_permalink(); ?>"><?php _e( 'View Details' ); ?></a></div>
           </div>
           <div class="col-md-12 clearfix">	
-				<div class="progress-bar-l">	
-					<div class="progress-bar-rate">
-						<div class="progress-bar-custom position" data-percent="<?php echo $rating_count; ?>" data-duration="1000"></div>
-					</div>
-					<div class="progress-bar-rate">
-						<div class="progress-bar-custom position" data-percent="<?php echo $review_count; ?>" data-duration="1000" data-color="#ccc,yellow"></div>
-					</div>
-					<div class="progress-bar-rate">
-						<div class="progress-bar-custom position" data-percent="<?php echo $average; ?>" data-duration="1000" data-color="#a456b1,#12b321"></div>
-					</div>
-				</div>
+		  <div class="progress-bar-l">
+		            <div class="dimaond_product_qty">			  
+			  <b>MQR:</b><br /><?php echo $stock_quantity; ?>&nbsp;<?php _e( 'Piece' ); ?>			  
+			</div>
+			</div>
+
 				<div class="progress-bar-r">	
 					<div class="progress-bar-rate">
-						<div class="progress-bar-custom position" data-percent="<?php echo '75'; ?>" data-type="heart" data-duration="1000" data-color="#a456b1,#12b321"></div>
+						<div class="progress-bar-custom position" data-percent="<?php echo $rating_count; ?>" data-duration="1000" data-color="#eeeeee,#0e7c05" ></div>
+					</div>
+					<div class="progress-bar-rate">
+						<div class="progress-bar-custom position" data-percent="<?php echo $review_count; ?>" data-duration="1000" data-color="#eeeeee,#ff6a1f"></div>
+					</div>
+					<div class="progress-bar-rate">
+						<div class="progress-bar-custom position" data-percent="<?php echo $average; ?>" data-duration="1000" data-color="#eeeeee,#d11d05"></div>
+					</div>
+					<div class="progress-bar-rate">
+						<div class="progress-bar-custom position heart" data-percent="<?php echo '75'; ?>" data-type="heart" data-duration="1000" data-color="#3ACBC6,#ECFEFA"></div>
 					</div>
 					<div class="progress-bar75">
 					75%
@@ -96,19 +103,22 @@ $wc_query = new WP_Query($args);
      </div>
      <?php endif; ?>
      </div>
+	<script type="text/javascript">		
 
+	</script>
 </div>
 
 <div class="col-sm-3">
+<div class="home-add-banner">
    <?php // _e( 'Google Adsens1', 'oliord' ); ?>
 <div id='afscontainer1'><div id='afscontainer2'><img src="<?php echo get_template_directory_uri(); ?>/images/g adv.jpg"></div></div>
 
 <?php  //_e( 'Google Adsens2', 'oliord' ); ?>
 
   <div id='afscontainer2'><img src="<?php echo get_template_directory_uri(); ?>/images/g adv.jpg"></div>
-
-<div class="col-sm-12" ><a href="#top" class="pull-right"><img style="width: 50px;" src="<?php echo get_template_directory_uri(); ?>/images/top.png"></a></div>
-<div class="col-sm-12 pull-right" style="margin-top: 14px;"><a class="pull-right" href="#"><img style="width: 50px;" src="<?php echo get_template_directory_uri(); ?>/images/chat.png"></a></div>
+</div>
+<div class="col-sm-12" ><a href="#top" class="pull-right back-to-top"><i class="fa fa-angle-double-up"></i></a></div>
+<div class="col-sm-12 pull-right" style="margin-top: 14px;"><a class="pull-right shair-ico" href="#"><i class="fa fa-commenting" aria-hidden="true"></i></a></div>
 </div>
 
 

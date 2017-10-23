@@ -7,13 +7,13 @@ body { background-color:#ECF0F1;}
 .progress-bar-custom {
   position: relative;
   margin-bottom: 30px;
-  width: 30px;
+  width: 26px;
 }
 
 .progress-bar-custom div {
   position: absolute;
-  height: 30px;
-  width: 30px;
+  height: 26px;
+  width: 26px;
   border-radius: 50%;
 }
 
@@ -21,9 +21,9 @@ body { background-color:#ECF0F1;}
   position: absolute;
   font-family: Arial;
   font-size: 10px;
-  line-height: 25px;
-  height: 25px;
-  width: 25px;
+  line-height: 22px;
+  height: 22px;
+  width: 22px;
   left: 2.0px;
   top: 2.0px;
   text-align: center;

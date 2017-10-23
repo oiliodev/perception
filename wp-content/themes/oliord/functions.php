@@ -123,10 +123,27 @@ function oliord_scripts() {
 	wp_enqueue_style( 'accordion-slider.min', get_template_directory_uri().'/assets/css/accordion-slider.min.css' );
 	wp_enqueue_style( 'asAccordion', get_template_directory_uri().'/assets/css/asAccordion.css' );
 	wp_enqueue_script( 'jquery.accordionSlider.min', get_template_directory_uri().'/assets/js/jquery.accordionSlider.min.js' );
-	wp_enqueue_style( 'style', get_template_directory_uri().'/style.css' );
+	
+	if( is_page( array( 'home-version-2') )){
+		wp_enqueue_style( 'style', get_template_directory_uri().'/style_version.css' );
+	}else{
+		wp_enqueue_style( 'style', get_template_directory_uri().'/style.css' );
+	}
+	
 	wp_enqueue_style( 'font-awesome', get_template_directory_uri().'/assets/css/font-awesome.min.css');
 }
 add_action( 'wp_enqueue_scripts', 'oliord_scripts' );
 
 
 require get_template_directory() . '/inc/custom_function.php';
+/* redirect after logout home */
+/*add_action('wp_logout','redirect_after_logout');
+function redirect_after_logout(){
+	wp_redirect( home_url() );
+	exit();
+}*/
+
+register_nav_menus( array(  
+  'primary' => __( 'Primary Navigation', 'olio' ),  
+  'secondary' => __('Footer Navigation', 'olio')  
+) );

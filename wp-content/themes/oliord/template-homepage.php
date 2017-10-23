@@ -25,31 +25,33 @@ $unique_id = esc_attr( uniqid( 'search-form-' ) );
 				
 			<?php echo do_shortcode('[my_products]'); ?>
 	
-			<div class="col-md-9 clearfix">
+			<div class="col-md-9 clearfix how-it-work-section">
+<!--<h3>How it Works</h3>
 				<div class="row">
 					<div class="col-6 col-sm-3 placeholder">
-					  <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail" width="200" height="200">
-					  <h4>Label</h4>
-					  <div class="text-muted">Something else</div>
+					 <div class="icon-how-work"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+					  <h4>Buy</h4>
+					  <div class="text-muted">Lorem ipsome dummy text Link Lorem Link ipsome dummy text. Lorem ipsome</div>
 					</div>
 					<div class="col-6 col-sm-3 placeholder">
-					  <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail" width="200" height="200">
-					  <h4>Label</h4>
-					  <span class="text-muted">Something else</span>
+					  <div class="icon-how-work"><i class="fa fa-thumbs-up" aria-hidden="true"></i></div>
+					  <h4>Quality Check</h4>
+					  <span class="text-muted">Lorem ipsome dummy text Link Lorem Link ipsome dummy text. Lorem ipsome</span>
 					</div>
 					<div class="col-6 col-sm-3 placeholder">
-					  <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail" width="200" height="200">
-					  <h4>Label</h4>
-					  <span class="text-muted">Something else</span>
+					  <div class="icon-how-work"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
+					  <h4>Videos Of Products</h4>
+					  <span class="text-muted">Lorem ipsome dummy text Link Lorem Link ipsome dummy text. Lorem ipsome</span>
 					</div>
 					<div class="col-6 col-sm-3 placeholder">
-					  <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail" width="200" height="200">
-					  <h4>Label</h4>
-					  <span class="text-muted">Something else</span>
+					  <div class="icon-how-work"><i class="fa fa-ambulance" aria-hidden="true"></i></div>
+					  <h4>Shipping</h4>
+					  <span class="text-muted">Lorem ipsome dummy text Link Lorem Link ipsome dummy text. Lorem ipsome</span>
 					</div>
-			  </div>
-				<!--<img src="<?php echo get_template_directory_uri(); ?>/images/how_work.jpg" style="width:100%">-->
-			</div>
+			  </div>-->
+
+				<img src="<?php echo get_template_directory_uri(); ?>/images/how-it-work-img.jpg" style="width:100%">
+				</div>
 			</div>
 		</main><!-- #main -->
 	</div><!-- #primary -->

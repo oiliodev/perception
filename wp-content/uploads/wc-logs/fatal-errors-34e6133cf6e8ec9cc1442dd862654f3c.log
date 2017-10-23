@@ -1,0 +1,80 @@
+2017-10-14T04:48:23+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T04:50:11+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T04:50:19+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T04:50:35+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T04:50:41+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T04:57:51+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T04:57:55+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T05:21:57+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T05:38:49+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T05:38:52+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T07:32:26+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T08:35:11+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T08:39:42+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T08:42:42+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T08:55:10+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T09:41:12+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T10:42:24+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T11:09:24+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T11:35:36+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:07:33+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:08:10+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:08:40+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:09:56+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:10:21+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:11:01+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:14:48+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:16:41+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:28:46+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:30:14+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:31:23+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:43:13+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:45:12+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:47:24+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:50:43+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T12:57:00+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T13:01:15+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T15:29:20+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-14T19:45:03+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-16T04:40:46+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+
+2017-10-16T04:40:59+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
+

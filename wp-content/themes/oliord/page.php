@@ -14,18 +14,20 @@ get_header();
 ?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
-		<h1><?php echo get_the_title(); ?></h1>
-		<div class="col-sm-9">
-		<?php
-			while ( have_posts() ) : the_post();
+		<div class="row">
+			<div class="col-sm-9">
+				<h1><?php echo get_the_title(); ?></h1>
+			<?php
+				while ( have_posts() ) : the_post();
 
-				the_content();
+					the_content();
 
-			endwhile; // End of the loop.
-		?>
-		</div>
-		<div class="col-sm-3">
-			<?php echo get_sidebar(); ?>
+				endwhile; // End of the loop.
+			?>
+			</div>
+			<div class="col-sm-3">
+				<?php //echo get_sidebar(); ?>
+			</div>
 		</div>
 	</main>
 </div>
