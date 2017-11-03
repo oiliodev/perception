@@ -19,12 +19,18 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+
 ?>
+
 <?php wc_print_notices(); ?>
+
 <?php do_action( 'woocommerce_before_customer_login_form' ); ?>
+
 <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
-<div class="u-columns col-12 row" id="customer_login">
-	<div class="u-column1 col-6">
+
+<div class="u-columns col2-set" id="customer_login">
+
+	<div class="u-column1 col-1">
 
 <?php endif; ?>
 
@@ -52,7 +58,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php _e( 'Remember me', 'woocommerce' ); ?></span>
 				</label>
 			</p>
-			<?php do_action( 'wordpress_social_login' ); ?>
 			<p class="woocommerce-LostPassword lost_password">
 				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php _e( 'Lost your password?', 'woocommerce' ); ?></a>
 			</p>
@@ -64,7 +69,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
 
 	</div>
-	<div class="u-column2 col-6">
+
+	<div class="u-column2 col-2">
 
 		<h2><?php _e( 'Register', 'woocommerce' ); ?></h2>
 
@@ -96,6 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 
 			<?php do_action( 'woocommerce_register_form' ); ?>
+
 			<p class="woocommerce-FormRow form-row">
 				<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
 				<input type="submit" class="woocommerce-Button button" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>" />
@@ -106,6 +113,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</form>
 
 	</div>
+
 </div>
 <?php endif; ?>
+
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>

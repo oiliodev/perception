@@ -19,9 +19,66 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+get_header( 'shop' );
 
-get_header( 'shop' ); ?>
-
+		//~ echo "<pre>"; print_r($_REQUEST); echo "</pre>";
+if(!empty($_REQUEST)){
+	$search_item	=	trim($_REQUEST['search_string']);	
+	
+	if(trim($_REQUEST['search_type'])	==	"Supplier"){
+		
+		$args = array(
+			's' => $search_item,
+			'role'	=> 'dc_vendor'
+		);
+		
+		$user_query = new WP_User_Query( $args );
+		
+		if ( ! empty( $user_query->results ) ) {
+			$ID_ARR	=	array();
+			foreach ( $user_query->results as $user ) {
+				$ID_ARR[]	=	$user->ID;		
+			}
+		}		
+		$seller_ids	=	implode(',',$ID_ARR);		
+	}
+	
+	if(trim($_REQUEST['search_type'])	==	"Product"){
+		$args = array(
+					'post_type' => 'product',
+					'orderby' => 'date',
+					'order' => 'DESC',					
+					's' => $search_item,
+					'post_status'    => 'publish',
+					'paged' => get_query_var( 'paged' ),
+				);
+	}else{		
+			$args = array(
+					'post_type' => 'product',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'author' => $seller_ids,
+					'post_status'    => 'publish',
+					'paged' => get_query_var( 'paged' )
+				);
+		
+	}
+	
+	
+}else{
+	 $args = array(
+					'post_type' => 'product',
+					'orderby' => 'date',
+					'order' => 'DESC',
+					'post_status'    => 'publish',
+					'paged' => get_query_var( 'paged' )
+				);
+}
+//~ echo "<pre>"; print_r($args); echo "</pre>";
+		wp_reset_query();
+		 $wp_query = new WP_Query( $args );
+		 ?>
+		 
 	<?php
 		/**
 		 * woocommerce_before_main_content hook.
@@ -49,11 +106,12 @@ get_header( 'shop' ); ?>
 			 * @hooked woocommerce_product_archive_description - 10
 			 */
 			do_action( 'woocommerce_archive_description' );
+			
 		?>
 
     </header>
 
-		<?php if ( have_posts() ) : ?>
+		
 
 			<?php
 				/**
@@ -70,7 +128,12 @@ get_header( 'shop' ); ?>
 
 				<?php woocommerce_product_subcategories(); ?>
 
-				<?php while ( have_posts() ) : the_post(); ?>
+				<?php 
+
+					if ( $wp_query->have_posts() ) :
+				//~ while ( have_posts() ) : the_post(); 
+						while ( $wp_query->have_posts() ) : $wp_query->the_post();
+				?>
 
 					<?php
 						/**
@@ -83,17 +146,41 @@ get_header( 'shop' ); ?>
 
 					<?php wc_get_template_part( 'content', 'product' ); ?>
 
-				<?php endwhile; // end of the loop. ?>
-
-			<?php woocommerce_product_loop_end(); ?>
-
-			<?php
+				<?php endwhile; // end of the loop. 
+					
+					woocommerce_product_loop_end(); 
 				/**
 				 * woocommerce_after_shop_loop hook.
 				 *
 				 * @hooked woocommerce_pagination - 10
 				 */
 				do_action( 'woocommerce_after_shop_loop' );
+				
+							
+            /*$total_pages = $products->max_num_pages; 
+
+            if ($total_pages > 1){
+
+                $current_page = max(1, get_query_var('paged'));
+                
+                ?>
+                <nav class="woocommerce-pagination">
+<?php
+                echo paginate_links(array(
+                    'base' => get_pagenum_link(1) . '%_%',
+                    'format' => '/page/%#%',
+                    'current' => $current_page,
+                    'total' => $total_pages,
+                    'prev_text'    => __('« prev'),
+                    'next_text'    => __('next »'),
+                )); ?>
+                </nav>
+                <?php
+             
+            }*/
+            
+            
+				
 			?>
 
 		<?php elseif ( ! woocommerce_product_subcategories( array( 'before' => woocommerce_product_loop_start( false ), 'after' => woocommerce_product_loop_end( false ) ) ) ) : ?>
@@ -110,6 +197,7 @@ get_header( 'shop' ); ?>
 		<?php endif; ?>
 
 	<?php
+	
 		/**
 		 * woocommerce_after_main_content hook.
 		 *
@@ -123,8 +211,10 @@ get_header( 'shop' ); ?>
 		 * woocommerce_sidebar hook.
 		 *
 		 * @hooked woocommerce_get_sidebar - 10
-		 */
-		do_action( 'woocommerce_sidebar' );
+		 */		
 	?>
 
-<?php get_footer( 'shop' ); ?>
+<?php 
+//wp_reset_postdata();					
+
+get_footer( 'shop' ); ?>

@@ -131,6 +131,7 @@ function oliord_scripts() {
 	}
 	
 	wp_enqueue_style( 'font-awesome', get_template_directory_uri().'/assets/css/font-awesome.min.css');
+	//wp_localize_script( 'wishlist', 'wishlistshortcode', array('wshortcode'      => 'hii'));
 }
 add_action( 'wp_enqueue_scripts', 'oliord_scripts' );
 
@@ -147,3 +148,117 @@ register_nav_menus( array(
   'primary' => __( 'Primary Navigation', 'olio' ),  
   'secondary' => __('Footer Navigation', 'olio')  
 ) );
+
+function addtowishlist(){
+
+	if(is_user_logged_in()==TRUE){
+
+		global $wpdb;
+		$user_id = get_current_user_id();
+		$results = $wpdb->get_results( 'SELECT prod_id FROM wp_yith_wcwl WHERE user_id ='.$user_id);
+		foreach ($results as $prod_id) {
+			$prod_ids[] = $prod_id->prod_id;
+		}
+		$prod_ids = array_unique($prod_ids);
+		if(in_array($_POST['post_id'], $prod_ids)){
+			echo $link = get_permalink( get_option('page_on_front') )."?remove_from_wishlist=".$_POST['post_id'];
+		}else{ 
+			echo $link = get_permalink( get_option('page_on_front') )."?add_to_wishlist=".$_POST['post_id'];
+		}
+			
+			die;
+	}else{
+		echo $link = site_url().'/seller-login';
+		die;
+	}
+	
+}
+add_action( 'wp_ajax_nopriv_addtowishlist', 'addtowishlist' );
+add_action( 'wp_ajax_addtowishlist', 'addtowishlist' );
+
+add_filter( 'lostpassword_url',  'wdm_lostpassword_url', 10, 0 );
+function wdm_lostpassword_url() {
+    return site_url('/forgot-password/');
+}
+
+
+function wooc_validate_extra_register_fields( $username, $email, $validation_errors ) {
+	
+       if ( isset( $_POST['billing_first_name'] ) && empty( $_POST['billing_first_name'] ) ) {
+             $validation_errors->add( 'billing_first_name_error', __( '<strong>Error</strong>: First name is required!', 'woocommerce' ) );
+       }
+
+       if ( isset( $_POST['billing_phone'] ) && empty( $_POST['billing_phone'] ) ) {
+              $validation_errors->add( 'billing_phone_error', __( '<strong>Error</strong>: Phone is required!.', 'woocommerce' ) );
+       }
+
+}
+add_action( 'woocommerce_register_post', 'wooc_validate_extra_register_fields', 10, 3 );
+
+
+function wooc_save_extra_register_fields( $customer_id ) {
+       if ( isset( $_POST['billing_first_name'] ) ) {
+              update_user_meta( $customer_id, 'first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+              update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+       }
+       if ( isset( $_POST['username'] ) ) {
+              update_user_meta( $customer_id, 'last_name', sanitize_text_field( $_POST['username'] ) );
+              update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( $_POST['username'] ) );
+       }
+
+       if ( isset( $_POST['billing_phone'] ) ) {
+            update_user_meta( $customer_id, 'billing_phone', sanitize_text_field( $_POST['billing_phone'] ) );
+       }
+       if ( isset( $_POST['billing_address_1'] ) ) {
+            update_user_meta( $customer_id, 'billing_address_1', sanitize_text_field( $_POST['billing_address_1'] ) );
+       }
+       if ( isset( $_POST['billing_address_2'] ) ) {
+            update_user_meta( $customer_id, 'billing_address_2', sanitize_text_field( $_POST['billing_address_2'] ) );
+       }
+       if ( isset( $_POST['billing_country'] ) ) {
+            update_user_meta( $customer_id, 'billing_country', sanitize_text_field( $_POST['billing_country'] ) );
+       }
+       if ( isset( $_POST['billing_state'] ) ) {
+            update_user_meta( $customer_id, 'billing_state', sanitize_text_field( $_POST['billing_state'] ) );
+       }
+       if ( isset( $_POST['billing_city'] ) ) {
+            update_user_meta( $customer_id, 'billing_city', sanitize_text_field( $_POST['billing_city'] ) );
+       }
+       if ( isset( $_POST['billing_postcode'] ) ) {
+            update_user_meta( $customer_id, 'billing_postcode', sanitize_text_field( $_POST['billing_postcode']));
+       }
+       if ( isset( $_POST['usertype'] ) ) {
+            update_user_meta( $customer_id, 'usertype', sanitize_text_field( $_POST['usertype']));
+       }
+       
+}
+
+add_action( 'woocommerce_created_customer', 'wooc_save_extra_register_fields' );
+
+/* get state */
+add_action('wp_ajax_change_state','change_state');
+add_action( 'wp_ajax_nopriv_change_state', 'change_state' );
+function change_state(){
+	$current_cc = $_POST['contry'];
+	$woo_countries = new WC_Countries();
+
+	$default_country = $woo_countries->get_base_country();
+	$states = $woo_countries->get_states( $current_cc );  
+	if(!empty($states)){
+		?>
+		<label for="billing_state" class="name-form"><?php _e( 'State/Province', 'woocommerce' ); ?></label>
+		<?php 
+		$html = '<select name="billing_state" id="billing_state"><option value="0">Select State</option>';
+		foreach($states as $key => $value){
+			$html .= '<option value="'.$key.'">'.$value.'</option>';
+		}
+		echo $html;
+	}else{
+		?>
+		<label for="billing_state" class="name-form"><?php _e( 'State/Province', 'woocommerce' ); ?></label>
+		<input type="text" class="form-control" name="billing_state" id="billing_state" value="<?php if ( ! empty( $_POST['billing_state'] ) ) esc_attr_e( $_POST['billing_state'] ); ?>" />		
+		<?php
+	}
+	die;
+}
+

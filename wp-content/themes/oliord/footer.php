@@ -13,46 +13,45 @@
 <footer class="footer-content">
 	<div class="wrap container">
 		<div class="row">
-			<div class="row col-md-12">
+			<div class="col-md-12">
               <?php //wp_nav_menu( array( 'theme_location' => 'secondary' ) ); ?>  
               <ul class="footer-menu">
+				  <li><h3>About Us</h3></li>
 				<li> <a href="#">Know Olio</a></li>
-				<li> <a href="#">Sell On Olio</a></li>
-				<li> <a href="#">Buy on Olio</a></li>
-				<li> <a href="#">Catalog</a></li>
+				<li> <a href="#">Contact Us</a></li>
 			</ul>
 			<ul class="footer-menu">
-				<li> <a href="#">Online convention booth</a></li>
-				<li> <a href="#">Trade services</a></li>
-				<li> <a href="#">Product videos</a></li>
-				<li> <a href="#">QC</a></li>
-              </ul>
-              <ul class="footer-menu">
+				<li><h3>Sell On Olio</h3></li>
+				<li> <a href="#">Supplier Membership</a></li>
 				<li> <a href="#">Policies</a></li>
-				<li> <a href="#">Shipping Policies</a></li>
-				<li> <a href="#">Multi lingual support</a></li>
-				<li> <a href="#">Secure Payment</a></li>
               </ul>
               <ul class="footer-menu">
-				<li> <a href="#">Your orders</a></li>
-				<li> <a href="#">Shipping options</a></li>
-				<li> <a href="#">Returns and Refunds</a></li>
-				<li> <a href="#">How may I help u?</a></li>
+				<li><h3>Buy on Olio</h3></li>
+				<li><a href="#">Catalog</a></li>
               </ul>
               <ul class="footer-menu">
-				<li> <a href="#">About Us</a></li>
-				<li> <a href="#">Supplier membership</a></li>
+				<li><h3>How may I help u?</h3></li>
 				<li> <a href="#">Your Account</a></li>
-				<li> <a href="#">Contact us</a></li>
-              </ul>
-               <ul class="footer-menu">
+				<li> <a href="#">Your Orders</a></li>
+				<li> <a href="#">Shipping Policies</a></li>
+				<li> <a href="#">Returns and Refunds</a></li>
 				<li> <a href="#">Help</a></li>
 				<li> <a href="#">FAQ</a></li>
+              </ul>
+              <ul class="footer-menu">
+				<li><h3> Trade services</h3></li>
+				<li> <a href="#">QC</a></li>
+				<li> <a href="#">Product Videos</a></li>
+				<li> <a href="#">Shipping Options</a></li>
+				<li> <a href="#">Secure Payment</a></li>
+				<li> <a href="#">Multilingual Support</a></li>
+				<li> <a href="#">Online Convention Booth</a></li>
               </ul>
 			</div>
     				
 		</div>
 		
+	</div>
 	</div>
 </footer>
 <div class="clearfix"></div>
@@ -80,7 +79,31 @@ jQuery('#example2').accordionSlider({
 	}
 });
 
+jQuery(document).ready(function($){
 
+	$('.add_wishlist').click(function(e){
+		e.preventDefault();
+		var aurl = "<?php echo admin_url( 'admin-ajax.php' ) ;?>";
+		var id = $(this).attr('id');
+		$.ajax({
+            url : aurl,
+            type : 'post',
+            data : {
+                action : 'addtowishlist',
+                post_id : id
+            },
+            success : function( response ) {
+                window.location.href= response;
+            }
+        });
+});
+		 $('.search.search-header .dropdown-menu li input[type="checkbox"]').click(function() {
+       	 	if ($(this).is(':checked')) {
+       	 		var label = $(this).attr('id');
+       	 		$('.search.search-header .dropdown > button').text(label);
+        	}
+    	});
+});
 
 </script>
 </body>

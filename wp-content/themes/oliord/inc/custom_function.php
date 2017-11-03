@@ -19,7 +19,12 @@ $wc_query = new WP_Query($args);
 
  <div class="col-sm-9 dimond_members">
 	 <h3>
-		<?php _e( 'Premium Products' ); ?>
+		<?php 
+		if( is_page( array( 'deals-of-the-day') )){
+			_e( 'Member producs display (Dimond members)' ); 
+		}else{
+		_e( 'Premium Products' ); 
+		} ?>
 	</h3>
 	<div class="dimond-products-list row">
      <?php if ($wc_query->have_posts()) : ?>
@@ -47,21 +52,44 @@ $wc_query = new WP_Query($args);
 				}
 			
 			//~ the_post_thumbnail( 'postbox-thumb', array( 'width' => 100, 'height' => 100 ) )
-     ?>
+				global $wpdb;
+				$user_id = get_current_user_id();
+				$results = $wpdb->get_results( 'SELECT prod_id FROM wp_yith_wcwl WHERE user_id ='.$user_id);
+				foreach ($results as $prod_id) {
+					$prod_ids[] = $prod_id->prod_id;
+				}
+				$prod_ids = array_unique($prod_ids);
+				if(in_array(get_the_ID(), $prod_ids)){
+					$class = "wishlist_added";
+				}else{ $class = "";}
+	
+     ?>	
       <div class="col-sm-3 right-space product_<?php echo $i; ?>">
 		<div class="dimond-products">
 			<div class="product-overlay">
 				<a href="<?php the_permalink(); ?>">
-					<img class="product-img" src="<?php echo $image;?>">
+					<img class="product-img" src="<?php echo $image;?>">					
 				</a>
+				<?php if( is_page( array( 'deals-of-the-day') )){ ?>
+				<span class="offer">50% off</span>
+				<?php } ?>
 			</div>
 			<div class="product-content">
           <h3>
-			  <?php echo $i; ?>
                <?php the_title(); ?>              
           </h3>     
           <div class="col-md-12 clearfix">
-          <div class="dimaond_product_price"><?php echo $product->get_price_html(); ?><?php _e( 'Per Piece' ); ?></div>
+          <div class="dimaond_product_price">
+			  
+			  <?php 
+			 if( is_page( array( 'deals-of-the-day') )){
+				echo "$34";
+				echo "<span>$70</span>"; 
+			 }else{
+			  echo $product->get_price_html(); ?><?php _e( 'Per Piece' ); 
+			}
+			  ?>
+			  </div>
           <div class="view-details"><a href="<?php the_permalink(); ?>"><?php _e( 'View Details' ); ?></a></div>
           </div>
           <div class="col-md-12 clearfix">	
@@ -82,7 +110,9 @@ $wc_query = new WP_Query($args);
 						<div class="progress-bar-custom position" data-percent="<?php echo $average; ?>" data-duration="1000" data-color="#eeeeee,#d11d05"></div>
 					</div>
 					<div class="progress-bar-rate">
-						<div class="progress-bar-custom position heart" data-percent="<?php echo '75'; ?>" data-type="heart" data-duration="1000" data-color="#3ACBC6,#ECFEFA"></div>
+						<div class="<?php echo $class;?> progress-bar-custom position heart" data-percent="<?php echo '75'; ?>" data-type="heart" data-duration="1000" data-color="#c3eae7,#00a99d" data-id="<?php echo get_the_ID(); ?>">
+							<?php //echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
+						</div>
 					</div>
 					<div class="progress-bar75">
 					75%
