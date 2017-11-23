@@ -53,11 +53,19 @@ if ( $product->is_in_stock() ) : ?>
 			 * @since 3.0.0.
 			 */
 			do_action( 'woocommerce_after_add_to_cart_quantity' );
+			
+			if ( is_user_logged_in()) {
 		?>
 
 		<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></button>
 
 		<?php
+		
+	} else { 
+			$url = site_url()."/seller-login";
+		?>		
+			<a class="single_add_to_cart_button button alt" href="<?php echo $url; ?>"><?php echo esc_html( $product->single_add_to_cart_text() ); ?></a>
+	<?php	}
 			/**
 			 * @since 2.1.0.
 			 */

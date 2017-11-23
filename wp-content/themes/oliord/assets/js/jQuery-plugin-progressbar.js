@@ -14,12 +14,13 @@
 			backgroundColor: $target.data('color') ? $target.data('color').split(',')[0] : DEFAULTS.backgroundColor,
 			progressColor: $target.data('color') ? $target.data('color').split(',')[1] : DEFAULTS.progressColor,
 			percent: $target.data('percent') ? $target.data('percent') : DEFAULTS.percent,
-			duration: $target.data('duration') ? $target.data('duration') : DEFAULTS.duration
+			duration: $target.data('duration') ? $target.data('duration') : DEFAULTS.duration,
+			id: $target.data('id') ? $target.data('id') : ""
 			};
 			// console.log(opts);
 			var html_txt = '<span>' + opts.percent + '</span>';
 			if($target.data('type') == "heart"){
-				var html_txt = '<span><i class="fa fa-heart" aria-hidden="true"></i></span>';
+				var html_txt = '<a id ="'+opts.id+'" class="add_wishlist" href="javascript: void(0);" onclick="whishlist('+opts.id+');"><span><i class="fa fa-heart" aria-hidden="true"></i></span></a>';
 			}
 	
 			$target.append('<div class="background"></div><div class="rotate"></div><div class="left"></div><div class="right"></div><div class="">' + html_txt + '</div>');

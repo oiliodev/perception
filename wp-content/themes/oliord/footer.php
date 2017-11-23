@@ -13,42 +13,62 @@
 <footer class="footer-content">
 	<div class="wrap container">
 		<div class="row">
-			<div class="col-md-12">
               <?php //wp_nav_menu( array( 'theme_location' => 'secondary' ) ); ?>  
-              <ul class="footer-menu">
-				  <li><h3>About Us</h3></li>
-				<li> <a href="#">Know Olio</a></li>
-				<li> <a href="#">Contact Us</a></li>
-			</ul>
-			<ul class="footer-menu">
-				<li><h3>Sell On Olio</h3></li>
-				<li> <a href="#">Supplier Membership</a></li>
-				<li> <a href="#">Policies</a></li>
-              </ul>
-              <ul class="footer-menu">
-				<li><h3>Buy on Olio</h3></li>
-				<li><a href="#">Catalog</a></li>
-              </ul>
-              <ul class="footer-menu">
-				<li><h3>How may I help u?</h3></li>
-				<li> <a href="#">Your Account</a></li>
-				<li> <a href="#">Your Orders</a></li>
-				<li> <a href="#">Shipping Policies</a></li>
-				<li> <a href="#">Returns and Refunds</a></li>
-				<li> <a href="#">Help</a></li>
-				<li> <a href="#">FAQ</a></li>
-              </ul>
-              <ul class="footer-menu">
-				<li><h3> Trade services</h3></li>
-				<li> <a href="#">QC</a></li>
-				<li> <a href="#">Product Videos</a></li>
-				<li> <a href="#">Shipping Options</a></li>
-				<li> <a href="#">Secure Payment</a></li>
-				<li> <a href="#">Multilingual Support</a></li>
-				<li> <a href="#">Online Convention Booth</a></li>
-              </ul>
-			</div>
-    				
+			  <div class="col-lg-9 col-md-12">
+				  <div class="row">
+					<div class="col-md-3 col-sm-6 form-group">
+						  <ul class="footer-menu">
+							  <li><h3>About Us</h3></li>
+							<li> <a href="#">About Olio</a></li>
+							<li> <a href="#">About Olio Group</a></li>
+							<li> <a href="#">Sitemap</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3 col-sm-6 form-group">
+						<ul class="footer-menu">
+							<li><h3>Customer Services</h3></li>
+							<li> <a href="#">Help Center</a></li>
+							<li> <a href="#">Contact Us</a></li>
+							<li> <a href="#">Report Abuse</a></li>
+							<li> <a href="#">Submit a Dispute</a></li>
+							<li> <a href="#">Polices & Rules</a></li>
+						  </ul>
+					 </div>
+					<div class="col-md-3 col-sm-6 form-group"> 
+						  <ul class="footer-menu">
+							<li><h3>How to Buy</h3></li>
+							<li><a href="#">Making Payments</a></li>
+							<li><a href="#">Delivery Options</a></li>
+							<li><a href="#">Buyer Protection</a></li>
+							<li><a href="#">New User Guide</a></li>
+						  </ul>
+					  </div>
+					<div class="col-md-3 col-sm-6 form-group">
+						  <ul class="footer-menu">
+							<li><h3>Trade Services</h3></li>
+							<li> <a href="#">Trade Assurance</a></li>
+							<li> <a href="#">Business Identity</a></li>
+							<li> <a href="#">Logistics Services</a></li>
+							<li> <a href="#">Secure Payment</a></li>
+							<li> <a href="#">Inspection Service</a></li>
+						  </ul>
+					  </div>
+				  </div>
+			  </div>
+			  <div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="footer-search">
+					<h3>Newsletter</h3>
+					<div class="input-group form-group">
+						<input class="form-control" type="text" />
+						<span class="input-group-btn">
+							<button class="btn btn-secondary" type="button">SUBMIT</button>
+						</span>
+					</div>
+					<div class="form-group news-icon">
+						<a href="#" class="massage-ico"></a> <a href="#" class="sina-weibo-ico"></a> 
+					</div>
+				</div>
+    		</div>	
 		</div>
 		
 	</div>
@@ -56,47 +76,47 @@
 </footer>
 <div class="clearfix"></div>
 <div class="copy-right-txt">
-			<div class="text-right">
+<div class="container">
+<div class="footer-line"></div>
+<div class="row">
+<div class="col-sm-12 footer-link text-center">
+<a href="#">Site Map</a>|<a href="#">Service</a>|<a href="#">Support</a>|<a href="#">Manufacturers</a>|<a href="#">Shipping</a>|<a href="#">Payments</a>|<a href="#">Terms & Conditions</a>|<a href="#">Warrantee</a></div>
+<div class="col-sm-12 text-center">
+<div class="coppy-right-text">
 				<?php
-					if( !empty(get_theme_mod("oliord_cp_op")) ) { echo get_theme_mod("oliord_cp_op"); } 
+				$oliord_cp_op = get_theme_mod("oliord_cp_op");
+				if(!empty($oliord_cp_op) ) { echo $oliord_cp_op; }
+					/*if( !empty(get_theme_mod("oliord_cp_op")) ) { echo get_theme_mod("oliord_cp_op"); } */
 					else { echo 'Please insert copyright text from theme settings.'; }
 				?>
-			</div>
-		</div>
+	  </div>
+</div>
+</div>
+  </div>
+</div>
 <?php wp_footer(); ?>
 <script type="text/javascript">
-jQuery('#example2').accordionSlider({
-	width: 1960,
-	height: 500,
-	responsiveMode: 'custom',
-	autoplay: false,
-	mouseWheel:false,
-	keyboard:false,
-	visiblePanels: 8,
-	breakpoints: {
-		900: {visiblePanels: 6,height: 900},
-		600: {visiblePanels: 4,height: 1000}
-	}
-});
 
-jQuery(document).ready(function($){
-
-	$('.add_wishlist').click(function(e){
-		e.preventDefault();
-		var aurl = "<?php echo admin_url( 'admin-ajax.php' ) ;?>";
-		var id = $(this).attr('id');
+function whishlist(id){
+		var aurl = "<?php echo admin_url( 'admin-ajax.php' ) ;?>";		
 		$.ajax({
             url : aurl,
             type : 'post',
             data : {
                 action : 'addtowishlist',
-                post_id : id
+                post_id : id,
+                current_page_id: '<?php echo get_the_ID(); ?>'
             },
             success : function( response ) {
                 window.location.href= response;
             }
         });
-});
+        
+}
+	
+
+
+jQuery(document).ready(function($){
 		 $('.search.search-header .dropdown-menu li input[type="checkbox"]').click(function() {
        	 	if ($(this).is(':checked')) {
        	 		var label = $(this).attr('id');

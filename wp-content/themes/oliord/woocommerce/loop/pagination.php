@@ -26,7 +26,7 @@ if ( $wp_query->max_num_pages <= 1 ) {
 	return;
 }
 ?>
-<nav class="woocommerce-pagination">
+<div class="pagination">
 	<?php
 		echo paginate_links( apply_filters( 'woocommerce_pagination_args', array(
 			'base'         => esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ),
@@ -36,7 +36,7 @@ if ( $wp_query->max_num_pages <= 1 ) {
 			'total'        => $wp_query->max_num_pages,
 			'prev_text'    => '&larr;',
 			'next_text'    => '&rarr;',
-			'type'         => 'list',
+			'type'         => 'plain',
 			'end_size'     => 3,
 			'mid_size'     => 3,
 			//~ 'add_args' => array(
@@ -45,4 +45,4 @@ if ( $wp_query->max_num_pages <= 1 ) {
 			 //~ )
 		) ) );
 	?>
-</nav>
+</div>

@@ -6,7 +6,7 @@
  *
  * @package oliord
  */
-
+ 
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -23,22 +23,23 @@
 
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed site">
-	<header class="site-header navbar-fixed-top header-sticky" role="banner">
+	<div class="headerbg">
+	<header id="masthead" class="site-header navbar-fixed-top header-sticky" role="banner">
 	<div class="header-top-part">
 	<div class="container">
-	<div class="row">
-				  <div class="col-sm-3 col-md-3 col-lg-2">
-						<div class="logo">
-						<?php
-							$custom_logo_id = get_theme_mod( 'custom_logo' );
-							$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
-							echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
-						?>
-						</div>
-					</div>
-				  <div class="col-sm-9 col-md-9 col-lg-10">
-				  <div class="header-right-part">
-					<div class="search search-header">	
+		<div class="row">
+			<div class="col-sm-3 col-md-3 col-lg-2">
+				<div class="logo">
+				<?php
+					$custom_logo_id = get_theme_mod( 'custom_logo' );
+					$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
+					echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
+				?>
+				</div>
+			</div>
+			<div class="col-sm-9 col-md-9 col-lg-10">
+				<div class="header-right-part float-right clearfix">
+					<div class="search search-header float-left">	
 						<?php 
 							$search_type	=	"Product";
 							$filter_text	=	"Supplier";
@@ -51,30 +52,40 @@
 								}
 							}
 						?>							
-						<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/shop' ) ); ?>">
-							<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
-							<input type="search"  id="<?php echo $unique_id; ?>" class="field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" value="<?php if(isset($_REQUEST['search_string']) && $_REQUEST['search_string'] != "" ) { echo $_REQUEST['search_string']; } ?>" name="search_string" required/>
-							<input type="hidden" name="search_type" value="<?php echo $search_type; ?>" id="search_type">
-						</form>
-						 <div class="dropdown">
-							<button class="btn btn-info dropdown-toggle filter_button" type="button" data-toggle="dropdown"><?php echo $search_type; ?></button>
-						  <ul class="dropdown-menu">    
-							<li><label for="Supplier" class="filter_text"><?php echo $filter_text; ?></label></li>
-						  </ul>
-						</div> 
+						
+						
+						
+					<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/shop' ) ); ?>">	
+					<div class="input-group">
+					<div class="input-group-btn search-panel">
+					
+					<button class="btn btn-info dropdown-toggle filter_button" type="button" data-toggle="dropdown"><?php echo $search_type; ?></button>                    
+					<ul class="dropdown-menu" role="menu">
+					  <li><label for="Supplier" class="filter_text"><?php echo $filter_text; ?></label></li>
+					</ul>
+					</div>
+					<input type="hidden" name="search_type" value="<?php echo $search_type; ?>" id="search_type">
+					<input type="hidden" name="search_param" value="all" id="search_param">
+					<input type="search"  id="<?php echo $unique_id; ?>" class="form-control" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" value="<?php if(isset($_REQUEST['search_string']) && $_REQUEST['search_string'] != "" ) { echo $_REQUEST['search_string']; } ?>" name="search_string" required/>
+					<span class="input-group-addon">
+					<button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					</span>
+					</div>
+					</form>
+					
 					</div>	
-					<div class="language-drop">
+					<div class="language-drop float-left">
 						<span onClick="swip_lan('en');" class="en">En</span>
 						<span onClick="swip_lan('chiness');" class="chiness">中文</span>
 						<span onClick="swip_lan('franch');" class="franch">Es</span>				
 					</div>	
-					<div class="user-profile">
-						<?php if(is_user_logged_in()) {
+					<div class="user-profile float-left">
+						<?php /*if(is_user_logged_in()) {
 							global $current_user;							
 								echo '<span>'.substr($current_user->user_login,0,1).'</span>';
 							} else { 
 								echo '<img src="'. get_template_directory_uri() .'/images/sign-in-ico.png">';
-							} ?>
+							}*/ ?>
 						<ul class="profile-sign">							
 							<?php if(is_user_logged_in()) {
 								global $current_user;
@@ -85,35 +96,61 @@
 							<?php } ?>
 						</ul>
 					</div>
-	
-					<div class="product-cart">						
+					<div class="hart-button float-left">
+					&nbsp;
+						<span>
+							<?php echo sprintf ( _n( '%d item', YITH_WCWL()->count_products() ), YITH_WCWL()->count_products() ); ?>
+						</span>
+					</div>			
+					<div class="product-cart float-left">						
 						<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 								?>
 							<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
-							<i class="fa fa-shopping-cart fa-2x"></i>
 							<span>
 								<?php echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
 								</span>
 							</a>
 						<?php } ?>
 					</div>
-					</div>
-					</div>
+				</div>
 			</div>
+		</div>
 	</div>
 	</div>
 		<div class="container">
 			<div class="row">
 			<div class="col-12">
+				<?php /* ?>
 				<nav class="rdnav menu-header">
 					<?php 
-						wp_nav_menu( array(	'theme_location' => 'top-menu', 
-											'menu_class' => 'nav navbar-nav') );
+						wp_nav_menu( array(	'theme_location' => 'top-menu', 'menu_class' => 'nav navbar-nav') );
 					?>
 				</nav>
+				<?php */ ?>
+				<?php if ( has_nav_menu( 'primary' )) : ?>
+					<div id="menu-toggle" class="menu-toggle align-middle">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					<div class="menu-toggle-text align-middle font-weight-bold text-uppercase"><?php _e( 'Menu', 'twentysixteen' ); ?></div>
+					<div id="site-header-menu" class="site-header-menu">
+						<?php if ( has_nav_menu( 'primary' ) ) : ?>
+							<nav id="site-navigation" class="main-navigation rdnav menu-header" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">
+								<?php
+									wp_nav_menu( array(	'theme_location' => 'top-menu', 
+											'menu_class' => 'nav navbar-nav') );
+								?>
+							</nav><!-- .main-navigation -->
+						<?php endif; ?>						
+					</div><!-- .site-header-menu -->
+				<?php endif; ?>
+				
 			</div>	
 			</div>
 		</div>
+		
+	<?php if(is_front_page()) { ?>
 		<div class="container convention">
 		<div class="row">
 			<div class="col-12">
@@ -123,8 +160,52 @@
 			</div>
 		</div>
 		</div>
-			
+	<?php } ?>	
+		
 	</header>
+	
+<div class="clearfix"></div>	
+<?php if(is_page( array( 'deals-of-the-day'))) { ?>
+<div class="deals-day-banner">
+<div class="container">
+		<div class="row">
+			<div class="col-12">
+			<div class="deals-day-boder float-left">
+				<div class="deals-day-text float-left">Our convention gives you once in a life time opportunity to expand your business by sitting at home !</div>
+				<div class="deals-day-vedio float-right">					
+					<div class="vedio-img pb-0">
+						<?php /*?><ul class="clearfix list-unstyled m-0">
+							<li><img src="<?php echo get_template_directory_uri() ; ?>/images/vedio01.jpg" /></li>
+							<li><img src="<?php echo get_template_directory_uri() ; ?>/images/vedio02.jpg" /></li>
+							<li><img src="<?php echo get_template_directory_uri() ; ?>/images/vedio03.jpg" /></li>
+							<li><img src="<?php echo get_template_directory_uri() ; ?>/images/vedio04.jpg" /></li>
+						</ul><?php */?>
+						<div class="row">
+							<div class="col-lg-3 col-sm-3 pb-sm-4 col-xs-6 deals-day-thumb"><img class="img-fluid w-100" src="<?php echo get_template_directory_uri() ; ?>/images/vedio01.jpg" /></div>
+							<div class="col-lg-3 col-sm-3 pb-sm-4 col-xs-6 deals-day-thumb"><img class="img-fluid w-100" src="<?php echo get_template_directory_uri() ; ?>/images/vedio02.jpg" /></div>
+							<div class="col-lg-3 col-sm-3 pb-sm-4 col-xs-6 deals-day-thumb"><img class="img-fluid w-100" src="<?php echo get_template_directory_uri() ; ?>/images/vedio03.jpg" /></div>
+							<div class="col-lg-3 col-sm-3 pb-sm-4 col-xs-6 deals-day-thumb"><img class="img-fluid w-100" src="<?php echo get_template_directory_uri() ; ?>/images/vedio04.jpg" /></div>
+						</div>
+					</div>					
+					<div class="invited-join float-left">
+						<div class="invited-join-text float-left">YOU’RE INVITED to join</div>
+						<div class="invited-email float-left">
+							<input type="text" class="form-control" id="company_email_id" name="company" placeholder="Email" /> 
+						</div>
+						
+						<div class="invited-sign float-left">
+							<button type="button" class="btn btn-default" id="join_convention" data-toggle="#jobInfo">Sign Up</button>
+						</div>
+					</div>	
+				</div>
+			</div>	
+			</div>
+		</div>
+		</div>	
+</div>		
+<?php } ?>
+</div>
+	
 <!--<div class="container"> -->
 <?php if(is_front_page()) { ?>
 <div class="gallery-hero-section">
@@ -187,4 +268,3 @@
 <?php } ?>
 <div class="clearfix"></div>	
 <div class="middle-content">
-	<div class="container">

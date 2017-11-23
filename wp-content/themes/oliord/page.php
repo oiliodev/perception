@@ -22,6 +22,7 @@ if($wp->request == 'my-account/lost-password'){
 	get_header(); 
 }
 ?>
+	<div class="container">
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 		<div <?php if($wp->request != 'my-account/lost-password'){ 

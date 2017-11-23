@@ -21,8 +21,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
+$stock_quantity		=	$product->get_stock_quantity();
 ?>
 
 <?php if ( $price_html = $product->get_price_html() ) : ?>
 	<span class="price"><?php echo $price_html; ?></span>
-<?php endif; ?>
+<?php endif; 
+if($stock_quantity > 0 ){
+?>
+
+<div class="mqr_qty">			  
+  <b><?php _e( 'MQR:' ); ?></b><br /><?php echo $stock_quantity; ?>&nbsp;<?php _e( 'Piece' ); ?>
+</div>
+
+
+<?php } ?>

@@ -15,11 +15,12 @@
  * @package 	WooCommerce/Templates
  * @version     3.2.0
  */
+global $product;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
+if(is_page( array( 'cart'))) {
 if ( $max_value && $min_value === $max_value ) {
 	?>
 	<div class="quantity hidden">
@@ -34,3 +35,15 @@ if ( $max_value && $min_value === $max_value ) {
 	</div>
 	<?php
 }
+}else {
+	$product_id	= $product->get_id();
+	if ( is_user_logged_in()) {
+		$url = site_url()."/contact-seller/?product_id=".$product_id;	
+	}else{
+		$url = site_url()."/seller-login";
+	}
+?>
+<div class="contact-seller">
+	<a class="button" href="<?php echo $url; ?>">Contact Seller</a>
+</div>
+<?php } ?>

@@ -34,21 +34,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 	echo get_the_password_form();
 	 	return;
 	 }
+	 //~ $classes	=	"row";
+	 $classes	=	"";
 ?>
 
-<div id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-	<?php
-		/**
-		 * woocommerce_before_single_product_summary hook.
-		 *
-		 * @hooked woocommerce_show_product_sale_flash - 10
-		 * @hooked woocommerce_show_product_images - 20
-		 */
-		do_action( 'woocommerce_before_single_product_summary' );
-	?>
-
-	<div class="summary entry-summary">
+<div id="product-<?php the_ID(); ?>" <?php post_class($classes); ?>>
+<div class="col-sm-12">
+	<div class="row detail-part">
+	<div class="product_image_section col-lg-5 col-md-5 mb-lg-0 mb-3">
+		<div class="detail-img">
+		<?php
+			/**
+			 * woocommerce_before_single_product_summary hook.
+			 *
+			 * @hooked woocommerce_show_product_sale_flash - 10
+			 * @hooked woocommerce_show_product_images - 20
+			 */
+			do_action( 'woocommerce_before_single_product_summary' );
+		?>
+	</div>
+	</div>
+	<div class="summary entry-summary col-lg-4 col-md-7 detail-dcs">
 
 		<?php
 			/**
@@ -67,7 +73,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 
 	</div><!-- .summary -->
-
+	<div class="you_may_like_section col-lg-3 col-md-12">
+		<?php echo do_shortcode('[you_may_like]');	?>
+	</div>
+	</div>
+	</div>
 	<?php
 		/**
 		 * woocommerce_after_single_product_summary hook.
@@ -79,6 +89,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		do_action( 'woocommerce_after_single_product_summary' );
 	?>
 
-</div><!-- #product-<?php the_ID(); ?> -->
+</div>
+<div class="related_products rows">
+	<?php do_action( 'woocommerce_after_single_product_summary_custom' ); ?>
+</div>
+<!-- #product-<?php the_ID(); ?> -->
 
 <?php do_action( 'woocommerce_after_single_product' ); ?>

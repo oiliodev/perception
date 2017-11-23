@@ -12,7 +12,7 @@
  * @package storefront
  */
 
-get_header();
+get_header('vesion');
 $unique_id = esc_attr( uniqid( 'search-form-' ) ); 
  ?>
  
@@ -53,4 +53,4 @@ $unique_id = esc_attr( uniqid( 'search-form-' ) );
 		</main><!-- #main -->
 	</div><!-- #primary -->
 <?php
-get_footer();
+get_footer('version');

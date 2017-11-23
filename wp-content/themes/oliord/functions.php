@@ -42,6 +42,27 @@ function oliord_widgets_init() {
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
+	
+	register_sidebar( array(
+		'name'          => __( 'Filter Sidebar', 'oliord' ),
+		'id'            => 'filter',
+		'description'   => __( 'Add widgets here to appear in your sidebar on blog posts and archive pages.', 'oliord' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
+
+	register_sidebar( array(
+		'name'          => __( 'Filter Deal of days', 'oliord' ),
+		'id'            => 'filter-deal-of-day',
+		'description'   => __( 'Add widgets here to appear in your sidebar on blog posts and archive pages.', 'oliord' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
+
 
 	register_sidebar( array(
 		'name'          => __( 'Footer 1', 'oliord' ),
@@ -113,7 +134,8 @@ add_action( 'customize_register', 'oliord_theme_section' );
 
 /* Register Style and Scripts */
 function oliord_scripts() {
-	wp_enqueue_script( 'jQuery.min', get_template_directory_uri().'/assets/js/jQuery.min.js' );
+	wp_enqueue_script( 'jQuery.min', get_template_directory_uri().'/assets/js/jQuery.min.js' );	
+	wp_enqueue_script( 'tether.min', get_template_directory_uri().'/assets/js/tether.min.js' );
 	wp_enqueue_script( 'bootstrap.min', get_template_directory_uri().'/assets/js/bootstrap.min.js' );
 	wp_enqueue_style( 'font-awesome.min', get_template_directory_uri().'/assets/font-awesome/css/font-awesome.min.css' );
 	wp_enqueue_style( 'progressbar', get_template_directory_uri().'/assets/css/jQuery-plugin-progressbar.css' );
@@ -124,19 +146,36 @@ function oliord_scripts() {
 	wp_enqueue_style( 'asAccordion', get_template_directory_uri().'/assets/css/asAccordion.css' );
 	wp_enqueue_script( 'jquery.accordionSlider.min', get_template_directory_uri().'/assets/js/jquery.accordionSlider.min.js' );
 	
-	if( is_page( array( 'home-version-2') )){
-		wp_enqueue_style( 'style', get_template_directory_uri().'/style_version.css' );
-	}else{
+	if(is_front_page()) {
 		wp_enqueue_style( 'style', get_template_directory_uri().'/style.css' );
+		wp_enqueue_style( 'style_home_page', get_template_directory_uri().'/assets/css/style_home_page.css' );
+	}else{		
+		wp_enqueue_style( 'test', get_template_directory_uri().'/assets/css/style.css' );		
+		wp_enqueue_style( 'style', get_template_directory_uri().'/style_version.css' );
 	}
 	
 	wp_enqueue_style( 'font-awesome', get_template_directory_uri().'/assets/css/font-awesome.min.css');
 	//wp_localize_script( 'wishlist', 'wishlistshortcode', array('wshortcode'      => 'hii'));
+	
+	wp_enqueue_script( 'twentysixteen-script', get_template_directory_uri() . '/assets/js/functions.js', array( 'jquery' ), '20160816', true );
+
+	wp_localize_script( 'twentysixteen-script', 'screenReaderText', array(
+		'expand'   => __( 'expand child menu', 'twentysixteen' ),
+		'collapse' => __( 'collapse child menu', 'twentysixteen' ),
+	) );
+	
 }
 add_action( 'wp_enqueue_scripts', 'oliord_scripts' );
 
 
 require get_template_directory() . '/inc/custom_function.php';
+/*************AJAX***************/
+include("ajax_functions.php");
+/*************AJAX***************/
+
+/*************woocommerce template***************/
+include("woocommerce_template.php");
+/*************AJAX***************/
 /* redirect after logout home */
 /*add_action('wp_logout','redirect_after_logout');
 function redirect_after_logout(){
@@ -149,32 +188,6 @@ register_nav_menus( array(
   'secondary' => __('Footer Navigation', 'olio')  
 ) );
 
-function addtowishlist(){
-
-	if(is_user_logged_in()==TRUE){
-
-		global $wpdb;
-		$user_id = get_current_user_id();
-		$results = $wpdb->get_results( 'SELECT prod_id FROM wp_yith_wcwl WHERE user_id ='.$user_id);
-		foreach ($results as $prod_id) {
-			$prod_ids[] = $prod_id->prod_id;
-		}
-		$prod_ids = array_unique($prod_ids);
-		if(in_array($_POST['post_id'], $prod_ids)){
-			echo $link = get_permalink( get_option('page_on_front') )."?remove_from_wishlist=".$_POST['post_id'];
-		}else{ 
-			echo $link = get_permalink( get_option('page_on_front') )."?add_to_wishlist=".$_POST['post_id'];
-		}
-			
-			die;
-	}else{
-		echo $link = site_url().'/seller-login';
-		die;
-	}
-	
-}
-add_action( 'wp_ajax_nopriv_addtowishlist', 'addtowishlist' );
-add_action( 'wp_ajax_addtowishlist', 'addtowishlist' );
 
 add_filter( 'lostpassword_url',  'wdm_lostpassword_url', 10, 0 );
 function wdm_lostpassword_url() {
@@ -235,30 +248,201 @@ function wooc_save_extra_register_fields( $customer_id ) {
 
 add_action( 'woocommerce_created_customer', 'wooc_save_extra_register_fields' );
 
-/* get state */
-add_action('wp_ajax_change_state','change_state');
-add_action( 'wp_ajax_nopriv_change_state', 'change_state' );
-function change_state(){
-	$current_cc = $_POST['contry'];
-	$woo_countries = new WC_Countries();
 
-	$default_country = $woo_countries->get_base_country();
-	$states = $woo_countries->get_states( $current_cc );  
-	if(!empty($states)){
-		?>
-		<label for="billing_state" class="name-form"><?php _e( 'State/Province', 'woocommerce' ); ?></label>
-		<?php 
-		$html = '<select name="billing_state" id="billing_state"><option value="0">Select State</option>';
-		foreach($states as $key => $value){
-			$html .= '<option value="'.$key.'">'.$value.'</option>';
-		}
-		echo $html;
-	}else{
-		?>
-		<label for="billing_state" class="name-form"><?php _e( 'State/Province', 'woocommerce' ); ?></label>
-		<input type="text" class="form-control" name="billing_state" id="billing_state" value="<?php if ( ! empty( $_POST['billing_state'] ) ) esc_attr_e( $_POST['billing_state'] ); ?>" />		
-		<?php
+//~ add_action('pre_get_posts','shop_filter_cat');
+
+ //~ function shop_filter_cat($query) {
+    //~ if (!is_admin() && is_post_type_archive( 'product' ) && $query->is_main_query()) {
+       //~ $query->set('tax_query', array(
+                    //~ array ('taxonomy' => 'product_cat',
+                                       //~ 'field' => 'slug',
+                                        //~ 'terms' => 'type-1'
+                                 //~ )
+                     //~ )
+       //~ );   
+    //~ }
+ //~ }
+add_action('pre_get_posts', 'woocm_product_query', 10);
+function woocm_product_query($query) {
+	global $wpdb;	
+	if ( is_post_type_archive('product') ) {		
+		if(!empty($_REQUEST)){
+			$search_item	=	trim($_REQUEST['search_string']);	
+			
+			if(trim($_REQUEST['search_type'])	==	"Supplier"){
+				
+				$args = array(
+					's' => $search_item,
+					'role'	=> 'dc_vendor'
+				);
+				
+				$user_query = new WP_User_Query( $args );
+				
+				if ( ! empty( $user_query->results ) ) {
+					$ID_ARR	=	array();
+					foreach ( $user_query->results as $user ) {
+						$ID_ARR[]	=	$user->ID;		
+					}
+				}		
+				$seller_ids	=	implode(',',$ID_ARR);		
+			}
+			
+			if(trim($_REQUEST['search_type'])	==	"Product"){
+				/*$args = array(
+							'post_type' => 'product',
+							'orderby' => 'date',
+							'order' => 'DESC',					
+							's' => $search_item,
+							'post_status'    => 'publish',
+							'paged' => get_query_var( 'paged' ),
+						);*/
+						$query->set( 's', $search_item );
+			}else{		
+					//~ $args = array(
+							//~ 'post_type' => 'product',
+							//~ 'orderby' => 'date',
+							//~ 'order' => 'DESC',
+							//~ 'author' => $seller_ids,
+							//~ 'post_status'    => 'publish',
+							//~ 'paged' => get_query_var( 'paged' )
+						//~ );
+				$query->set( 'author', $seller_ids );
+			}
+			
+			
+		}		
 	}
-	die;
 }
 
+
+add_shortcode('deals_of_the_day_filter','filter_dealoftheday');
+function filter_dealoftheday(){
+	
+	$price = $_REQUEST['price'];
+	$discount = $_REQUEST['discount'];
+	$review = $_REQUEST['review'];
+	$sort = $_REQUEST['sort'];
+	
+	$checked_1 = "";
+	$checked_2 = "";
+	$checked_3 = "";
+	$checked_4 = "";
+	
+	$deal_checked_1 = "";
+	$deal_checked_2 = "";
+	$deal_checked_3 = "";
+	
+	$review_checked_1 = "";
+	$review_checked_2 = "";
+	$review_checked_3 = "";
+	$review_checked_4 = "";
+	
+	if($price == 1){
+		$checked_1 = 'checked="checked"';
+	}	
+	if($price == 2){
+		$checked_2 = 'checked="checked"';
+	}
+	
+	if($price == 3){
+		$checked_3 = 'checked="checked"';
+	}
+	
+	if($price == 4){
+		$checked_4 = 'checked="checked"';
+	}
+	
+	
+	if($discount == 10){
+		$deal_checked_1 = 'checked="checked"';
+	}	
+	if($discount == 25){
+		$deal_checked_2 = 'checked="checked"';
+	}
+	
+	if($discount == 50){
+		$deal_checked_3 = 'checked="checked"';
+	}
+	
+	
+	if($review == 1){
+		$review_checked_1 = 'checked="checked"';
+	}	
+	if($review == 2){
+		$review_checked_2 = 'checked="checked"';
+	}	
+	if($review == 3){
+		$review_checked_3 = 'checked="checked"';
+	}
+	
+	if($review == 4){
+		$review_checked_4 = 'checked="checked"';
+	}
+	
+
+
+	$html = '<div class="side-bar-filter filter-man"><div class="filter">
+	<div class="drop-down">
+	<div class="price-section">
+		<label>Price</label>
+		<input type="checkbox" name="deal_price" class="deal_price filter_select" '.$checked_1.' value="1" min="0" max="24"> Under $25
+		<input type="checkbox" name="deal_price" class="deal_price filter_select" '.$checked_2.' value="2" min="25" max="50"> $25 to $50
+		<input type="checkbox" name="deal_price" class="deal_price filter_select" '.$checked_3.' value="3" min="50" max="100"> $50 to $100
+		<input type="checkbox" name="deal_price" class="deal_price filter_select" '.$checked_4.' value="4" min="100" max="200"> $100 to $200
+	</div>
+	
+	<div class="deal_discount-section">
+		<label>Discount</label>
+		<input type="checkbox" name="deal_discount" class="deal_discount filter_select" '.$deal_checked_1.' value="10" min_disc="10" max_disc="99"> 10% off or More
+		<input type="checkbox" name="deal_discount" class="deal_discount filter_select" '.$deal_checked_2.' value="25" min_disc="25" max_disc="99"> 25% off or More
+		<input type="checkbox" name="deal_discount" class="deal_discount filter_select" '.$deal_checked_3.'  value="50" min_disc="50" max_disc="99"> 50% off or More
+	</div>
+	
+	<div class="deal_review-section">
+		<label>Average Customer Review</label>
+		<input type="checkbox" name="review" class="review filter_select" '.$review_checked_4.' value="4" min_review="4" max_review="4.99"> Stars 4 and up
+		<input type="checkbox" name="review" class="review filter_select" '.$review_checked_3.' value="3" min_review="3" max_review="3.99"> 3 and up
+		<input type="checkbox" name="review" class="review filter_select" '.$review_checked_2.' value="2" min_review="2" max_review="2.99"> 2 and up
+		<input type="checkbox" name="review" class="review filter_select" '.$review_checked_1.' value="1" min_review="1" max_review="1.99"> 1 and up
+	</div>
+	
+		
+		</div>
+	</div>';
+	
+	
+	$html .= '</div>';
+	
+	
+		$html .= '<div class="filter">		
+			<div class="drop-down">
+				<select name="deal_sort" id="deal_sort" class="filter_select">
+					<option value="0" field="" order="">Shot By</option>
+					<option value="1" field="_sale_price" order="asc"';
+					if($sort == 1){
+						$html .= 'selected="selected"';
+					}			
+					$html .= '>Price- Low to High</option>
+					<option value="2" field="_sale_price" order="desc"';
+					if($sort == 2){
+						$html .= 'selected="selected"';
+					}			
+					$html .= '>Price- High to Low</option>
+					<option value="3" field="discount" order="asc"';
+					if($sort == 3){
+						$html .= 'selected="selected"';
+					}			
+					$html .='>Discount- Low to High</option>
+					<option value="4" field="discount" order="desc"';
+					if($sort == 4){
+						$html .= 'selected="selected"';
+					}			
+					$html .='>Discount- High to Low</option>			
+				</select>
+			</div>
+	</div>';
+	
+	
+	return $html;
+}
+//~ remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination', 10 );

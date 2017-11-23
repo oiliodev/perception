@@ -21,12 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $post, $product;
-
+$productId =$post->ID;		
+$deals_of_the_day	=	get_post_meta( $productId, 'deals_of_the_day'); 	
 ?>
-<?php if ( $product->is_on_sale() ) : ?>
+<?php if($deals_of_the_day[0] == '1') {
+	$discount		=	get_post_meta( $productId, 'discount'); 
+?>
+		<?php echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . esc_html__( $discount[0].'&nbsp;%OFF', 'woocommerce' ) . '</span>', $post, $product ); ?>
 
-	<?php echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . esc_html__( 'Sale!', 'woocommerce' ) . '</span>', $post, $product ); ?>
-
-<?php endif;
+<?php }
 
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */

@@ -19,5 +19,20 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
+global $product;
 the_title( '<h1 class="product_title entry-title">', '</h1>' );
+$product_id	= $product->get_id();
+$vendor_id 		= 	get_post_field( 'post_author', $product_id );
+$user		 	= 	new WP_User(absint($vendor_id));
+$membership		=	get_user_meta($vendor_id, 'membership');	
+
+$manufacture	=	get_post_meta( $product_id, 'manufacture');
+
+?>
+<div class="vendor_name"><?php echo $manufacture[0]; ?></div>
+<?php
+if($user->roles[0] == "dc_vendor"){
+	echo '<div class="member_plan">'.$membership[0].'</div>';
+}
+
+?>

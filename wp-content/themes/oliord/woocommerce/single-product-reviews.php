@@ -26,23 +26,57 @@ if ( ! comments_open() ) {
 }
 
 ?>
+
 <div id="reviews" class="woocommerce-Reviews">
 	<div id="comments">
-		<h2 class="woocommerce-Reviews-title"><?php
-			if ( get_option( 'woocommerce_enable_review_rating' ) === 'yes' && ( $count = $product->get_review_count() ) ) {
-				/* translators: 1: reviews count 2: product name */
-				printf( esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
-			} else {
-				_e( 'Reviews', 'woocommerce' );
-			}
-		?></h2>
-
-		<?php if ( have_comments() ) : ?>
-
-			<ol class="commentlist">
-				<?php wp_list_comments( apply_filters( 'woocommerce_product_review_list_args', array( 'callback' => 'woocommerce_comments' ) ) ); ?>
-			</ol>
-
+		<?php if ( have_comments() ) : 
+		?>
+			<div class="average_commentlist_secton">
+				<div class="progressbar-part">
+					<div class="form-group"><div class="star-progress float-left">5 </div>
+						 <div class="progress five_star">
+								<div class="progress-bar" role="progressbar" aria-valuenow="70"  aria-valuemin="0" aria-valuemax="100" style="width:70%">
+									<span class="sr-only">70% Complete</span>
+								 </div>
+						</div> 
+						<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['5'])) { echo $product->rating_counts['5']; } else { echo '0'; } ?></div>
+					</div>
+					<div class="form-group"><div class="star-progress float-left">4</div>
+						<div class="progress four_star">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"  aria-valuemin="0" aria-valuemax="100" style="width:60%">
+									<span class="sr-only">60% Complete</span>
+								 </div>
+						</div> 
+						
+					 <div class="star-progress-number float-left"><?php if(isset($product->rating_counts['4'])) { echo $product->rating_counts['4']; } else { echo '0'; } ?></div></div>
+					<div class="form-group"><div class="star-progress float-left">3 </div>
+					<div class="progress three_star">
+								<div class="progress-bar" role="progressbar" aria-valuenow="50"  aria-valuemin="0" aria-valuemax="100" style="width:50%">
+									<span class="sr-only">50% Complete</span>
+								 </div>
+					</div> 
+					<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['3'])) { echo $product->rating_counts['3']; } else { echo '0'; } ?></div></div>
+					<div class="form-group"><div class="star-progress float-left">2 </div>
+					<div class="progress tow_star">
+							<div class="progress-bar" role="progressbar" aria-valuenow="20"  aria-valuemin="0" aria-valuemax="100" style="width:20%">
+								<span class="sr-only">20% Complete</span>
+							 </div>
+						</div> 
+					<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['2'])) { echo $product->rating_counts['2']; } else { echo '0'; } ?></div></div>
+					<div class="form-group"><div class="star-progress float-left">1 </div>
+					<div class="progress one_star">
+							<div class="progress-bar" role="progressbar" aria-valuenow="10"  aria-valuemin="0" aria-valuemax="100" style="width:10%">
+								<span class="sr-only">10% Complete</span>
+							 </div>
+						</div> 
+					<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['1'])) { echo $product->rating_counts['1']; } else { echo '0'; } ?></div></div>
+				</div>
+			</div>
+			<div class="commentlist_secton clearfix">
+				<ol class="commentlist">
+					<?php wp_list_comments( apply_filters( 'woocommerce_product_review_list_args', array( 'callback' => 'woocommerce_comments' ) ) ); ?>
+				</ol>
+			</div>
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 				echo '<nav class="woocommerce-pagination">';
 				paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
@@ -74,10 +108,10 @@ if ( ! comments_open() ) {
 						'title_reply_after'    => '</span>',
 						'comment_notes_after'  => '',
 						'fields'               => array(
-							'author' => '<p class="comment-form-author">' . '<label for="author">' . esc_html__( 'Name', 'woocommerce' ) . ' <span class="required">*</span></label> ' .
-										'<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" aria-required="true" required /></p>',
-							'email'  => '<p class="comment-form-email"><label for="email">' . esc_html__( 'Email', 'woocommerce' ) . ' <span class="required">*</span></label> ' .
-										'<input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" aria-required="true" required /></p>',
+							'author' => '<p class="comment-form-author">' . '<label class="custom_label" for="author">' . esc_html__( 'Name', 'woocommerce' ) . ' <span class="required">*</span></label> ' .
+										'<input id="author" name="author" class="form-control" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" aria-required="true" required /></p>',
+							'email'  => '<p class="comment-form-email"><label for="email" class="custom_label">' . esc_html__( 'Email', 'woocommerce' ) . ' <span class="required">*</span></label> ' .
+										'<input id="email" class="form-control" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" aria-required="true" required /></p>',
 						),
 						'label_submit'  => __( 'Submit', 'woocommerce' ),
 						'logged_in_as'  => '',

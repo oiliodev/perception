@@ -342,7 +342,7 @@ input[type="search"] {
 .home-Member-pad .dimond_members .dimond-products-list h3 {color: #202020;  font-size: 14px;  margin: 5px 0 10px; font-family: 'arialbold';}
 .site-header{background:#fff; box-sizing: border-box; float: left; padding:0 0 10px; width: 100%; transition: all 0.8s ease 0s; opacity: 1; z-index: 9;}
 .header-top-part {border-bottom: 1px solid #f9b723; margin-bottom: 17px; padding: 5px 0;}
-.header-scroll{left: 0; position: fixed; right: 0; top: 0; z-index: 9999;  animation: 0.9s ease 0s normal none 1 running slide-top;
+header.header-scroll{left: 0; position: fixed; right: 0; top: 0; z-index: 9999;  animation: 0.9s ease 0s normal none 1 running slide-top;
 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); opacity: 1; padding:0 0 10px; background:#fff; border:none;}
 header.header-scroll .header-right-part{padding:11px 0 0;}
 header.header-scroll .logo{margin:0;}
@@ -636,47 +636,32 @@ min-width: auto;
 
 /*=====================Register Type============================*/
 
-.register-type {
-  display: block;
-  margin: 20px auto;
-  text-align: center;
-}
-.register h6 {
-  color: #505050;
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 22px;
-}
-.register-type span {
-  margin-right: 10px;
-}
-.register-type label {
-  color: #bababa;
-  font-size: 15px;
-  font-weight: 600;
-  margin:0 10px;
-}
-.pagination-register {
-  background: #f6f6f6 none repeat scroll 0 0;
-  border: 1px solid #e0e0e0;
-  margin-top: 13px;
-  padding: 15px;
-  text-align: right;
-}
-.pagination-register .btn {
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 0;
-  margin-left: 12px;
-  padding: 10px 22px;
-}
+.register-type {display: block; margin: 20px auto; text-align: center;}
+.register h6 {color: #505050; font-size: 17px; font-weight: 800; margin-bottom: 18px;}
+.register-type span {margin-right: 10px;}
+.register-type label {color: #bababa; font-size: 15px; font-weight: 600; margin:0 10px;}
+.pagination-register .btn {cursor: pointer; font-size: 14px; margin-bottom: 0; margin-left: 12px; padding: 10px 22px;}
+.pagination-register {margin-top: 13px; text-align: center;}
+.btn-warning:focus, .btn-warning.focus {box-shadow: none;}
+.registration .woocommerce-error {background: #ffffff; border: 1px solid #b81c23; color: #b81c23;}
+.register .register-type h6 {margin-bottom: 24px;}
+.register .form-control.invalid {background: #ffffff; border: 1px solid #ff0000;}
+.register select{background: #f8f8f8 url(images/dropdown-arrow-field.png) no-repeat 98% center; font-weight: 400;color: #464a4c; font-size:15px; padding:8px 12px;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer; border-radius: 0;}
 
-
-/*.pagination-register {
-  border-top: 1px solid #f0ad4e;
-  margin-top: 13px;
-  padding-top: 22px;
-  text-align: right;
-}*/
 /*=====================Register Type end============================*/
 
+li.how_it_work_menu.menu-item{
+border-bottom:none;
+}
+
+li.how_it_work_menu.menu-item a{
+ color: #2c2825;
+}
+
+.menu-header li.how_it_work_menu.menu-item:hover{
+    border-bottom: 3px solid #f9b723;
+}
+
+.menu-header li.how_it_work_menu.menu-item a:hover {
+    color: #00a99d;
+}
