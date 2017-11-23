@@ -78,3 +78,23 @@
 
 2017-10-16T04:40:59+00:00 CRITICAL Cannot redeclare ai_custom_hook_function_0() (previously declared in /var/www/html/CMS/wp/b2b-e-commerce/wp-content/plugins/ad-inserter/ad-inserter.php:1154)
 
+2017-10-23T09:39:27+00:00 CRITICAL Using $this when not in object context
+
+2017-10-23T09:39:32+00:00 CRITICAL Using $this when not in object context
+
+2017-10-23T09:39:32+00:00 CRITICAL Using $this when not in object context
+
+2017-10-23T09:40:04+00:00 CRITICAL Using $this when not in object context
+
+2017-10-23T09:40:08+00:00 CRITICAL Using $this when not in object context
+
+2017-10-23T10:47:52+00:00 CRITICAL Call to a member function get_type() on a non-object
+
+2017-10-23T10:48:00+00:00 CRITICAL Call to a member function get_type() on a non-object
+
+2017-10-23T10:48:10+00:00 CRITICAL Call to a member function get_type() on a non-object
+
+2017-10-23T10:51:01+00:00 CRITICAL Using $this when not in object context
+
+2017-10-24T10:35:38+00:00 CRITICAL Call to undefined function sub_str()
+
