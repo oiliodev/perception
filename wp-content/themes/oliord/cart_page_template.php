@@ -18,11 +18,10 @@
 	//~ get_header(); 
 //~ }
 global $wp;
-if($wp->request == 'my-account/lost-password'){
-	get_header('sellerlogin');
-}else{
-	get_header(); 
-}
+
+
+get_header();
+
 ?>
 	<div class="container">
 <div id="primary" class="content-area">

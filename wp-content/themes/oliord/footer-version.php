@@ -13,56 +13,85 @@
 <footer class="footer-content">
 	<div class="wrap container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-lg-9 col-md-12">
+			  <div class="row">	
               <?php //wp_nav_menu( array( 'theme_location' => 'secondary' ) ); ?>  
-              <ul class="footer-menu">
-				  <li><h3>About Us</h3></li>
-				<li> <a href="#">Know Olio</a></li>
-				<li> <a href="#">Contact Us</a></li>
-			</ul>
-			<ul class="footer-menu">
-				<li><h3>Sell On Olio</h3></li>
-				<li> <a href="#">Supplier Membership</a></li>
-				<li> <a href="#">Policies</a></li>
-              </ul>
-              <ul class="footer-menu">
-				<li><h3>Buy on Olio</h3></li>
-				<li><a href="#">Catalog</a></li>
-              </ul>
-              <ul class="footer-menu">
-				<li><h3>How may I help u?</h3></li>
-				<li> <a href="#">Your Account</a></li>
-				<li> <a href="#">Your Orders</a></li>
-				<li> <a href="#">Shipping Policies</a></li>
-				<li> <a href="#">Returns and Refunds</a></li>
-				<li> <a href="#">Help</a></li>
-				<li> <a href="#">FAQ</a></li>
-              </ul>
-              <ul class="footer-menu">
-				<li><h3> Trade services</h3></li>
-				<li> <a href="#">QC</a></li>
-				<li> <a href="#">Product Videos</a></li>
-				<li> <a href="#">Shipping Options</a></li>
-				<li> <a href="#">Secure Payment</a></li>
-				<li> <a href="#">Multilingual Support</a></li>
-				<li> <a href="#">Online Convention Booth</a></li>
-              </ul>
+              <div class="col-md-3 col-sm-6 form-group">
+	              <ul class="footer-menu">
+					<li><h3>About Us</h3></li>
+					<li> <a href="#">About Olio</a></li>
+					<li> <a href="#">About Olio Group</a></li>
+					<li> <a href="#">Sitemap</a></li>
+				  </ul>
+			  </div>
+			<div class="col-md-3 col-sm-6 form-group">
+	              <ul class="footer-menu">
+					<li><h3>Customer Services</h3></li>
+					<li><a href="#">Help Center</a></li>
+					<li><a href="#">Contact Us</a></li>
+					<li><a href="#">Report Abuse</a></li>
+					<li><a href="#">Submit a Dispute</a></li>
+					<li><a href="#">Polices & Rules</a></li>
+	              </ul>
+            </div>
+            <div class="col-md-3 col-sm-6 form-group"> 
+				<ul class="footer-menu">
+					<li><h3>How to Buy</h3></li>
+					<li><a href="#">Making Payments</a></li>
+					<li><a href="#">Delivery Options</a></li>
+					<li><a href="#">Buyer Protection</a></li>
+					<li><a href="#">New User Guide</a></li>
+				  </ul>
+          	</div>
+          	<div class="col-md-3 col-sm-6 form-group">
+				<ul class="footer-menu">
+					<li><h3>Trade Services</h3></li>
+					<li> <a href="#">Trade Assurance</a></li>
+					<li> <a href="#">Business Identity</a></li>
+					<li> <a href="#">Logistics Services</a></li>
+					<li> <a href="#">Secure Payment</a></li>
+					<li> <a href="#">Inspection Service</a></li>
+				</ul>
+             </div> 
+		   </div>
+		</div>
+
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="footer-search">
+					<h3>Newsletter</h3>
+					<div class="input-group form-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-secondary" type="button">SUBMIT</button>
+						</span>
+					</div>
+					<div class="form-group news-icon">
+						<a href="#" class="massage-ico"></a> <a href="#" class="sina-weibo-ico"></a> 
+					</div>
+				</div>
 			</div>
     				
 		</div>
 		
 	</div>
-	</div>
+	
 </footer>
 <div class="clearfix"></div>
 <div class="copy-right-txt">
-			<div class="text-right">
-				<?php
-					if( !empty(get_theme_mod("oliord_cp_op")) ) { echo get_theme_mod("oliord_cp_op"); } 
-					else { echo 'Please insert copyright text from theme settings.'; }
-				?>
-			</div>
+	<div class="container">
+	<div class="footer-line"></div>
+		<div class="row">
+			<div class="col-sm-12 footer-link text-center">
+				<a href="#">Site Map</a> | <a href="#">Service</a> | <a href="#">Support</a> | <a href="#">Manufacturers</a> | <a href="#">Shipping</a> | <a href="#">Payments</a> | <a href="#">Terms &amp; Conditions</a> | <a href="#">Warrantee</a>
+		    </div>
+		<div class="col-sm-12 text-center">
+			<div class="coppy-right-text">
+				&copy;Copyrights Olio	  
+		    </div>
 		</div>
+		</div>
+	</div>
+</div>
 <?php wp_footer(); ?>
 <script type="text/javascript">
 
@@ -91,6 +120,17 @@ jQuery(document).ready(function($){
        	 		$('.search.search-header .dropdown > button').text(label);
         	}
     	});
+    	
+    	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5a16a07fbb0c3f433d4cacdd/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+
 });
 
 </script>

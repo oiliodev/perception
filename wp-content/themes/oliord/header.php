@@ -28,16 +28,23 @@
 	<div class="header-top-part">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3 col-md-3 col-lg-2">
+			<div class="col-sm-12 col-md-3 col-lg-2">
 				<div class="logo">
 				<?php
 					$custom_logo_id = get_theme_mod( 'custom_logo' );
 					$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
-					echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
+					echo '<a href="'.get_home_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
 				?>
 				</div>
 			</div>
-			<div class="col-sm-9 col-md-9 col-lg-10">
+			<div class="d-md-none col-sm-2 col-menu-toggle">
+				<div id="menu-toggle" class="menu-toggle align-middle">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+			<div class="col-sm-10 col-md-9 col-lg-10">
 				<div class="header-right-part float-right clearfix">
 					<div class="search search-header float-left">	
 						<?php 
@@ -73,41 +80,68 @@
 					</div>
 					</form>
 					
-					</div>	
+					</div>
 					<div class="language-drop float-left">
 						<span onClick="swip_lan('en');" class="en">En</span>
 						<span onClick="swip_lan('chiness');" class="chiness">中文</span>
 						<span onClick="swip_lan('franch');" class="franch">Es</span>				
 					</div>	
 					<div class="user-profile float-left">
+						
 						<?php /*if(is_user_logged_in()) {
 							global $current_user;							
 								echo '<span>'.substr($current_user->user_login,0,1).'</span>';
 							} else { 
 								echo '<img src="'. get_template_directory_uri() .'/images/sign-in-ico.png">';
 							}*/ ?>
-						<ul class="profile-sign">							
+							
 							<?php if(is_user_logged_in()) {
-								global $current_user;
-								  ?>
-								<li class="lought-btn"><a href="<?php echo wp_logout_url(home_url()); ?>">Logout</a></li>
-							<?php } else { ?>
-								<li class="sign-up-btn"><a href="<?php echo site_url().'/seller-login'; ?>">Sign up </a></li>
+						global $current_user;	
+													
+							$attachment_url = esc_url( get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ); 
+							 
+							if($attachment_url == ''){
+								//$attachment_url	=	get_template_directory_uri() .'/images/sign-in-ico.png';
+								echo '<span>'.substr($current_user->user_login,0,1).'</span>';
+							}else{
+								$image_id	= get_attachment_id( $attachment_url ); 
+								$attachment_url = wp_get_attachment_image_src($image_id, 'you_may_like_thumb');
+								$attachment_url	=	$attachment_url[0];
+								echo '<span><img class="img-fluid" src="'. $attachment_url .'"></span>';
+							}							
+							
+							} else { 
+								echo '<span><img src="'. get_template_directory_uri() .'/images/sign-in-ico.png"></span>';
+							} ?>
+								  
+								<ul class="profile-sign">
+								<?php if(is_user_logged_in()) {
+									global $current_user;
+								?>								
+								<li class="lought-btn"><a href="<?php echo wp_logout_url(home_url()); ?>"><?php _e('Logout','olio'); ?></a></li>
+								<li class="lought-btn"><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account','olio'); ?></a></li>
+							<?php } else { ?>								
+								<li class="sign-up-btn"><a href="<?php echo site_url().'/seller-login'; ?>"><?php _e('Login','olio'); ?></a></li>
+							<li class="sign-up-btn"><a href="<?php echo site_url().'/registration'; ?>"><?php _e('Sign up','olio'); ?></a></li>
 							<?php } ?>
 						</ul>
 					</div>
 					<div class="hart-button float-left">
+						<a href="<?php echo site_url().'/wishlist'; ?>">
 					&nbsp;
 						<span>
 							<?php echo sprintf ( _n( '%d item', YITH_WCWL()->count_products() ), YITH_WCWL()->count_products() ); ?>
 						</span>
-					</div>			
+						</a>
+					</div>
 					<div class="product-cart float-left">						
 						<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 								?>
 							<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
 							<span>
-								<?php echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
+								<?php 
+								//~ echo count(WC()->cart->get_cart());
+								echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
 								</span>
 							</a>
 						<?php } ?>
@@ -119,37 +153,31 @@
 	</div>
 		<div class="container">
 			<div class="row">
-			<div class="col-12">
-				<?php /* ?>
-				<nav class="rdnav menu-header">
-					<?php 
-						wp_nav_menu( array(	'theme_location' => 'top-menu', 'menu_class' => 'nav navbar-nav') );
-					?>
-				</nav>
-				<?php */ ?>
-				<?php if ( has_nav_menu( 'primary' )) : ?>
-					<div id="menu-toggle" class="menu-toggle align-middle">
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="menu-toggle-text align-middle font-weight-bold text-uppercase"><?php _e( 'Menu', 'twentysixteen' ); ?></div>
-					<div id="site-header-menu" class="site-header-menu">
-						<?php if ( has_nav_menu( 'primary' ) ) : ?>
-							<nav id="site-navigation" class="main-navigation rdnav menu-header" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">
-								<?php
-									wp_nav_menu( array(	'theme_location' => 'top-menu', 
-											'menu_class' => 'nav navbar-nav') );
-								?>
-							</nav><!-- .main-navigation -->
-						<?php endif; ?>						
-					</div><!-- .site-header-menu -->
-				<?php endif; ?>
-				
-			</div>	
+				<div class="col-12">
+					<?php /* ?>
+					<nav class="rdnav menu-header">
+						<?php 
+							wp_nav_menu( array(	'theme_location' => 'top-menu', 'menu_class' => 'nav navbar-nav') );
+						?>
+					</nav>
+					<?php */ ?>
+					<?php if ( has_nav_menu( 'primary' )) : ?>
+						
+						<?php /*?><div class="menu-toggle-text align-middle font-weight-bold text-uppercase"><?php _e( 'Menu', 'twentysixteen' ); ?></div><?php */?>
+						<div id="site-header-menu" class="site-header-menu">
+							<?php if ( has_nav_menu( 'primary' ) ) : ?>
+								<nav id="site-navigation" class="main-navigation rdnav menu-header" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">
+									<?php
+										wp_nav_menu( array(	'theme_location' => 'top-menu', 
+												'menu_class' => 'nav navbar-nav') );
+									?>
+								</nav><!-- .main-navigation -->
+							<?php endif; ?>						
+						</div><!-- .site-header-menu -->
+					<?php endif; ?>				
+				</div>	
 			</div>
-		</div>
-		
+		</div>		
 	<?php if(is_front_page()) { ?>
 		<div class="container convention">
 		<div class="row">

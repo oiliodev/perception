@@ -20,7 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-wc_print_notices();
+//~ wc_print_notices();
+
 
 do_action( 'woocommerce_before_cart' ); ?>
 
@@ -110,12 +111,23 @@ do_action( 'woocommerce_before_cart' ); ?>
 								if ( $_product->is_sold_individually() ) {
 									$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" />', $cart_item_key );
 								} else {
+									
 									$product_quantity = woocommerce_quantity_input( array(
 										'input_name'  => "cart[{$cart_item_key}][qty]",
 										'input_value' => $cart_item['quantity'],
 										'max_value'   => $_product->get_max_purchase_quantity(),
 										'min_value'   => '0',
 									), $_product, false );
+									
+									//~ $mqr	=	get_post_meta( $product_id, '_wc_mmax_min');
+									//~ $product_quantity = woocommerce_quantity_input( array(
+										//~ 'input_name'  => "cart[{$cart_item_key}][qty]",
+										//~ 'input_value' => $cart_item['quantity'],
+										//~ 'max_value'   => 999999,
+										//~ 'min_value'   => $mqr[0],
+									//~ ), $_product, false );
+									
+									
 								}
 
 								echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item );

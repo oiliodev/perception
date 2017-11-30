@@ -446,9 +446,7 @@ h1.inner-heading span.finsihed:before{display:block; margin-top: -1px; opacity: 
 .content-inner {margin-bottom: 110px;}
 .content-inner p {color: #434343; font-size: 15px; line-height: 1.5; margin-bottom: 22px;}
 
-body.home .disable_background{position:relative;}
-body.home .disable_background::before {background-color:#000; opacity:0.8; bottom: 0;  content: ""; display: block; height: 100%; left: 0; position: absolute; right: 0; top: 0;  width: 100%; z-index: 9;}
-.gallery-hero-section.disable_background,.middle-content.disable_background,.footer-content.disable_background,.copy-right-txt.disable_background {opacity: 0.8;}
+
 
 /*=======================================Login Page================================*/
 .seller-login-logo {margin: 20px auto; max-width: 120px;}
@@ -499,7 +497,7 @@ h5.global-wholesaler {
 }
 
 
-.step {
+/*.step {
   height: 15px;
   width: 15px;
   margin: 0 2px;
@@ -511,17 +509,17 @@ h5.global-wholesaler {
 }
 .step.active {
   opacity: 1;
-}
+}*/
 /* Mark the steps that are finished and valid: */
-.step.finish {
+/*.step.finish {
   background-color: #4CAF50;
-}
+}*/
 .seller_information{
 display:none;
 }
-.registration_progress{
+/*.registration_progress{
 text-align:center;margin-top:40px; display:none;
-}
+}*/
 .registration .btn-warning{
 min-width: auto;
 }
@@ -561,34 +559,6 @@ min-width: auto;
 }
 .goto_more_offer_tab.button {
     display: none !important;
-}
-
-.product_image_section .main_product_image{
-border: 1px solid #e1e1e1;
-  box-sizing: border-box;
-  padding: 6px; 
-}
-.product_image_section 	.jcarousel-wrapper{
-    margin: 10px auto;
-    position: relative;
-    border:none;
-    box-shadow: none;
-}
-.product_image_section .jcarousel li{
-	padding:5px;
-}
-.product_image_section .jcarousel-control-prev,.product_image_section .jcarousel-control-next{
-    background: #04a69d none repeat scroll 0 0;
-}
-.product_image_section .jcarousel-control-prev:hover,.product_image_section .jcarousel-control-next:hover{
-    text-decoration: none;
-    color:#fff;
-}
-.product_image_section .jcarousel-control-prev {
-    left: 5px;
-}
-.product_image_section .jcarousel-control-next {
-    right: 5px;
 }
 select.invalid {
   border: 1px solid red;

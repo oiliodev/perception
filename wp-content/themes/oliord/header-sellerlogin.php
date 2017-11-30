@@ -21,22 +21,8 @@
 
 <script>
 $(function(){
-
-if(jQuery('.country_to_state').val() != ""){
-	var contry = jQuery('.country_to_state').val();
-	get_state_by_country(contry);
-}
-	
-jQuery('.country_to_state').on('change',function(){	
-	var contry = jQuery(this).val();
-	get_state_by_country(contry);
-});
-});
-
-
-
-function get_state_by_country(contry){
-	//~ contry = jQuery(this).val();
+jQuery('.country_to_state').on('change',function(){
+	contry = jQuery(this).val();
 	var data = {
 		action: 'change_state',
 		contry: contry
@@ -44,16 +30,15 @@ function get_state_by_country(contry){
 	jQuery.post('<?php echo admin_url('admin-ajax.php');?>', data, function(response) {
 		jQuery(".billing_state").html(response);
 	});	
-	
-	
-}
+});
+});
 </script>
 </head>
 
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed site">
 	
-		<div class="container">
+		<?php /*?><div class="container">
 			<div class="row">
 				<div class="seller-login-logo">
 						<?php
@@ -64,7 +49,7 @@ function get_state_by_country(contry){
 				</div>
 			</div>
 
-		</div>
+		</div><?php */?>
 	
 	
 <!--<div class="container"> -->

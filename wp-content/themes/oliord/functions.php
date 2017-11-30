@@ -1,4 +1,9 @@
 <?php
+function app_output_buffer() {
+	ob_start();
+}
+add_action('init', 'app_output_buffer');
+
 function oliord_setup() {
 	load_theme_textdomain( 'oliord' );
 	add_theme_support( 'automatic-feed-links' );
@@ -271,9 +276,18 @@ function woocm_product_query($query) {
 			
 			if(trim($_REQUEST['search_type'])	==	"Supplier"){
 				
+				$metakey_array = array(
+					array('key' => 'membership','value' => $search_item,'compare' => 'LIKE')
+				);
+
+				
 				$args = array(
 					's' => $search_item,
-					'role'	=> 'dc_vendor'
+					'role'	=> 'dc_vendor',
+					'meta_query' => array(
+						'relation' => 'OR',
+						$metakey_array
+					)
 				);
 				
 				$user_query = new WP_User_Query( $args );
@@ -446,3 +460,38 @@ function filter_dealoftheday(){
 	return $html;
 }
 //~ remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination', 10 );
+
+
+function get_attachment_id( $url ) {
+	$attachment_id = 0;
+	$dir = wp_upload_dir();
+	if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
+		$file = basename( $url );
+		$query_args = array(
+			'post_type'   => 'attachment',
+			'post_status' => 'inherit',
+			'fields'      => 'ids',
+			'meta_query'  => array(
+				array(
+					'value'   => $file,
+					'compare' => 'LIKE',
+					'key'     => '_wp_attachment_metadata',
+				),
+			)
+		);
+		$query = new WP_Query( $query_args );
+		if ( $query->have_posts() ) {
+			foreach ( $query->posts as $post_id ) {
+				$meta = wp_get_attachment_metadata( $post_id );
+				$original_file       = basename( $meta['file'] );
+				$cropped_image_files = wp_list_pluck( $meta['sizes'], 'file' );
+				if ( $original_file === $file || in_array( $file, $cropped_image_files ) ) {
+					$attachment_id = $post_id;
+					break;
+				}
+			}
+		}
+	}
+	return $attachment_id;
+}
+

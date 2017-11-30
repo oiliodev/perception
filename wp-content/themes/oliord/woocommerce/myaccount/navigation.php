@@ -29,7 +29,15 @@ do_action( 'woocommerce_before_account_navigation' );
 			<li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
 				<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"><?php echo esc_html( $label ); ?></a>
 			</li>
-		<?php endforeach; ?>
+		<?php endforeach; 
+		/*
+		$current_user = wp_get_current_user();
+		if (is_user_wcmp_vendor($current_user)) {
+            $dashboard_page_link = wcmp_vendor_dashboard_page_id() ? get_permalink(wcmp_vendor_dashboard_page_id()) : '#';
+            echo apply_filters('wcmp_vendor_goto_dashboard', '<a href="' . $dashboard_page_link . '">' . __('Dashboard', 'dc-woocommerce-multi-vendor') . '</a>');
+        }*/
+        
+		?>
 	</ul>
 </nav>
 

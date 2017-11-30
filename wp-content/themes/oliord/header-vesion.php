@@ -27,78 +27,109 @@
 	<div class="header-top-part">
 	<div class="container">
 	<div class="row">
-				  <div class="col-sm-3 col-md-3 col-lg-2">
-						<div class="logo">
-						<?php
-							$custom_logo_id = get_theme_mod( 'custom_logo' );
-							$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
-							echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
-						?>
-						</div>
-					</div>
-				  <div class="col-sm-9 col-md-9 col-lg-10">
-				  <div class="header-right-part">
-					<div class="search search-header">	
-						<?php 
-							$search_type	=	"Product";
+		<div class="col-sm-12 col-md-3 col-lg-2">
+			<div class="logo">
+				<?php
+					$custom_logo_id = get_theme_mod( 'custom_logo' );
+					$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
+					echo '<a href="'.get_home_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
+				?>
+			</div>
+		</div>
+		<div class="d-md-none col-sm-2 col-menu-toggle">
+			<div id="menu-toggle" class="menu-toggle align-middle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div class="col-sm-10 col-md-9 col-lg-10">
+			<div class="header-right-part">
+				<div class="search search-header">	
+				<?php 
+					$search_type	=	"Product";
+					$filter_text	=	"Supplier";
+					if(isset($_REQUEST['search_type']) && $_REQUEST['search_type'] != ""){
+						$search_type	=	$_REQUEST['search_type'];
+						if($search_type	==	"Product"){
 							$filter_text	=	"Supplier";
-							if(isset($_REQUEST['search_type']) && $_REQUEST['search_type'] != ""){
-								$search_type	=	$_REQUEST['search_type'];
-								if($search_type	==	"Product"){
-									$filter_text	=	"Supplier";
-								}else{
-									$filter_text	=	"Product";
-								}
-							}
-						?>							
-						<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/shop' ) ); ?>">
-							<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
-							<input type="search"  id="<?php echo $unique_id; ?>" class="field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" value="<?php if(isset($_REQUEST['search_string']) && $_REQUEST['search_string'] != "" ) { echo $_REQUEST['search_string']; } ?>" name="search_string" required/>
-							<input type="hidden" name="search_type" value="<?php echo $search_type; ?>" id="search_type">
-						</form>
-						 <div class="dropdown">
-							<button class="btn btn-info dropdown-toggle filter_button" type="button" data-toggle="dropdown"><?php echo $search_type; ?></button>
-						  <ul class="dropdown-menu">    
-							<li><label for="Supplier" class="filter_text"><?php echo $filter_text; ?></label></li>
-						  </ul>
-						</div> 
-					</div>	
-					<div class="language-drop">
-						<span onClick="swip_lan('en');" class="en">En</span>
-						<span onClick="swip_lan('chiness');" class="chiness">中文</span>
-						<span onClick="swip_lan('franch');" class="franch">Es</span>				
-					</div>	
-					<div class="user-profile">
-						<?php if(is_user_logged_in()) {
-							global $current_user;							
+						}else{
+							$filter_text	=	"Product";
+						}
+					}
+				?>							
+				<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/shop' ) ); ?>">
+					<button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+					<input type="search"  id="<?php echo $unique_id; ?>" class="field-custom" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'twentyseventeen' ); ?>" value="<?php if(isset($_REQUEST['search_string']) && $_REQUEST['search_string'] != "" ) { echo $_REQUEST['search_string']; } ?>" name="search_string" required/>
+					<input type="hidden" name="search_type" value="<?php echo $search_type; ?>" id="search_type">
+				</form>
+				 <div class="dropdown">
+					<button class="btn btn-info dropdown-toggle filter_button" type="button" data-toggle="dropdown"><?php echo $search_type; ?></button>
+				  <ul class="dropdown-menu">    
+					<li><label for="Supplier" class="filter_text"><?php echo $filter_text; ?></label></li>
+				  </ul>
+				</div> 
+				</div>	
+				<div class="language-drop">
+					<span onClick="swip_lan('en');" class="en">En</span>
+					<span onClick="swip_lan('chiness');" class="chiness">中文</span>
+					<span onClick="swip_lan('franch');" class="franch">Es</span>				
+				</div>	
+				<div class="user-profile">
+					<?php if(is_user_logged_in()) {
+						global $current_user;	
+													
+							$attachment_url = esc_url( get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ); 
+							 
+							if($attachment_url == ''){
+								$attachment_url	=	get_template_directory_uri() .'/images/sign-in-ico.png';
 								echo '<span>'.substr($current_user->user_login,0,1).'</span>';
-							} else { 
-								echo '<img src="'. get_template_directory_uri() .'/images/sign-in-ico.png">';
-							} ?>
-						<ul class="profile-sign">							
-							<?php if(is_user_logged_in()) {
-								global $current_user;
-								  ?>
-								<li class="lought-btn"><a href="<?php echo wp_logout_url(home_url()); ?>">Logout</a></li>
-							<?php } else { ?>
-								<li class="sign-up-btn"><a href="<?php echo site_url().'/seller-login'; ?>">Sign up </a></li>
-							<?php } ?>
-						</ul>
-					</div>
-	
-					<div class="product-cart">						
-						<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-								?>
-							<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
-							<i class="fa fa-shopping-cart fa-2x"></i>
-							<span>
-								<?php echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
-								</span>
-							</a>
+							}else{
+								$image_id	= get_attachment_id( $attachment_url ); 
+								$attachment_url = wp_get_attachment_image_src($image_id, 'you_may_like_thumb');
+								$attachment_url	=	$attachment_url[0];
+								echo '<span><img class="img-fluid" src="'. $attachment_url .'"></span>';
+							}
+							
+							
+						} else { 
+							echo '<span><img src="'. get_template_directory_uri() .'/images/sign-in-ico.png"></span>';
+						} ?>
+					<ul class="profile-sign">							
+						<?php if(is_user_logged_in()) {
+							global $current_user;							 
+							  ?>
+							<li class="lought-btn"><a href="<?php echo wp_logout_url(home_url()); ?>"><?php _e('Logout','olio'); ?></a></li>
+							<li class="lought-btn"><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account','olio'); ?></a></li>
+						<?php } else { ?>
+							<li class="sign-up-btn"><a href="<?php echo site_url().'/seller-login'; ?>"><?php _e('Login','olio'); ?></a></li>
+							<li class="sign-up-btn"><a href="<?php echo site_url().'/registration'; ?>"><?php _e('Sign up','olio'); ?></a></li>
 						<?php } ?>
+					</ul>
+				</div>
+			
+			<div class="hart-button float-left">
+						<a href="<?php echo site_url().'/wishlist'; ?>">
+					&nbsp;
+						<span>
+							<?php echo sprintf ( _n( '%d item', YITH_WCWL()->count_products() ), YITH_WCWL()->count_products() ); ?>
+						</span>
+						</a>
 					</div>
-					</div>
-					</div>
+					
+			<div class="product-cart">						
+			<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+					?>
+				<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">
+				<i class="fa fa-shopping-cart fa-2x"></i>
+				<span>
+					<?php echo sprintf ( _n( '%d item', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?>
+					</span>
+				</a>
+			<?php } ?>
+			</div>
+			</div>
+		</div>
 			</div>
 	</div>
 	</div>
@@ -114,12 +145,8 @@
 				</nav>
 				<?php */ ?>
 					<?php if ( has_nav_menu( 'primary' )) : ?>
-					<div id="menu-toggle" class="menu-toggle align-middle">
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-					<div class="menu-toggle-text align-middle font-weight-bold text-uppercase"><?php _e( 'Menu', 'twentysixteen' ); ?></div>
+					
+					<?php /*?><div class="menu-toggle-text align-middle font-weight-bold text-uppercase"><?php _e( 'Menu', 'twentysixteen' ); ?></div><?php */?>
 					<div id="site-header-menu" class="site-header-menu">
 						<?php if ( has_nav_menu( 'primary' ) ) : ?>
 							<nav id="site-navigation" class="main-navigation rdnav menu-header" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">

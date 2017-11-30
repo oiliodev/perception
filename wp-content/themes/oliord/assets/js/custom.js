@@ -306,7 +306,8 @@ function swip_lan(class_name){
 //START ragistration functionality
 var currentTab = 0; // Current tab is set to be the first tab (0)
 function showTab(n) {
-	jQuery(".woocommerce-error").hide();	
+	jQuery(".woocommerce-error").hide();
+	
   // This function will display the specified tab of the form...
 	  var x = document.getElementsByClassName("tab");
 	  x[n].style.display = "block";
@@ -317,12 +318,27 @@ function showTab(n) {
 		document.getElementById("prevBtn").style.display = "inline";
 	  }
 	  
-	    var register_type = $("input[name='register_type']:checked").val();	
+	   var register_type = $("input[name='register_type']:checked").val();
+	   if(register_type	==	"Buyer"){
+		jQuery("#seller_information").removeClass( "tab" );	
+		jQuery(".seller_information").hide();  		
+		jQuery("#seller_step").removeClass( "step" );
+		jQuery("#seller_step").hide();
+		jQuery(".registration_progress").removeClass( "seller_registration_progress" );
+	  }else{
+		jQuery("#seller_information").addClass( "tab" );
+		jQuery(".tab").removeClass( "seller_information" );	
+		jQuery("#seller_step").addClass( "step" );
+		jQuery("#seller_step").show();
+		jQuery(".registration_progress").addClass( "seller_registration_progress" );
+	  }
+	  
+	  
 	  
 	  if(register_type == "Seller" && n != (x.length - 1)){
 			 jQuery(".form-group.buyer").html("");
 	  }
-		  
+		  //~ alert(x.length);
 	  if (n == (x.length - 1)) {
 		  
 		  jQuery.getScript("https://www.google.com/recaptcha/api.js");
@@ -353,18 +369,40 @@ function nextPrev(n) {
   x[currentTab].style.display = "none";
   // Increase or decrease the current tab by 1:
   currentTab = currentTab + n;  
-	if(currentTab == 2){
-	  var register_type = $("input[name='register_type']:checked").val();	  
+  //~ var register_type = $("input[name='register_type']:checked").val();
+	
+	//~ if(currentTab == 1){
+
+	//~ if(register_type	==	"Buyer"){
+		//~ jQuery("#seller_information").removeClass( "tab" );	
+		//~ jQuery(".seller_information").hide();  		
+		//~ jQuery("#seller_step").removeClass( "step" );
+		//~ jQuery("#seller_step").hide();
+		//~ jQuery(".registration_progress").removeClass( "seller_registration_progress" );
+	  //~ }else{
+		//~ jQuery(".seller_information").addClass( "tab" );
+		//~ jQuery(".tab").removeClass( "seller_information" );	
+		//~ jQuery("#seller_step").addClass( "step" );
+		//~ jQuery("#seller_step").show();
+		//~ jQuery(".registration_progress").addClass( "seller_registration_progress" );
+	  //~ }
+	//~ }
+	
+	/*if(currentTab == 2){
 	  if(register_type	==	"Buyer"){
 		jQuery("#seller_information").removeClass( "tab" );	
 		jQuery(".seller_information").hide();  		
 		jQuery("#seller_step").removeClass( "step" );
+		jQuery("#seller_step").hide();
+		jQuery(".registration_progress").removeClass( "seller_registration_progress" );
 	  }else{
 		jQuery(".seller_information").addClass( "tab" );
 		jQuery(".tab").removeClass( "seller_information" );	
 		jQuery("#seller_step").addClass( "step" );
+		jQuery("#seller_step").show();
+		jQuery(".registration_progress").addClass( "seller_registration_progress" );
 	  }
-	}
+	}*/
   
   // if you have reached the end of the form...
   if (currentTab >= x.length) {
@@ -527,7 +565,7 @@ function validateForm() {
 	  return false;
   }
   // If the valid status is true, mark the step as finished and valid:
-  if (valid) {
+  if (valid) {	  
     document.getElementsByClassName("step")[currentTab].className += " finish";
   }
   return valid; // return the valid status

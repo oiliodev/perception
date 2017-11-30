@@ -19,5 +19,15 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+global $product;
+$productId	= get_the_ID();
+$mqr	=	get_post_meta( $productId, '_wc_mmax_min'); 
+if(!isset($mqr[0])){
+		$mqr[0]	=	1;
+}
 ?>
-<p class="stock <?php echo esc_attr( $class ); ?>"><?php echo _e('MQR:', 'woocommerce').str_replace('in stock','',wp_kses_post( $availability )); ?><?php echo _e('Pieces', 'woocommerce');?></p>
+<p class="stock <?php echo esc_attr( $class ); ?>">
+<?php //echo _e('MQR:', 'woocommerce').str_replace('in stock','',wp_kses_post( $availability ));  echo _e('Pieces', 'woocommerce');?>
+    <?php _e( 'MQR:' ); echo $mqr[0]; ?>&nbsp;<?php _e( 'Piece' ); ?>
+</p>

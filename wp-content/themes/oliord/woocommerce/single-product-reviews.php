@@ -21,57 +21,71 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 
+
 if ( ! comments_open() ) {
 	return;
 }
+
 
 ?>
 
 <div id="reviews" class="woocommerce-Reviews">
 	<div id="comments">
 		<?php if ( have_comments() ) : 
+		$five_star_per	= $product->rating_counts['5'] / 5 * 100; //70
+		$for_star_per 	= $product->rating_counts['4'] / 5 * 100;	//60
+		$three_star_per = $product->rating_counts['3'] / 5 * 100;	//50
+		$two_star_per 	= $product->rating_counts['2'] / 5 * 100;	//20
+		$one_star_per 	= $product->rating_counts['1'] / 5 * 100;	//10
+		
 		?>
-			<div class="average_commentlist_secton">
-				<div class="progressbar-part">
-					<div class="form-group"><div class="star-progress float-left">5 </div>
-						 <div class="progress five_star">
-								<div class="progress-bar" role="progressbar" aria-valuenow="70"  aria-valuemin="0" aria-valuemax="100" style="width:70%">
-									<span class="sr-only">70% Complete</span>
-								 </div>
-						</div> 
-						<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['5'])) { echo $product->rating_counts['5']; } else { echo '0'; } ?></div>
-					</div>
-					<div class="form-group"><div class="star-progress float-left">4</div>
-						<div class="progress four_star">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60"  aria-valuemin="0" aria-valuemax="100" style="width:60%">
-									<span class="sr-only">60% Complete</span>
-								 </div>
-						</div> 
-						
-					 <div class="star-progress-number float-left"><?php if(isset($product->rating_counts['4'])) { echo $product->rating_counts['4']; } else { echo '0'; } ?></div></div>
-					<div class="form-group"><div class="star-progress float-left">3 </div>
-					<div class="progress three_star">
-								<div class="progress-bar" role="progressbar" aria-valuenow="50"  aria-valuemin="0" aria-valuemax="100" style="width:50%">
-									<span class="sr-only">50% Complete</span>
-								 </div>
-					</div> 
-					<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['3'])) { echo $product->rating_counts['3']; } else { echo '0'; } ?></div></div>
-					<div class="form-group"><div class="star-progress float-left">2 </div>
-					<div class="progress tow_star">
-							<div class="progress-bar" role="progressbar" aria-valuenow="20"  aria-valuemin="0" aria-valuemax="100" style="width:20%">
-								<span class="sr-only">20% Complete</span>
-							 </div>
-						</div> 
-					<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['2'])) { echo $product->rating_counts['2']; } else { echo '0'; } ?></div></div>
-					<div class="form-group"><div class="star-progress float-left">1 </div>
-					<div class="progress one_star">
-							<div class="progress-bar" role="progressbar" aria-valuenow="10"  aria-valuemin="0" aria-valuemax="100" style="width:10%">
-								<span class="sr-only">10% Complete</span>
-							 </div>
-						</div> 
-					<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['1'])) { echo $product->rating_counts['1']; } else { echo '0'; } ?></div></div>
-				</div>
-			</div>
+<div class="average_commentlist_secton">
+<div class="progressbar-part">
+	<div class="form-group"><div class="star-progress float-left">5 </div>
+		 <div class="progress five_star">
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $five_star_per; ?>"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $five_star_per; ?>%">
+					<span class="sr-only"><?php echo $five_star_per; ?>% Complete</span>
+				 </div>
+		</div> 
+		<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['5'])) { echo $product->rating_counts['5']; } else { echo '0'; } ?></div>
+	</div>
+	
+	<div class="form-group"><div class="star-progress float-left">4</div>
+		<div class="progress four_star">
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $for_star_per; ?>"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $for_star_per; ?>%">
+					<span class="sr-only"><?php echo $for_star_per; ?>% Complete</span>
+				 </div>
+		</div> 		
+		<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['4'])) { echo $product->rating_counts['4']; } else { echo '0'; } ?></div>
+	</div>
+	
+	<div class="form-group"><div class="star-progress float-left">3 </div>
+	<div class="progress three_star">
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $three_star_per; ?>"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $three_star_per; ?>%">
+					<span class="sr-only"><?php echo $three_star_per; ?>% Complete</span>
+				 </div>
+	</div> 
+	<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['3'])) { echo $product->rating_counts['3']; } else { echo '0'; } ?></div>
+	</div>
+	
+	<div class="form-group"><div class="star-progress float-left">2 </div>
+	<div class="progress tow_star">
+			<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $two_star_per; ?>"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $two_star_per; ?>%">
+				<span class="sr-only"><?php echo $two_star_per; ?>% Complete</span>
+			 </div>
+		</div> 
+	<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['2'])) { echo $product->rating_counts['2']; } else { echo '0'; } ?></div></div>
+	<div class="form-group"><div class="star-progress float-left">1 </div>
+	<div class="progress one_star">
+			<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $one_star_per; ?>"  aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $one_star_per; ?>%">
+				<span class="sr-only"><?php echo $one_star_per; ?>% Complete</span>
+			 </div>
+		</div> 
+	<div class="star-progress-number float-left"><?php if(isset($product->rating_counts['1'])) { echo $product->rating_counts['1']; } else { echo '0'; } ?></div></div>
+</div>
+</div>
+
+
 			<div class="commentlist_secton clearfix">
 				<ol class="commentlist">
 					<?php wp_list_comments( apply_filters( 'woocommerce_product_review_list_args', array( 'callback' => 'woocommerce_comments' ) ) ); ?>

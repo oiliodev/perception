@@ -330,9 +330,19 @@ function woo_specification_tab_content(){
 }
 
 add_filter( 'woocommerce_product_tabs', 'woo_new_product_tab' );
-function woo_new_product_tab( $tabs ) {
+function woo_new_product_tab( $tabs ) {	
+	// Adds the new tab	
+	global $product, $wp_query;
+	$product_id	 	= $wp_query->post->ID;	
+	$product = wc_get_product( $product_id );
 	
-	// Adds the new tab
+    $check_product_review_count = $product->get_review_count();
+    if ( $check_product_review_count == 0 ) {
+        $tabs['reviews']['title'] = 'Reviews';
+    } else {
+        $tabs['reviews']['title'] = 'Reviews('.$check_product_review_count.')';
+    }
+    
 	
 	$tabs['company_profile'] = array(
 		'title' 	=> __( 'Company Profile', 'woocommerce' ),

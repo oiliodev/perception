@@ -52,7 +52,7 @@ $args = array(
 $wc_query = new WP_Query($args); 
 ?>
 
- <div class="col-sm-9 dimond_members">
+ <div class="col-xl-9 col-sm-12 dimond_members">
 	 <h3>
 		<?php 
 		if( is_page( array( 'deals-of-the-day') )){
@@ -70,6 +70,7 @@ $wc_query = new WP_Query($args);
                 $product_id			= 	get_the_ID();                 
                 $product		 	= 	wc_get_product( $product_id );
                 $stock_quantity		=	$product->get_stock_quantity();
+                $mqr				=	get_post_meta( $product_id, '_wc_mmax_min'); 
 				$rating_count		=	$product->get_rating_count();
 				$review_count		=	$product->get_review_count();
 				$average			=	$product->get_average_rating();
@@ -99,7 +100,7 @@ $wc_query = new WP_Query($args);
 				}else{ $class = "";}
 	
      ?>	
-      <div class="col-sm-3 right-space product_<?php echo $i; ?>">
+      <div class="col-xl-3 col-lg-3 col-sm-6 right-space product_<?php echo $i; ?>">
 		<div class="dimond-products">
 			<div class="product-overlay">
 				<a href="<?php the_permalink(); ?>">
@@ -130,7 +131,7 @@ $wc_query = new WP_Query($args);
           <div class="col-md-12 clearfix">	
 		  <div class="progress-bar-l">
 		            <div class="dimaond_product_qty">			  
-			  <b>MQR:</b><br /><?php echo $stock_quantity; ?>&nbsp;<?php _e( 'Piece' ); ?>			  
+			  <b>MQR:</b><br /><?php echo $mqr[0]; ?>&nbsp;<?php _e( 'Piece' ); ?>			  
 			</div>
 			</div>
 
@@ -173,7 +174,7 @@ $wc_query = new WP_Query($args);
 	</script>
 </div>
 
-<div class="col-sm-3">
+<div class="col-lg-3 col-sm-6">
 <div class="home-add-banner">
    <?php // _e( 'Google Adsens1', 'oliord' ); ?>
 <div id='afscontainer1'><div id='afscontainer2'><img src="<?php echo get_template_directory_uri(); ?>/images/g adv.jpg"></div></div>
@@ -230,7 +231,8 @@ $cur_date 	= date('H');
 
 $metakey_array = array(
 	array('key' => 'deals_of_the_day','value' => '1','compare' => '='),						
-	//~ array('key' => 'deals_end_date','value' => date('Ymd'),'compare' => '>=')
+	array('key' => 'deals_end_date','value' => date('Ymd'),'compare' => '>='),
+	array('key' => 'hours','value' => (int) $cur_date,  'type'    => 'numeric', 'compare' => '>')
 );
 
 //~ $urs_array = array(
@@ -252,8 +254,8 @@ $args = array(
 		)
 	);	
 	
-$products = new WP_Query( $args ); 
-
+$products = new WP_Query( $args );
+//~ echo "<pre>"; print_r($products); exit;
 $arr_ProductId	=	array();
 if ( $products->have_posts() ) {
 	while ( $products->have_posts() ) : $products->the_post(); 	
@@ -264,12 +266,13 @@ if ( $products->have_posts() ) {
 $product_ids = implode(",",$arr_ProductId);
 //~ $sql_hours = $wpdb->get_row( $wpdb->prepare( "SELECT min(meta_value) as hours FROM wp_postmeta WHERE meta_key LIKE 'hours' and meta_value > HOUR(NOW()) ORDER BY meta_value  ASC" ) );
 
-$sql_hours = $wpdb->get_row( $wpdb->prepare( "SELECT meta_value as hours FROM wp_postmeta WHERE meta_key LIKE 'hours' and post_id in ($product_ids) ORDER BY `wp_postmeta`.`meta_value`  DESC limit 0, 1" ) );
+$sql_h	=	"SELECT min(CAST(meta_value AS DECIMAL)) as hours FROM wp_postmeta WHERE meta_key LIKE 'hours' and post_id in ($product_ids) and meta_value > $cur_date ORDER BY `wp_postmeta`.`meta_value` ";
+$sql_hours = $wpdb->get_row( $wpdb->prepare( $sql_h ) );
 
 
 $get_hour	=	$sql_hours->hours;	
 
-$get_hour	=	21;
+//$get_hour	=	7;
 
 
 
@@ -378,6 +381,7 @@ $results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMI
 	<h3 class="you-may-like"><?php _e( 'You May Like' ); ?></h3>
 	<div class="dimond-products-list">
 		<?php 
+		//~ echo "<pre>"; print_r($results); echo "</pre>";
 		foreach ($results as $prod_id) {
 			$wc_query->the_post();
 			$product_id			= 	$prod_id->prod_id;
@@ -391,7 +395,7 @@ $results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMI
 						<a href="<?php the_permalink($product_id); ?>"><img class="product-img" src="<?php echo $image;?>"></a>
 					</div>
 					<div class="product-content">
-						<h3><?php the_title(); ?></h3>     
+						<h3><?php echo get_the_title($product_id); ?></h3>     
 							
 								<div class="dimaond_product_price">			  
 								<?php echo $product->get_price_html(); ?>
@@ -427,7 +431,7 @@ global $product, $woocommerce, $woocommerce_loop, $wpdb;;
  //~ 
 //~ $loop = new WP_Query( $args );
 
-$wc_query = new WP_Query($args); 
+//~ $wc_query = new WP_Query($args); 
 $results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMIT 0 , 5');
 
 ?>
@@ -436,7 +440,7 @@ $results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMI
 	<div class="dimond-products-list">
 		<?php 
 		foreach ($results as $prod_id) {
-			$wc_query->the_post();
+			//~ $wc_query->the_post();
 			$product_id			= 	$prod_id->prod_id;
 
 			$product		= 	wc_get_product( $product_id );				
@@ -485,6 +489,8 @@ $args = array(
 		'author__not_in' => array( $vendor_id )
 	);	
 
+//~ $args[] = array_filter( array_map( 'wc_get_product', wc_get_related_products( $product->get_id(), $args['posts_per_page'], $product->get_upsell_ids() ) ), 'wc_products_array_filter_visible' );
+//~ echo "<pre>"; print_r($args); echo "</pre>";
 $products = new WP_Query( $args ); 
 
 ?>
@@ -511,15 +517,45 @@ $products = new WP_Query( $args );
 <?php 
 }
 
-function cw_change_product_price_display( $price ) {
-	if( is_page( array( 'deals-of-the-day') )){
-		return $price;
+//~ function cw_change_product_price_display( $price ) {
+	//~ if( is_page( array( 'deals-of-the-day') )){
+		//~ return $price;
+	//~ }else{
+		//~ $price_r	=	$price;
+		//~ $price =  str_replace( '</span></ins>', ' Per Piece </span></ins>', $price_r );
+		//~ return $price;
+	//~ }
+//~ }
+	//~ add_filter( 'woocommerce_get_price_html', 'cw_change_product_price_display' );
+	//~ add_filter( 'woocommerce_cart_item_price', 'cw_change_product_price_display' );
+
+add_action('woocommerce_get_price','change_price_regular_member', 10, 2);
+function change_price_regular_member($price, $product){	
+	$productId	= get_the_ID();
+	 //~ $deals_from_date	=	get_post_meta( $productId, 'deals_from_date'); 
+	$deals_end_date		=	get_post_meta( $productId, 'deals_end_date'); 	
+	$deals_of_the_day	=	get_post_meta( $productId, 'deals_of_the_day'); 
+	
+	$today = date('Ymd');
+
+	if($deals_of_the_day[0] == '1' && $today <= $deals_end_date[0]) {
+		$deal_of_day_price	=	get_post_meta( $productId, 'deal_of_day_price'); 	
+		return $deal_of_day_price[0];
 	}else{
-		$price_r	=	$price;
-		$price =  str_replace( '</span></ins>', ' Per Piece </span></ins>', $price_r );
+		return $price;
+	}
+    
+}	
+add_filter('woocommerce_get_price','change_price_regular_member', 10, 2);
+add_filter( 'woocommerce_get_price_html', 'bbloomer_price_prefix_suffix', 100, 2 );
+ 
+function bbloomer_price_prefix_suffix( $price, $product ){
+	//~ $productId	= get_the_ID();
+	if( is_page( array( 'deals-of-the-day') )){
+		return str_replace( '</ins>', ' / Piece </ins>', $price );
+	}else{
+		$price = $price . '&nbsp;<span>'.'Per Piece</span>';
 		return $price;
 	}
 }
-	add_filter( 'woocommerce_get_price_html', 'cw_change_product_price_display' );
-	add_filter( 'woocommerce_cart_item_price', 'cw_change_product_price_display' );
 ?>

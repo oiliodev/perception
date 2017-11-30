@@ -21,17 +21,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $product;
+$productId	= get_the_ID();
 $stock_quantity		=	$product->get_stock_quantity();
 ?>
 
 <?php if ( $price_html = $product->get_price_html() ) : ?>
 	<span class="price"><?php echo $price_html; ?></span>
 <?php endif; 
-if($stock_quantity > 0 ){
+$mqr	=	get_post_meta( $productId, '_wc_mmax_min'); 
+if($mqr[0] > 0 ){
 ?>
 
 <div class="mqr_qty">			  
-  <b><?php _e( 'MQR:' ); ?></b><br /><?php echo $stock_quantity; ?>&nbsp;<?php _e( 'Piece' ); ?>
+    <b><?php _e( 'MQR:' ); ?></b><br /><?php echo $mqr[0]; ?>&nbsp;<?php _e( 'Piece' ); ?>
 </div>
 
 

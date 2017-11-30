@@ -42,7 +42,12 @@ if ( $max_value && $min_value === $max_value ) {
 	}else{
 		$url = site_url()."/seller-login";
 	}
+	$mqr	=	get_post_meta( $product_id, '_wc_mmax_min');
 ?>
+<div class="quantity hidden">
+		<input type="hidden" id="<?php echo esc_attr( $input_id ); ?>" class="qty" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $mqr[0] ); ?>" />
+	</div>
+	
 <div class="contact-seller">
 	<a class="button" href="<?php echo $url; ?>">Contact Seller</a>
 </div>

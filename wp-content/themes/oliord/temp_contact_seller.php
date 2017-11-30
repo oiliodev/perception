@@ -61,13 +61,13 @@ get_header( 'shop' ); ?>
 <script>
 $(document).ready(function() {
     var text_max = 4000;
-    $('#textarea_feedback').html(text_max + ' characters remaining');
+    $('#textarea_feedback').html('<span>Remain : </span>' + text_max + ' characters');
 
     $('#textarea').keyup(function() {
         var text_length = $('#textarea').val().length;
         var text_remaining = text_max - text_length;
 
-        $('#textarea_feedback').html(text_remaining + ' characters remaining');
+        $('#textarea_feedback').html( '<span>Remain : </span>' + text_remaining + ' characters');
     });
 });    
 </script>
@@ -101,26 +101,31 @@ $(document).ready(function() {
 			<?php 			
 				$image			= 	get_the_post_thumbnail_url($product_id,'shop_thumbnail');
 			?>	
-			<div class="product-overlay d-inline-block align-top">
-				<a href="<?php the_permalink($product_id); ?>"><img class="product-img" src="<?php echo $image;?>"></a>
+			<div class="product-overlay d-inline-block align-top seller-product-img">
+				<a href="<?php the_permalink($product_id); ?>">
+					<img class="product-img" src="<?php echo $image;?>">
+				</a>
 			</div>
-			<div class="d-inline-block pl-4">
-				<h1 class="product_title entry-title"><?php echo $product->get_title(); ?></h1>
+			<div class="d-inline-block pl-md-4 seller-title">
+				<h1 class="product_title entry-title mb-4 pb-1 position-relative"><?php echo $product->get_title(); ?></h1>
 				<input class="input-text qty text form-control w-auto" step="1" min="0"  max="9999" name="quantity" value="1" title="Qty" size="4" pattern="[0-9]*" type="number" style="max-width:5.625rem" />
 			</div>
 			<hr class="mb-4" />
 		</div>
 	</div>	
-	<div class="form-group">
-		<label class="d-block w-100">Message <span style="color:#868686;font-size:12px;">(Enter product details such as color, size, materials etc. and other specific requirements to receive an accurate quote.)</span></label>
+	<div class="mb-1">
+		<label class="d-block w-100">Message <span style="color:#868686;font-size:13px;"> (Enter product details such as color, size, materials etc. and other specific requirements to receive an accurate quote.)</span></label>
 		<div class="position-relative" style="position:relative">
-			<textarea class="form-control" name="message" id="textarea" rows="8" cols="30" maxlength="4000"></textarea>
-			<div id="textarea_feedback" class="position-absolute" style="color:#868686;font-size:12px;position:absolute;right:10px;bottom:10px;"></div>
+			<textarea class="form-control" name="message" id="textarea" rows="8" cols="30" maxlength="4000" style="background:#fdfdfd"></textarea>
+			<div id="textarea_feedback" class="position-absolute"></div>
 		</div>
+	</div>
+	<div class="mb-4">
+		<small class="required">Your message must be between 100-4000 characters</small>
 	</div>
 	<div>
 		<input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
-		<input class="btn btn-warning text-uppercase font-weight-bold h6" type="submit" value="Contact Seller" name="contact_seller">
+		<input class="btn btn-warning text-uppercase font-weight-bold h6 cursor-pointer" type="submit" value="Contact Seller" name="contact_seller" />
 	</div>
 	</form>
 </div>
