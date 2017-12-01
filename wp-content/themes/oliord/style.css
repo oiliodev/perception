@@ -411,7 +411,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4fd6c8', end
 .menu-header li a:hover{color:#00a99d;}
 .menu-header li.current-menu-item{border-bottom: 3px solid #f9b723;}
 .menu-header li.current-menu-item a{color:#00a99d;}
-.header-right-part{float:right; padding:19px 0;}
+/*.header-right-part{float:right; padding:19px 0;}
 .header-right-part .search,
 .header-right-part .language-drop,
 .header-right-part .user-profile,
@@ -423,14 +423,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4fd6c8', end
 .header-right-part .user-profile{line-height: 45px;}
 .header-right-part .user-profile i, .header-right-part .product-cart i {color: #fff; font-size: 40px;}
 .header-right-part .search {margin-right: 10px; margin-top: 5px; width: 667px;}
-.header-right-part .language-drop:hover{background:#ffffff; color:#00a99d;}
-.header-right-part .user-profile ul.profile-sign {background: #ffffff; border: 2px solid #00a99d; border-radius: 100%; height: 54px; left: 0;  list-style: outside none none;  margin-top: -50px; padding:7px 0; position: absolute; top: -33px; width: 54px; z-index: 99; line-height:normal;}
+.header-right-part .language-drop:hover{background:#ffffff; color:#00a99d;}*/
+/*.header-right-part .user-profile ul.profile-sign {background: #ffffff; border: 2px solid #00a99d; border-radius: 100%; height: 54px; left: 0;  list-style: outside none none;  margin-top: -50px; padding:7px 0; position: absolute; top: -33px; width: 54px; z-index: 99; line-height:normal;}
 .header-right-part .user-profile ul.profile-sign .sign-up-btn,
 .header-right-part .user-profile ul.profile-sign .lought-btn{line-height:2;}
 .header-right-part .user-profile ul.profile-sign {display: block; opacity: 0; top: 66px; transition-duration: 0.35s; transition-property: margin, opacity, visibility;  transition-timing-function: ease-in-out; visibility: hidden;}
 .header-right-part .user-profile:hover ul {display: block; margin-top: -11px; opacity: 1; visibility: visible;}
 .header-right-part .user-profile ul li a {color: #00a99d; font-family: "arialregular"; font-size: 14px; text-decoration: none;}
-.header-right-part .user-profile ul li span{margin-right:10px;}
+.header-right-part .user-profile ul li span{margin-right:10px;}*/
 
 .header-right-part .search-header .dropdown {position: absolute; top: 0;}
 .header-right-part .search-header .dropdown .btn-info {padding: 10px; border-radius: 10px;}
@@ -450,14 +450,14 @@ input.search-field-custom.stoggle {border-width: 1px; width: 87%;}
 .search-form .search-submit .icon {height: 24px;top: -2px;width: 24px;}
 .header-right-part .search-field-custom {background:none; border:none;}
 .header-right-part .search-field-custom.stoggle {background: #fff; border: 1px solid #000000; padding: 6px 15px;}
-.header-right-part .user-profile a {color: #000;}
-.header-right-part .product-cart span{color:#ffffff; display:inline-block; font-size: 13px; line-height: 1.4; position: absolute; right: 18px; text-align: center; top: -4px;}
-.header-right-part .language-drop {cursor: pointer; color: #fff; font-size: 20px; line-height: 50px; font-family: 'arialregular'; text-transform: uppercase;}
+/*.header-right-part .user-profile a {color: #000;}*/
+/*.header-right-part .product-cart span{color:#ffffff; display:inline-block; font-size: 13px; line-height: 1.4; position: absolute; right: 18px; text-align: center; top: -4px;}*/
+/*.header-right-part .language-drop {cursor: pointer; color: #fff; font-size: 20px; line-height: 50px; font-family: 'arialregular'; text-transform: uppercase;}
 .header-right-part .language-drop .chiness {border: 2px solid #00a99d; border-radius: 100%; display: block; font-size: 18px; height: 44px; left: 0; line-height: 42px; margin: 0;  opacity: 0; font-family: "arialregular"; position: absolute; top:0px; transition-duration: 0.45s; transition-property: margin, opacity, visibility; transition-timing-function: ease-in-out;  visibility: hidden; width: 44px;}
 .header-right-part .language-drop:hover .chiness {display: block; margin-left: -45px; margin-top: -19px; opacity: 1; top: 0; visibility: visible;}
 .header-right-part .language-drop .franch{  border: 2px solid #00a99d; border-radius: 100%; display: block; font-size: 18px; height: 44px; line-height: 42px; margin: 0; font-family: "arialregular"; opacity: 0; position: absolute; right: 0; top:0px; transition-duration: 0.45s; transition-property: margin, opacity, visibility; transition-timing-function: ease-in-out;  visibility: hidden; width: 44px;}
 .header-right-part .language-drop:hover .franch{ display: block; margin-right: -45px;  margin-top: -19px; opacity: 1; top: 0; visibility: visible;}
-.header-right-part .user-profile span {color: #ffffff; font-size: 20px; display: block; font-family: "arialregular"; line-height: 52px; text-transform: capitalize;}
+.header-right-part .user-profile span {color: #ffffff; font-size: 20px; display: block; font-family: "arialregular"; line-height: 52px; text-transform: capitalize;}*/
 
 .information {float: left; margin: 20px auto 5px; width: 100%;}
 .information img{max-width:100%; width:100%;}

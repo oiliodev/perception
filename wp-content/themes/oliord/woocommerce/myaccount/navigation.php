@@ -21,10 +21,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 do_action( 'woocommerce_before_account_navigation' );
+
+global $current_user;
+$attachment_url = esc_url( get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ); 
+if($attachment_url != ''){
+	$image_id	= get_attachment_id( $attachment_url ); 
+	$attachment_url = wp_get_attachment_image_src($image_id, 'user_profile_img');
+	$attachment_url	=	$attachment_url[0];
+}else{	
+	$attachment_url	=	"http://0.gravatar.com/avatar/c5deb4c7d055944eb080d7295a1edd2b?s=335&d=mm&r=g";
+}
 ?>
 
 <nav class="woocommerce-MyAccount-navigation">
-	<ul>
+	<span><img src="<?php echo $attachment_url; ?>"></span>
+	<ul>		
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
 			<li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
 				<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"><?php echo esc_html( $label ); ?></a>
@@ -42,3 +53,4 @@ do_action( 'woocommerce_before_account_navigation' );
 </nav>
 
 <?php do_action( 'woocommerce_after_account_navigation' ); ?>
+

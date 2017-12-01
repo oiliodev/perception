@@ -33,7 +33,7 @@
 				<?php
 					$custom_logo_id = get_theme_mod( 'custom_logo' );
 					$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
-					echo '<a href="'.get_home_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
+					echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
 				?>
 				</div>
 			</div>
@@ -85,7 +85,8 @@
 						<span onClick="swip_lan('en');" class="en">En</span>
 						<span onClick="swip_lan('chiness');" class="chiness">中文</span>
 						<span onClick="swip_lan('franch');" class="franch">Es</span>				
-					</div>	
+					</div>
+						
 					<div class="user-profile float-left">
 						
 						<?php /*if(is_user_logged_in()) {
@@ -102,27 +103,28 @@
 							 
 							if($attachment_url == ''){
 								//$attachment_url	=	get_template_directory_uri() .'/images/sign-in-ico.png';
-								echo '<span>'.substr($current_user->user_login,0,1).'</span>';
+								echo '<span class="profile-name">'.substr($current_user->user_login,0,1).'</span>';
 							}else{
 								$image_id	= get_attachment_id( $attachment_url ); 
 								$attachment_url = wp_get_attachment_image_src($image_id, 'you_may_like_thumb');
 								$attachment_url	=	$attachment_url[0];
-								echo '<span><img class="img-fluid" src="'. $attachment_url .'"></span>';
+								echo '<span  class="profile-ing"><img class="img-fluid" src="'. $attachment_url .'"></span>';
 							}							
 							
 							} else { 
-								echo '<span><img src="'. get_template_directory_uri() .'/images/sign-in-ico.png"></span>';
+								//~ echo '<span><img src="'. get_template_directory_uri() .'/images/sign-in-ico.png"></span>';
+								//~ echo '<span><img src="'. get_template_directory_uri() .'/images/header-ico.png"></span>';
 							} ?>
 								  
-								<ul class="profile-sign">
+								<ul class="profile-signs float-left ">
 								<?php if(is_user_logged_in()) {
 									global $current_user;
 								?>								
-								<li class="lought-btn"><a href="<?php echo wp_logout_url(home_url()); ?>"><?php _e('Logout','olio'); ?></a></li>
-								<li class="lought-btn"><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account','olio'); ?></a></li>
+								<li class="sign-up-btn login-hader"><a href="<?php echo wp_logout_url(home_url()); ?>"><?php _e('Logout','olio'); ?></a></li>
+								<li class="sign-up-btn sign--up-hader"><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account','olio'); ?></a></li>
 							<?php } else { ?>								
-								<li class="sign-up-btn"><a href="<?php echo site_url().'/seller-login'; ?>"><?php _e('Login','olio'); ?></a></li>
-							<li class="sign-up-btn"><a href="<?php echo site_url().'/registration'; ?>"><?php _e('Sign up','olio'); ?></a></li>
+								<li class="sign-up-btn login-hader"><a href="<?php echo site_url().'/seller-login'; ?>"><?php _e('Login','olio'); ?></a></li>
+							<li class="sign-up-btn sign--up-hader"><a href="<?php echo site_url().'/registration'; ?>"><?php _e('Sign up','olio'); ?></a></li>
 							<?php } ?>
 						</ul>
 					</div>
@@ -134,7 +136,7 @@
 						</span>
 						</a>
 					</div>
-					<div class="product-cart float-left">						
+					<div class="product-cart  count_cart_item float-left">						
 						<?php if(in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 								?>
 							<a href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>">

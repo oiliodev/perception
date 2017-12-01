@@ -16,9 +16,10 @@ get_header();
 ?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h1><?php echo get_the_title(); ?></h1>
+				<h1 class="title-my-acco"><?php echo get_the_title(); ?></h1>
 			<?php
 			
 				while ( have_posts() ) : the_post();
@@ -28,6 +29,7 @@ get_header();
 				endwhile; // End of the loop.
 			?>
 			</div>
+		</div>
 		</div>
 	</main>
 </div>

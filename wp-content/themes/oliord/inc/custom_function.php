@@ -5,7 +5,7 @@ add_image_size( 'member_product_big', 230,230, true );
 add_image_size( 'rmv_expand_product', 235,230, true );
 add_image_size( 'expand_product_img', 512,230, true );
 add_image_size( 'you_may_like_thumb', 90,90, true );
-
+add_image_size( 'user_profile_img', 335,252, true );
 
 
 wp_register_script( 'b2b-script', plugins_url() );

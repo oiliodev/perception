@@ -164,7 +164,9 @@ if ( ! defined( 'YITH_WCWL' ) ) {
 
 	                        <!-- Add to cart button -->
                             <?php if( $show_add_to_cart && isset( $stock_status ) && $stock_status != 'out-of-stock' ): ?>
-                                <?php woocommerce_template_loop_add_to_cart(); ?>
+                                <?php //woocommerce_template_loop_add_to_cart(); 
+                                do_action( 'woocommerce_' . $product->get_type() . '_add_to_cart' );
+                                ?>
                             <?php endif ?>
 
 	                        <!-- Change wishlist -->
@@ -202,7 +204,7 @@ if ( ! defined( 'YITH_WCWL' ) ) {
 
 	                        <!-- Remove from wishlist -->
 	                        <?php if( $is_user_owner && $repeat_remove_button ): ?>
-                                <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove_from_wishlist button" title="<?php _e( 'Remove this product', 'yith-woocommerce-wishlist' ) ?>"><?php _e( 'Remove', 'yith-woocommerce-wishlist' ) ?></a>
+                                <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove_from_wishlist button remove-btn" title="<?php _e( 'Remove this product', 'yith-woocommerce-wishlist' ) ?>"><?php _e( 'Remove', 'yith-woocommerce-wishlist' ) ?></a>
                             <?php endif; ?>
                         </td>
 	                <?php endif; ?>

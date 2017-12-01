@@ -29,6 +29,10 @@ wc_print_notices();
 do_action( 'woocommerce_account_navigation' ); ?>
 
 <div class="woocommerce-MyAccount-content">
+	<div class="account-author">
+		<h1><?php echo esc_html( $current_user->display_name ); ?></h1>
+	</div>
+	<div class="main-container">
 	<?php
 		/**
 		 * My Account content.
@@ -36,4 +40,5 @@ do_action( 'woocommerce_account_navigation' ); ?>
 		 */
 		do_action( 'woocommerce_account_content' );
 	?>
+	</div>
 </div>

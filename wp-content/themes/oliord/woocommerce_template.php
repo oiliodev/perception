@@ -407,17 +407,42 @@ Sportswear
 <h3 class="company-reviews">Company video & photos</h3>
 <ul class="company-video">
 	<?php if(!empty($product_videos)){
+		$i = 0;
 		foreach($product_videos as $val){
+		$i++;
 			//~ echo "<pre>"; print_r($val); exit;
 		 ?>
-			<li><?php 
+		<li><?php 
 			if($val->type == "Embedded"){
-				echo $val->embebido; 
-			}
-			?>			
-			</li>			
+			?>
+
+			<a href="#" style="position: relative; display: block; width: 163px; height: 163px;" data-toggle="modal" data-target="#video<?php echo $i; ?>">
+			<div style="position:absolute; width: 100%; height: 100%; top: 0; left: 0;"></div>
+				<?php echo $val->embebido; ?>
+			</a>
+			<div class="modal fade" id="video<?php echo $i; ?>">
+			  <div class="modal-dialog">
+				<div class="modal-content">				
+				  <div class="modal-header">
+<!--
+					  <h4>View</h4>
+-->
+					<button type="button" class="close" data-dismiss="modal" >
+					  <span aria-hidden="true">&times;</span>
+					</button>        
+				  </div>
+				  <div class="modal-body">
+					<?php echo $val->embebido; ?>
+				  </div>
+				  
+				</div>
+			  </div>
+			</div>
+		</li>
+		
 		<?php 
 		}
+	}
 	} else { ?>
 <li><img class="parentimage" src="<?php echo get_template_directory_uri() ; ?>/images/company-video-01.jpg" /></li>
 <li><img class="parentimage" src="<?php echo get_template_directory_uri() ; ?>/images/company-video-02.jpg" /></li>

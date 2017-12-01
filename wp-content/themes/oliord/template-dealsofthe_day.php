@@ -228,10 +228,12 @@ get_header( 'shop' );
 			$args['order'] = 'DESC';
 		}
 		
-		/*echo "<pre>";
-		print_r($args);*/
+		$loop = new WP_Query( $args );
 		
-		     $loop = new WP_Query( $args );
+		
+		//~ echo "<pre>";
+		//~ print_r($loop); exit;
+		 
 		 if ( $loop->have_posts() ) : ?>
 			<div class="col-sm-12 catlog_products">
 			<?php

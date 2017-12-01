@@ -316,7 +316,7 @@ $(window).load(function() {
 		?>
 	</div>
 			</div>
-			<?php wc_print_notices(); ?>
+			<?php //wc_print_notices(); ?>
 			<?php 
 			if($message != ""){ ?>
 				<h6 class="woocommerce-error"><?php echo $message; ?></h6>
