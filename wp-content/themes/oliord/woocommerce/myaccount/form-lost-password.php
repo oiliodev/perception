@@ -28,7 +28,7 @@ wc_print_notices(); ?>
 
 	<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
 		<label for="user_login"><?php _e( 'Username or email', 'woocommerce' ); ?></label>
-		<input class="woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" />
+		<input class="woocommerce-Input woocommerce-Input--text input-text form-control" type="text" name="user_login" id="user_login" />
 	</p>
 
 	<div class="clear"></div>
@@ -37,7 +37,7 @@ wc_print_notices(); ?>
 
 	<p class="woocommerce-form-row form-row">
 		<input type="hidden" name="wc_reset_password" value="true" />
-		<input type="submit" class="woocommerce-Button button" value="<?php esc_attr_e( 'Reset password', 'woocommerce' ); ?>" />
+		<input type="submit" class="woocommerce-Button btn btn-block btn-primary" value="<?php esc_attr_e( 'Reset password', 'woocommerce' ); ?>" />
 	</p>
 
 	<?php wp_nonce_field( 'lost_password' ); ?>

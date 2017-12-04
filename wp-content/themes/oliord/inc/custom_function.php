@@ -36,7 +36,14 @@ global $product, $woocommerce, $woocommerce_loop;
 $current_user = wp_get_current_user();
 
 $metakey_array = array(
-	array('key' => 'deals_of_the_day','value' => '1','compare' => '!=')
+	array('key' => 'deals_of_the_day','value' => '1','compare' => '!='),
+	 
+        array( // Simple products type
+            'key'           => '_sale_price',
+            'value'         => 0,
+            'compare'       => '=',
+            'type'          => 'numeric'
+        )
 );
 
 $args = array(
@@ -50,6 +57,8 @@ $args = array(
 	)
 );
 $wc_query = new WP_Query($args); 
+
+//~ echo "<pre>"; print_r($wc_query); exit;
 ?>
 
  <div class="col-xl-9 col-sm-12 dimond_members">
@@ -122,7 +131,8 @@ $wc_query = new WP_Query($args);
 				echo "$34";
 				echo "<span>$70</span>"; 
 			 }else{
-			  echo $product->get_price_html(); ?><?php _e( 'Per Piece' ); 
+			  echo $product->get_price_html();  
+			  //_e( 'Per Piece' ); 
 			}
 			  ?>
 			  </div>
@@ -131,7 +141,7 @@ $wc_query = new WP_Query($args);
           <div class="col-md-12 clearfix">	
 		  <div class="progress-bar-l">
 		            <div class="dimaond_product_qty">			  
-			  <b>MQR:</b><br /><?php echo $mqr[0]; ?>&nbsp;<?php _e( 'Piece' ); ?>			  
+			  <b>MQR:</b><br /><?php echo $mqr[0]; ?>&nbsp;<?php _e( 'Piece' ); ?>
 			</div>
 			</div>
 
@@ -485,7 +495,7 @@ $vendor_id 		= 	get_post_field( 'post_author', $product_id );
 $args = array(
 		'post_type' => 'product',					
 		'post_status'    => 'publish',					
-		'posts_per_page' => 4,
+		'posts_per_page' => 10,
 		'author__not_in' => array( $vendor_id )
 	);	
 
@@ -497,11 +507,11 @@ $products = new WP_Query( $args );
 
 <div class="flash_deals woocommerce col-sm-12 other_vendor">	
 	<h3><span><?php esc_html_e( 'Products from other Vendors', 'woocommerce' ); ?></span></h3>
-		<ul class="row">
+		<ul class="row" id="other_vendor_products">
 		<?php 
 		if ( $products->have_posts() ) { 
 		while ( $products->have_posts() ) : $products->the_post(); ?>		
-				<li class="col-lg-3 col-md-4 col-sm-6 form-group">
+				<li class="form-group">
 					<div class="product-pad form-group">
 						<?php woocommerce_get_template_part( 'content', 'product' ); ?>
 					</div>

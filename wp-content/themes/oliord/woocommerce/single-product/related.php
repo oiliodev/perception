@@ -31,7 +31,7 @@ if ( $related_products ) : ?>
 			<?php 
 			//~ echo "<pre>"; print_r($related_products); echo "</pre>"; exit;
 			foreach ( $related_products as $related_product ) : ?>
-					<li <?php //post_class(); ?>  class="col-sm-6 col-md-4 col-lg-3">
+					<li <?php //post_class(); ?> >
 					<div class="product-pad">
 					<?php
 						$post_object = get_post( $related_product->get_id() );

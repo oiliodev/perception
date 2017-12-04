@@ -26,8 +26,10 @@ $mqr	=	get_post_meta( $productId, '_wc_mmax_min');
 if(!isset($mqr[0])){
 		$mqr[0]	=	1;
 }
+if(!is_page( array( 'wishlist'))) { 
 ?>
 <p class="stock <?php echo esc_attr( $class ); ?>">
 <?php //echo _e('MQR:', 'woocommerce').str_replace('in stock','',wp_kses_post( $availability ));  echo _e('Pieces', 'woocommerce');?>
     <?php _e( 'MQR:' ); echo $mqr[0]; ?>&nbsp;<?php _e( 'Piece' ); ?>
 </p>
+<?php } ?>

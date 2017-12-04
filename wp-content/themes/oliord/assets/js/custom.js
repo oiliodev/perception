@@ -22,7 +22,38 @@ window.onload = function() {
 //~ });
 
 
-$(function(){	
+$(function(){
+	
+jQuery(".related_products ul.products").owlCarousel({
+autoPlay: false, //Set AutoPlay to 3 seconds
+items : 4,
+navigation : true,
+pagination : false,
+});
+
+jQuery("#other_vendor_products").owlCarousel({
+autoPlay: false, //Set AutoPlay to 3 seconds
+items : 4,
+navigation : true,
+pagination : false,
+});
+
+	
+jQuery("#woozoom-gallery ul li a video").click(function() {
+	var video_link	=	jQuery(this).parent().data('video_link');	
+	var video_html	=	'<video width="400" controls><source src="'+video_link+'" type="video/mp4" >Your browser does not support HTML5 video.</video>';
+	jQuery(".main_product_image").html(video_html);
+});
+
+jQuery("#woozoom-gallery ul li a img.product-img").click(function(e) {
+	
+	if($('video').length == 2){
+			var img_src = $(this).parent().data('zoom-image');
+			jQuery(".main_product_image").html('<a href="'+img_src+'" itemprop="image" class="woocommerce-main-image zoom" data-rel="prettyPhoto[product-gallery]"><div style="height:415px;width:415px;" class="zoomWrapper"><img id="woozoom-zoom" class="woocommerce-main-image notSelectable" src="'+img_src+'" data-zoom-image="'+img_src+'" style="position: absolute;"></div></a>');	
+			jQuery(window).trigger('resize');
+	}
+	
+});
 	
 	//~ jQuery('#example2').accordionSlider({
 	//~ width: 1960,

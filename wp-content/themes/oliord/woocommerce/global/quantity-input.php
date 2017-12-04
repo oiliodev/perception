@@ -36,6 +36,7 @@ if ( $max_value && $min_value === $max_value ) {
 	<?php
 }
 }else {
+	
 	$product_id	= $product->get_id();
 	if ( is_user_logged_in()) {
 		$url = site_url()."/contact-seller/?product_id=".$product_id;	
@@ -45,10 +46,11 @@ if ( $max_value && $min_value === $max_value ) {
 	$mqr	=	get_post_meta( $product_id, '_wc_mmax_min');
 ?>
 <div class="quantity hidden">
-		<input type="hidden" id="<?php echo esc_attr( $input_id ); ?>" class="qty" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $mqr[0] ); ?>" />
-	</div>
-	
+	<input type="hidden" id="<?php echo esc_attr( $input_id ); ?>" class="qty" name="<?php echo esc_attr( $input_name ); ?>" value="<?php echo esc_attr( $mqr[0] ); ?>" />
+</div>
+<?php if(!is_page( array( 'wishlist'))) { ?>	
 <div class="contact-seller">
 	<a class="button" href="<?php echo $url; ?>">Contact Seller</a>
 </div>
-<?php } ?>
+<?php } 
+}?>

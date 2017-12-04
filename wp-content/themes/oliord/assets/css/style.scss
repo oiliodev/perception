@@ -10,7 +10,8 @@
 	$color-yellow: #fab523; 
 	$color-black_dark: #000;  
 	$color-black_medium: #858585;
-	$color-black_gray: #747474;  
+	$color-black_gray: #747474;
+	$color-white: #fff;   
 /* Colors for less end*/
 
 /* background for less css */
@@ -20,6 +21,7 @@
 	$bg-black_medium: #ecfffb;
 	$bg-black_gray: #e5e5e5;
 	$color-yellow: #f5b322;
+	$bg-black_Coral: #ff622d;
 /*background for less end*/
 
 /*border radius for less css*/
@@ -126,6 +128,15 @@ $outline: none;
 	-moz-box-sizing: border-box; 
 	-ms-box-sizing: border-box;
 }
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
 /*box sizing for less css*/
 
 
@@ -277,7 +288,7 @@ header.site-header {background: $bg-white; padding-bottom: 24px; font-family: $f
 .header-right-part .user-profile ul.profile-sign {word-break: break-all; background: $bg-white; border: 2px solid $bg-teal_dark; border-radius: 100%; height: 42px; left: 0;  list-style: none;  margin-top: -50px; padding:7px 0; position: $position-a; top: -33px; width: 42px; z-index: 99; line-height:normal; text-align: center; font-weight: $font-weight-600; font-size: $font-size-13;  line-height: 0.9;}
 .header-right-part .user-profile ul.profile-sign {display: block; opacity: 0; top: 66px; transition-duration: 0.35s; transition-property: margin, opacity, visibility;  transition-timing-function: ease-in-out; visibility: hidden;}
 .header-right-part .user-profile:hover ul {display: block; margin-top: -20px; opacity: 1; visibility: visible;}
-.header-right-part .user-profile ul li a {color: $bg-teal_dark; font-size: $font-size-14; text-decoration: none;}
+.header-right-part .user-profile ul li a { color: $bg-teal_dark; font-size: $font-size-14; text-decoration: none;}
 .header-right-part .user-profile ul li span{margin-right:10px;}
 /*Header part end*/
 
@@ -2448,82 +2459,57 @@ border: 1px solid #e1e1e1;
 /*************END**************/
 
 /*1 12 2017 header*/
+@media screen and (max-width:$grid-breakpoints-sm) {
+header.site-header .site-header-menu.toggled-on { display: block;
+    left: 0; margin-bottom: 10px; margin-left: -15px; margin-right: -15px; position: relative; top: 0; width: auto;}
+}
 
-.user-profile span {color: #ffffff; font-size: 20px; display: block; font-family: "arialregular"; line-height: 52px; 
-	text-transform: capitalize;}
-	.product-cart span,.hart-button span {
-		background: #fe6028; 
-		border-radius: 50px; 
-		color: #fff; 
-		font-size: 13px; 
-		font-weight: 0; 
-		height: 18px; 
-		line-height: 1.2; 
-		position: absolute; 
-		right: -3px; 
-		text-align: center; 
-		top: -10px; 
-		width: 18px;}
-	.user-profile,.product-cart,.hart-button {
-		background: #01a89e url("../../images/header-ico.png") no-repeat;
-	}
-	.user-profile {
-		background-position: 10px 8px;
-	}
-	.hart-button {
-		background-position: -38px 9px;
-	}
-	.product-cart {
-		background-position: -85px 9px;
-	}
-	.user-profile ul{
-		margin: 0; 
-		padding: 0; 
-		list-style: none;
-	}
-	.user-profile .login-hader{
-		left: 0;
-		line-height: 2.4;
-	}
-	.user-profile .sign--up-hader {
-		line-height: 0.9; 
-		padding: 5px 0; 
-		right: 0;
-	}
-	.user-profile .sign-up-btn {
-		border: 2px solid #01a89e;
-		border-radius: 100%;
-		color: #01a89e;
-		display: block;
-		font-size: 14px;
-		font-weight: 600;
-		height: 42px;
-		margin: 0;
-		opacity: 0;
-		position: absolute;
-		text-align: center;
-		top: 0;
-		transition-duration: 0.45s;
-		transition-property: margin, opacity, visibility;
-		transition-timing-function: ease-in-out;
-		visibility: hidden;
-		width: 42px;
-		z-index: 1;}
-.user-profile .sign-up-btn a{color: #01a89e; font-size: 14px; font-weight: 600; text-decoration: none;}
+.sign-up-btn.login-hader a img {
+    vertical-align: middle;
+}
+li.sign-up-btn.sign--up-hader a{line-height: 26px;}
+li.sign-up-btn.sign--up-hader a img{vertical-align: middle;}
+.user-profile span {color: $color-white; font-size: $font-size-20; display: block; font-family: "arialregular"; 
+	line-height: 52px; text-transform: capitalize;}
 
-.user-profile:hover .login-hader { background: #fff; display: block; margin-left: -34px; margin-top: 40px; opacity: 1; top: 0; visibility: visible;}
-.user-profile:hover .sign--up-hader {background: #fff; display: block;	margin-right: -34px; margin-top: 40px; opacity: 1; 	  top: 0;	visibility: visible;}
+.product-cart span,.hart-button span {background: #fe6028; border-radius:$border-radius; color: $color-white;
+	font-size: $font-size-13; font-weight: 0; height: 18px; line-height: 1.2; position: absolute; right: -3px; 
+	text-align: center; top: -10px; width: 18px;}
+
+.user-profile,.product-cart,.hart-button {background: #01a89e url("../../images/header-ico.png") no-repeat;}
+.user-profile {background-position: 10px 8px;}
+.hart-button {background-position: -38px 9px;}
+
+.product-cart {background-position: -85px 9px;}
+.user-profile ul{ margin: 0; padding: 0; list-style: none;}
+.user-profile .login-hader{left: 0;	line-height: 2.4;}
+.user-profile .sign--up-hader {line-height: 0.9; padding: 5px 0; right: 0;}
+
+.user-profile .sign-up-btn { border: 2px solid #01a89e;	border-radius: 100%; color: #01a89e; display: block; 
+	font-size: $font-size-14; font-weight:$font-weight-600; height: 42px; margin: 0; opacity: 0; position: absolute; 
+	text-align: center; top: 0; transition-duration: 0.45s; transition-property: margin, opacity, visibility; 		 		    transition-timing-function: ease-in-out; visibility: hidden; width: 42px; z-index: 1;}
+
+.user-profile .sign-up-btn a{color: #01a89e; font-size:$font-size-14; font-weight: $font-weight-600; text-decoration: none;}
+.user-profile:hover .login-hader { background: $bg-white; display: block; margin-left: -34px; margin-top: 40px;
+	 opacity: 1; top: 0; visibility: visible;}
+.user-profile:hover .sign--up-hader {background-color: $bg-white; display: block;	margin-right: -34px; margin-top: 40px; 
+	opacity: 1; top: 0;	visibility: visible;}
+
 .profile-ing { position: absolute; top:0px;}
 .profile-ing .img-fluid { border-radius: 50%;}
 span.profile-name { position: absolute; right: 0; left: 0; top: -5px;}
 
-h1.title-my-acco { font-size: 28px; color: #676767; font-weight: 700; padding: 35px 0 15px 0;}
+h1.title-my-acco { font-size:$font-size-24; color: #676767; font-weight:$font-weight-700; padding:0;}
+
 .woocommerce-account .woocommerce { margin-bottom: 50px;}
 .woocommerce-account .woocommerce-MyAccount-navigation{ background: #494949; padding:0px 0;}
 .woocommerce-account .woocommerce-MyAccount-navigation ul{margin:0; padding:0;}
-.woocommerce-account .woocommerce-MyAccount-navigation li{  display: inline-block; width: 100%; border-bottom: #626262 1px solid; padding: 10px 30px;}
+.woocommerce-account .woocommerce-MyAccount-navigation li{  display: inline-block; width: 100%; 
+	border-bottom: #626262 1px solid; padding: 10px 30px;}
+
 .woocommerce-account .woocommerce-MyAccount-navigation li:last-child{ border-bottom: none;}
-.woocommerce-account .woocommerce-MyAccount-navigation li a{ color:#fff; font-size:18px; text-decoration: none; }
+.woocommerce-account .woocommerce-MyAccount-navigation li a{ color:$color-white; font-size:$font-size-18; 
+	text-decoration: none; }
 .woocommerce-account .woocommerce-MyAccount-navigation li:hover{ background: #f9b723; color:#333;}
 .woocommerce-account .woocommerce-MyAccount-navigation li.is-active{ background: #f9b723; color:#333;}
 
@@ -2534,10 +2520,10 @@ h1.title-my-acco { font-size: 28px; color: #676767; font-weight: 700; padding: 3
 
 .woocommerce-Address-title.title{position: relative;}
 .woocommerce-Address-title.title:before { border-top: 1px #d6d6d6 solid; position: absolute; width: 100%; top: 19px;}
-.woocommerce-Address-title a.edit{ position: relative; top: 0; background: #fff; padding: 7px 15px;}
+.woocommerce-Address-title a.edit{ position: relative; top: 0; background: $bg-white; padding: 7px 15px;}
 .woocommerce-Address-title a.edit .fa-pencil {font-size: 19px; color: #737373; position: relative; top: 1px; left: 10px;}
 
-.custom-billing-address .input-text{ display: block; width: 100%; padding: 0.5rem 0.75rem; font-size: 1rem; line-height: 1.25; color: #464a4c; background-color: #fff; background-image: none;
+.custom-billing-address .input-text{ display: block; width: 100%; padding: 0.5rem 0.75rem; font-size: 1rem; line-height: 1.25; color: #464a4c; background-color: $bg-white; background-image: none;
     -webkit-background-clip: padding-box;
     background-clip: padding-box; border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 0.25rem;
     -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
@@ -2548,14 +2534,14 @@ h1.title-my-acco { font-size: 28px; color: #676767; font-weight: 700; padding: 3
 .custom-billing-address input.button{
     background-color: #00a99d;
     border-color: #00a99d;
-    color: #fff;
+    color:$color-white;
 }
 .custom-billing-address input.button:hover{
     background-color: #00a99d;
     border-color: #00a99d;
-    color: #fff;
+    color:$color-white;
 }
-.woocommerce-account .addresses .title h3 {float: left; font-size: 16px;font-weight: normal; margin: 0; color: #01a89e; padding: 10px; position: relative; z-index: 1; background: #fff;}
+.woocommerce-account .addresses .title h3 {float: left; font-size:$font-size-16;font-weight: normal; margin: 0; color: #01a89e; padding: 10px; position: relative; z-index: 1; background:$bg-white;}
 
 .account-author {width: 100%; display: inline-block; background: #494949;}
 .account-author h1 {font-size: 1.5rem; color: #f9b723; margin: 0; padding: 25px 30px;}
@@ -2563,13 +2549,48 @@ h1.title-my-acco { font-size: 28px; color: #676767; font-weight: 700; padding: 3
 .main-container a{color:#01a89e; font-size:14px;}
 
 .wishlist_table del{ display: none;}
-.wishlist_table .woocommerce-Price-amount.amount { color: #00a89d; font-size: 14px; font-weight: 400; margin-right: 7px;}
+.wishlist_table .woocommerce-Price-amount.amount { color: #00a89d; font-size: $font-size-14; font-weight: $font-weight-400; margin-right: 7px;}
 .wishlist_table ins { text-decoration: none;}
-a.remove_from_wishlist.button.remove-btn.remove-btn {background-color: #ff622d; font-size: 14px;
-    font-weight: 600; margin-left: 0; padding: 11px; color:#fff; text-transform: uppercase;}
+a.remove_from_wishlist.button.remove-btn.remove-btn {background-color: $bg-black_Coral; font-size: $font-size-14;
+    font-weight:$font-weight-600; margin-left: 0; padding: 11px; color:$color-white; text-transform: uppercase;}
 
-a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart.add_to_cart.button.alt{
- background-color: #01a89e; font-size: 14px; font-weight: 600; margin-left: 0; padding: 11px; color:#fff; 
- text-transform: uppercase;}
-
+.wishlist_table .single_add_to_cart_button.button.alt{
+ background-color: $bg-teal_dark; font-size:$font-size-14; font-weight: $font-weight-600; margin-left: 0; padding: 11px; color:$color-white; text-transform: uppercase; width: 100%; margin-bottom: 10px;}
+.wishlist_table .single_add_to_cart_button.button.alt:hover{ background-color:$bg-teal_dark; color:$color-white;}
 .company-video iframe {width: 100%;}
+
+
+
+.content-area h1{ margin-bottom: 50px; margin-top: 20px; font-family: "arialbold";}
+
+.content-area .col-sm-4.dts-main{display: -ms-flex; display: -webkit-flex; display: flex; display: -webkit-flex; -webkit-flex-wrap: wrap; flex-wrap: wrap;}
+.departments-blog {width: 100%; display: inline-block; text-align: center; background:$bg-white; margin-bottom: 30px; padding-bottom: 25px}
+.departments-img {width: 100%; text-align: center; padding: 15px; }
+
+ 
+.departments-img img { max-width: 100%; min-height: 311px;}
+.departments-blog .label.label-info { padding: 15px; text-align: center; font-size: $font-size-18;}
+.departments-blog .list-group ul{padding:0; marging:0;}
+.departments-blog .list-group li{margin: 5px 25px;  border-bottom: 1px solid #ccc  !important; border-left: none; border-right: none; border-top: none; padding: 6px 0;
+border-radius: 0;}
+
+.departments-blog .list-group li a{color: $color-black_gray; font-size:$font-size-14; font-weight: $font-weight-400; 
+	text-decoration: none;}
+.departments-blog .list-group li a:hover{color: $color-teal;}
+.login-page, .forgot, .reset_password{margin: 0% auto !important;}
+.woocommerce-Button { width: auto !important;}
+.wcmp_main_page .wcmp_main_menu ul li a:hover, .wcmp_main_page .wcmp_main_menu ul li a.active{background: #f9b723 !important; color: #494949 !important;}
+
+.wcmp_main_page .wcmp_headding1, body .wcmp_main_page .wcmp_side_menu{background: #494949 !important; color: #333 !important;}
+.wcmp_main_page .wcmp_main_menu ul li a{background: #494949 !important; color: #fff !important;}
+.wcmp_side_menu .wcmp_top_logo_div h3{color: #fff;}
+.wcmp_main_holder .wcmp_headding1 ul li{color: #f9b723;}
+.wcmp_main_holder .wcmp_headding1 span{color: #f9b723;}
+.wcmp_side_menu .wcmp_top_logo_div ul li a{color: #fff;}
+
+#other_vendor_products .form-group{padding: 0 8px;}
+ .woocommerce .products ul li, .woocommerce ul.products li{padding:0 8px;}
+ 
+ .owl-buttons { position: absolute; top: 35%; width: 100%;}
+.owl-theme .owl-controls .owl-buttons div.owl-prev{ content: ""; background: url("../../images/next-aroow.png") 0 0 no-repeat;  width: 50px; height: 50px; font-size: 0; position: absolute;  left: 0px;}
+.owl-theme .owl-controls .owl-buttons div.owl-next{ content: ""; background: url("../../images/prev-aroow.png") 0 0 no-repeat; width: 50px;height: 50px; font-size: 0; position: absolute;  right: 0px;}

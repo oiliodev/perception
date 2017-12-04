@@ -603,4 +603,10 @@ return $redirect_to;
 }
 
 
+add_filter( 'woocommerce_output_related_products_args', 'jk_related_products_args' ); 
+function jk_related_products_args( $args ) {
+	$args['posts_per_page'] = 10; // 4 related products
+	$args['columns'] = 2; // arranged in 2 columns
+	return $args;
+}
 ?>

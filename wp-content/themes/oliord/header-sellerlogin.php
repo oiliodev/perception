@@ -38,7 +38,7 @@ jQuery('.country_to_state').on('change',function(){
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed site">
 	
-		<?php /*?><div class="container">
+		 <?php if(is_page( array( 'forgot-password'))) { ?><div class="container">
 			<div class="row">
 				<div class="seller-login-logo">
 						<?php
@@ -49,7 +49,7 @@ jQuery('.country_to_state').on('change',function(){
 				</div>
 			</div>
 
-		</div><?php */?>
+		</div><?php } ?>
 	
 	
 <!--<div class="container"> -->
