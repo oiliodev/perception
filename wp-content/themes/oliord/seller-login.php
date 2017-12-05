@@ -29,7 +29,7 @@ if ( is_user_logged_in()) {
 	$userID = $current_user->ID;
 	$user_login	=	$current_user->user_login;	
 	$rows_affected = $wpdb->update( $table_name, array( 'hash' => $_REQUEST['qrHash'],'uname' => $user_login ), array( 'hash' => $_REQUEST['qrHash'] ) );	
-	wp_redirect(site_url());
+	wp_redirect(site_url().'?n='.time());
 	ob_end_flush();
 	exit;
 }

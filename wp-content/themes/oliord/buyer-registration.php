@@ -37,6 +37,8 @@ if ( isset( $_POST['seller_register_nonce'] ) && wp_verify_nonce( $_POST['seller
 	$juridicial_person_email	=	sanitize_text_field($_POST['juridicial_person_email']);
 	$business_tax_id			=	sanitize_text_field($_POST['business_tax_id']);
 	$membership					=	sanitize_text_field($_POST['membership']);
+	$expire_business_license	=	sanitize_text_field($_POST['expire_business_license']);
+	$expire_import_export_business_certified	=	sanitize_text_field($_POST['expire_import_export_business_certified']);
 	
 	$info = array();
 	$info['first_name'] =	$billing_first_name;
@@ -105,9 +107,15 @@ if ( isset( $_POST['seller_register_nonce'] ) && wp_verify_nonce( $_POST['seller
 			   if ( isset( $business_tax_id ) && $business_tax_id != "" ) {
 					update_user_meta( $sellerId, 'business_tax_id', sanitize_text_field( $business_tax_id));
 			   }
-			   if ( isset( $membership ) && $membership != "" ) {
-					update_user_meta( $sellerId, 'membership', sanitize_text_field( $membership));
-			   }			   
+			   if ( isset( $expire_business_license ) && $expire_business_license != "" ) {
+					update_user_meta( $sellerId, 'expire_business_license', sanitize_text_field( $expire_business_license));
+			   }
+			   
+			   if ( isset( $expire_import_export_business_certified ) && $expire_import_export_business_certified != "" ) {
+					update_user_meta( $sellerId, 'expire_import_export_business_certified', sanitize_text_field( $expire_import_export_business_certified));
+			   }
+			   
+		   			   
 			   
 			   if(isset($_FILES['business_license']['name']) && $_FILES['business_license']['name'] != ""){
 				  $business_license_dir	=	$uploads.'/business_license/';

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header( 'shop' ); ?>
 <div class="container">
-	<div class="row  woocommerce">
+	<div class="row woocommerce">
 		<?php 
 			 if ( have_posts() ) : ?>
 				<div class="col-sm-12 catlog_products">

@@ -4,37 +4,19 @@ window.onload = function() {
    jQuery(".progress-bar-custom").loading();
 };
 
-
-//~ $(function(){
- //~ var shrinkHeader = 100;
-  //~ $(window).scroll(function() {
-    //~ var scroll = getCurrentScroll();
-      //~ if ( scroll >= shrinkHeader ) {
-           //~ $('.deals-day-banner').addClass('shrink');
-        //~ }
-        //~ else {
-            //~ $('.deals-day-banner').removeClass('shrink');
-        //~ }
-  //~ });
-//~ function getCurrentScroll() {
-    //~ return window.pageYOffset || document.documentElement.scrollTop;
-    //~ }
-//~ });
-
-
 $(function(){
 	
 jQuery(".related_products ul.products").owlCarousel({
-autoPlay: false, //Set AutoPlay to 3 seconds
+autoPlay: true, //Set AutoPlay to 3 seconds
 items : 4,
-navigation : true,
+navigation : false,
 pagination : false,
 });
 
 jQuery("#other_vendor_products").owlCarousel({
-autoPlay: false, //Set AutoPlay to 3 seconds
+autoPlay: true, //Set AutoPlay to 3 seconds
 items : 4,
-navigation : true,
+navigation : false,
 pagination : false,
 });
 
@@ -43,6 +25,7 @@ jQuery("#woozoom-gallery ul li a video").click(function() {
 	var video_link	=	jQuery(this).parent().data('video_link');	
 	var video_html	=	'<video width="400" controls><source src="'+video_link+'" type="video/mp4" >Your browser does not support HTML5 video.</video>';
 	jQuery(".main_product_image").html(video_html);
+	jQuery(window).trigger('resize');
 });
 
 jQuery("#woozoom-gallery ul li a img.product-img").click(function(e) {
@@ -54,46 +37,6 @@ jQuery("#woozoom-gallery ul li a img.product-img").click(function(e) {
 	}
 	
 });
-	
-	//~ jQuery('#example2').accordionSlider({
-	//~ width: 1960,
-	//~ height: 500,
-	//~ responsiveMode: 'custom',
-	//~ autoplay: false,
-	//~ mouseWheel:false,
-	//~ keyboard:false,
-	//~ visiblePanels: 8,
-	//~ breakpoints: {
-		//~ 900: {visiblePanels: 6,height: 900},
-		//~ 600: {visiblePanels: 4,height: 1000}
-	//~ }
-//~ });
-
-//~ $('ul.products li').hover(
-//~ function() {
-	//~ $(this).addClass('expand');
-//~ }, function() {
-	//~ $(this).removeClass('expand');
-	//~ $(this).parent().find('li').removeClass("expand");
-//~ });
-    
-    
-
-
-//jQuery('.filter-sidebar').on('mouseover', '> div', function(e) {	
-//~ jQuery('.filter-sidebar').mouseover(function(){
-	//~ jQuery('.catlog_products').addClass('disable_background');
-			
-//~ }).on('mouseout', '> div', function (e) {
-		//~ jQuery('.catlog_products').removeClass('disable_background');
-//~ });
-	
-
-//~ $('.filter-sidebar').hover(
-//~ function() {
-	//~ click_filter();
-//~ });
-
 
 $('.flash_deals ul li').hover(
 function() {	
@@ -113,8 +56,6 @@ function() {
 });
     
 
-	//~ var currentTab = 0; // Current tab is set to be the first tab (0)
-	//~ showTab(currentTab); // Display the crurrent tab
 	$("#reg_billing_phone").intlTelInput();
 		
 	jQuery('.navbar-nav').on('mouseover', '> #menu-item-159', function(e) {        
@@ -179,12 +120,7 @@ function() {
 			var max_review = 0;
 		}
 		
-  
-		//~ jQuery(':checkbox[name="'  + name + '"]').not($(this)).prop('checked',false);   				 
-		 //~ var url = site_url+"/deals-of-the-day/?price="+price+"&min_price="+min_price+
-		//~ "&max_price="+max_price+"&discount="+discount+"&min_disc="+min_disc+"&max_disc="+max_disc+
-		//~ "&review="+review+"&min_review="+min_review+"&max_review="+max_review+"&sort="+sort+"&field="+field+"&order="+order;
-		
+
 		var url = site_url+"/deals-of-the-day/?price="+price+"&min_price="+min_price+
 		"&max_price="+max_price+"&discount="+discount+"&min_disc="+min_disc+"&max_disc="+max_disc+
 		"&review="+review+"&min_review="+min_review+"&max_review="+max_review;		
@@ -268,7 +204,6 @@ function() {
 						if(msg	== 1){
 							alert("Thanks for joining with us");
 							jQuery("#company_email_id").val('');
-							//~ jQuery('.invited-join').html('<p class="deals-day-text">Thanks for joining</p>');
 						}
 					}
 			});
@@ -400,40 +335,6 @@ function nextPrev(n) {
   x[currentTab].style.display = "none";
   // Increase or decrease the current tab by 1:
   currentTab = currentTab + n;  
-  //~ var register_type = $("input[name='register_type']:checked").val();
-	
-	//~ if(currentTab == 1){
-
-	//~ if(register_type	==	"Buyer"){
-		//~ jQuery("#seller_information").removeClass( "tab" );	
-		//~ jQuery(".seller_information").hide();  		
-		//~ jQuery("#seller_step").removeClass( "step" );
-		//~ jQuery("#seller_step").hide();
-		//~ jQuery(".registration_progress").removeClass( "seller_registration_progress" );
-	  //~ }else{
-		//~ jQuery(".seller_information").addClass( "tab" );
-		//~ jQuery(".tab").removeClass( "seller_information" );	
-		//~ jQuery("#seller_step").addClass( "step" );
-		//~ jQuery("#seller_step").show();
-		//~ jQuery(".registration_progress").addClass( "seller_registration_progress" );
-	  //~ }
-	//~ }
-	
-	/*if(currentTab == 2){
-	  if(register_type	==	"Buyer"){
-		jQuery("#seller_information").removeClass( "tab" );	
-		jQuery(".seller_information").hide();  		
-		jQuery("#seller_step").removeClass( "step" );
-		jQuery("#seller_step").hide();
-		jQuery(".registration_progress").removeClass( "seller_registration_progress" );
-	  }else{
-		jQuery(".seller_information").addClass( "tab" );
-		jQuery(".tab").removeClass( "seller_information" );	
-		jQuery("#seller_step").addClass( "step" );
-		jQuery("#seller_step").show();
-		jQuery(".registration_progress").addClass( "seller_registration_progress" );
-	  }
-	}*/
   
   // if you have reached the end of the form...
   if (currentTab >= x.length) {
@@ -540,7 +441,8 @@ function validateForm() {
 		valid = false;
 	}
  
-	if(currentTab	==	 2 && jQuery("#billing_state").val() == ""){
+ 
+	if((currentTab	==	 2 )&& (jQuery("#billing_state").val() == "0" || jQuery("#billing_state").val() == "")){
 		jQuery("#billing_state").addClass( "invalid" );
 		valid = false;
 	}
@@ -582,18 +484,13 @@ function validateForm() {
 		}
 		
 	}
- //~ if(currentTab	==	 2 && jQuery("#seller_agreement").prop("checked") == false){
-	 //~ jQuery("#seller_agreement").addClass( "invalid" );
-	  //~ valid = false;
-//~ }
   
   if(valid == false){
-	  //~ jQuery(".woocommerce-error").html("Please fill up mandatory fields");
-	  //~ jQuery(".woocommerce-error").html(content);
 	  
 		jQuery(".woocommerce-error").html(content);
 		jQuery(".woocommerce-error").show();
-	  return false;
+		
+		return false;
   }
   // If the valid status is true, mark the step as finished and valid:
   if (valid) {	  
@@ -614,13 +511,8 @@ function fixStepIndicator(n) {
 //END ragistration functionality
 
 function click_filter(){
-		//~ jQuery(".side-bar-filter").animate({
-			//~ width: "toggle"
-		//~ });	
-		
+
 	jQuery(".side-bar-filter").slideToggle("slow");
-	//~ jQuery(".side-bar-filter").removeAttr("style");      
-	
 	jQuery('body').toggleClass('disable_background');
 	jQuery(".side-bar-filter").toggleClass("active");
 	jQuery(".click_filter_toogle").toggleClass("open");

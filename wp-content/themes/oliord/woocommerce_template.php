@@ -42,13 +42,14 @@ remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_ad
 
 
 function woocommerce_template_loop_product_thumbnail( $size = 'shop_catalog', $deprecated1 = 0, $deprecated2 = 0 ){	
-	global $product;
+	global $product,$wpdb;
 	$productId	= get_the_ID();
 	//~ $rating				=	$product->get_rating_count($productId);	
 	//~ $rating_count		=	(( $rating / 5 ) * 100 );
 	//~ $review_count		=	(($product->get_review_count($productId) / 5 ) * 100);
 	//~ $average			=	(($product->get_average_rating($productId)/ 5 ) * 100);
-	
+	$prod_id_like = $wpdb->get_results( 'SELECT count(prod_id) as count FROM wp_yith_wcwl WHERE prod_id ='.$productId);
+	$like	=	$prod_id_like->count;
 	
 	$rating_count	= $product->rating_counts['5'] / 5 * 100; //70	
 	$review_count	= $product->rating_counts['3'] / 5 * 100;	//50
@@ -60,12 +61,13 @@ function woocommerce_template_loop_product_thumbnail( $size = 'shop_catalog', $d
 	$image_exp	= 	get_the_post_thumbnail_url($productId,'expand_product_img');
 	
 	
-	global $wpdb;
 	$user_id = get_current_user_id();
 	$results = $wpdb->get_results( 'SELECT prod_id FROM wp_yith_wcwl WHERE user_id ='.$user_id);
 	foreach ($results as $prod_id) {
 		$prod_ids[] = $prod_id->prod_id;
 	}
+	
+	//~ echo "<pre>"; print_r($prod_ids); exit;
 	$prod_ids = array_unique($prod_ids);
 	if(in_array(get_the_ID(), $prod_ids)){
 		$class = "wishlist_added";
@@ -76,15 +78,21 @@ function woocommerce_template_loop_product_thumbnail( $size = 'shop_catalog', $d
 	
 	<div class="custom_rating">
 					<div class="progress-bar-r">	
+						<?php if($rating_count > 0) { ?>
 						<div class="progress-bar-rate first">
 							<div class="progress-bar-custom position" data-percent="<?php echo $rating_count; ?>" data-duration="1000" data-color="#fff,#0e7c05" ></div>
 						</div>
+						<?php } ?>
+						<?php if($review_count > 0) { ?>
 						<div class="progress-bar-rate first">
 							<div class="progress-bar-custom position" data-percent="<?php echo $review_count; ?>" data-duration="1000" data-color="#fff,#ff6a1f"></div>
 						</div>
+						<?php } ?>
+						<?php if($average > 0) { ?>
 						<div class="progress-bar-rate first">
 							<div class="progress-bar-custom position" data-percent="<?php echo $average; ?>" data-duration="1000" data-color="#fff,#d11d05"></div>
 						</div>
+						<?php } ?>
 						<div class="progress-bar-rate">
 							<div class="<?php echo $class;?> progress-bar-custom position heart" data-percent="<?php echo '75'; ?>" data-type="heart" data-duration="1000" data-color="#fff,#00a99d" data-id="<?php echo get_the_ID(); ?>">
 								<?php //echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
@@ -598,7 +606,6 @@ function wpse125952_redirect_to_request($redirect_to, $requested_redirect_to, $u
        
 ob_start();	
 $redirect_to	=	site_url();
-ob_end_flush();
 return $redirect_to;
 }
 

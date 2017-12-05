@@ -432,26 +432,27 @@ add_shortcode( 'top_sell_item', 'top_sell_item_fun' );
 function top_sell_item_fun() {
 	
 global $product, $woocommerce, $woocommerce_loop, $wpdb;;
-//~ $args = array(
-    //~ 'post_type' => 'product',
-    //~ 'meta_key' => 'total_sales',
-    //~ 'orderby' => 'meta_value_num',
-    //~ 'posts_per_page' => 1,
-//~ );
- //~ 
-//~ $loop = new WP_Query( $args );
+$args = array(
+    'post_type' => 'product',
+    'meta_key' => 'total_sales',
+    'orderby' => 'meta_value_num',
+    'posts_per_page' => 5,
+);
+ 
+$loop = new WP_Query( $args );
 
 //~ $wc_query = new WP_Query($args); 
-$results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMIT 0 , 5');
+//~ $results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMIT 0 , 5');
 
 ?>
 <div class="detail-r">
 	<h3 class="you-may-like"><?php _e( 'Customer who bought items in your cart also bought' ); ?></h3>
 	<div class="dimond-products-list">
-		<?php 
-		foreach ($results as $prod_id) {
+		<?php 		
+			foreach ( $loop->posts as $product_id ) {
+			
 			//~ $wc_query->the_post();
-			$product_id			= 	$prod_id->prod_id;
+			//~ $product_id			= 	$prod_id->prod_id;
 
 			$product		= 	wc_get_product( $product_id );				
 			$image			= 	get_the_post_thumbnail_url($product_id,'you_may_like_thumb');
@@ -462,7 +463,7 @@ $results = $wpdb->get_results( 'SELECT * FROM wp_yith_wcwl ORDER BY ID DESC LIMI
 						<a href="<?php the_permalink($product_id); ?>"><img class="product-img" src="<?php echo $image;?>"></a>
 					</div>
 					<div class="product-content">
-						<h3><?php the_title(); ?></h3>     
+						<h3><?php echo get_the_title($product_id); ?></h3>     
 							
 								<div class="dimaond_product_price">			  
 								<?php echo $product->get_price_html(); ?>
@@ -549,7 +550,7 @@ function change_price_regular_member($price, $product){
 	$today = date('Ymd');
 
 	if($deals_of_the_day[0] == '1' && $today <= $deals_end_date[0]) {
-		$deal_of_day_price	=	get_post_meta( $productId, 'deal_of_day_price'); 	
+		$deal_of_day_price	=	get_post_meta( $productId, 'deal_of_day_price');
 		return $deal_of_day_price[0];
 	}else{
 		return $price;
@@ -560,9 +561,22 @@ add_filter('woocommerce_get_price','change_price_regular_member', 10, 2);
 add_filter( 'woocommerce_get_price_html', 'bbloomer_price_prefix_suffix', 100, 2 );
  
 function bbloomer_price_prefix_suffix( $price, $product ){
-	//~ $productId	= get_the_ID();
+	$productId	= get_the_ID();
 	if( is_page( array( 'deals-of-the-day') )){
-		return str_replace( '</ins>', ' / Piece </ins>', $price );
+		
+		
+		
+			$sale_price	=	get_post_meta( $productId, '_sale_price'); 			
+			if($sale_price[0] == ""){	
+				$deal_of_day_price	=	get_post_meta( $productId, 'deal_of_day_price');			
+				$_price			=	get_post_meta( $productId, '_price');
+				return '<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span>'.wc_price($_price[0]).'</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span>'.wc_price($deal_of_day_price[0]).'</span> / Piece </ins></span>';
+			} else {	
+				return str_replace( '</ins>', ' / Piece </ins>', $price );
+			}
+			
+			//~ return str_replace( '</ins>', ' / Piece </ins>', $price );
+			
 	}else{
 		$price = $price . '&nbsp;<span>'.'Per Piece</span>';
 		return $price;

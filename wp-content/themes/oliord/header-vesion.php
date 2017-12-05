@@ -17,6 +17,9 @@
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets/css/intlTelInput.css">
 <script src="<?php echo get_template_directory_uri();?>/assets/js/intlTelInput.js"></script> 
+<script type="text/javascript" src="<?php echo get_template_directory_uri();?>/assets/js/owl.carousel.js"></script>		
+<link type="text/css" rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets/css/owl.carousel.css" />	
+<link type="text/css" rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets//css/owl.theme.css"  />	
 <script src="<?php echo get_template_directory_uri();?>/assets/js/custom.js"></script> 
 
 </head>
@@ -97,11 +100,16 @@
 						} ?>
 					<ul class="profile-sign">							
 						<?php if(is_user_logged_in()) {
-							global $current_user;							 
+							global $current_user;	
+							if (is_user_wcmp_vendor($current_user)) {
+								$dashboard_page_link = wcmp_vendor_dashboard_page_id() ? get_permalink(wcmp_vendor_dashboard_page_id()) : '#';
+							}else{
+								$dashboard_page_link =	get_permalink( get_option('woocommerce_myaccount_page_id') ); 
+							}
 							  ?>
 							<li class="sign-up-btn login-hader"><a data-toggle="tooltip" data-placement="top" title="Logout" href="<?php echo wp_logout_url(home_url()); ?>"><?php _e('','olio'); ?>
 							<img src="<?php echo  get_template_directory_uri(); ?>/images/icons8-Sign-up.png" /></a></li>
-							<li class="sign-up-btn sign--up-hader "><a data-toggle="tooltip" data-placement="top" title="My Account" href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('','olio'); ?><img src="<?php echo  get_template_directory_uri(); ?>/images/my-account.png"></a></li>
+							<li class="sign-up-btn sign--up-hader "><a data-toggle="tooltip" data-placement="top" title="My Account" href="<?php echo $dashboard_page_link; ?>"><?php _e('','olio'); ?><img src="<?php echo  get_template_directory_uri(); ?>/images/my-account.png"></a></li>
 						<?php } else { ?></a>
 							<li class="sign-up-btn login-hader"><a data-toggle="tooltip" data-placement="top" title="Login" href="<?php echo site_url().'/seller-login'; ?>">
 							<img src="<?php echo  get_template_directory_uri(); ?>/images/icons8-login.png"><?php _e('','olio'); ?></a></li>

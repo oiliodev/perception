@@ -203,9 +203,9 @@ if ( ! defined( 'YITH_WCWL' ) ) {
 	                        <?php endif; ?>
 
 	                        <!-- Remove from wishlist -->
-	                        <?php if( $is_user_owner && $repeat_remove_button ): ?>
+	                        <?php /*if( $is_user_owner && $repeat_remove_button ): ?>
                                 <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $item['prod_id'] ) ) ?>" class="remove_from_wishlist button remove-btn" title="<?php _e( 'Remove this product', 'yith-woocommerce-wishlist' ) ?>"><?php _e( 'Remove', 'yith-woocommerce-wishlist' ) ?></a>
-                            <?php endif; ?>
+                            <?php endif; */?>
                         </td>
 	                <?php endif; ?>
                     </tr>
