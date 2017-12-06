@@ -19,7 +19,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-
+wp_redirect(site_url('/seller-login'));
+exit;
 ?>
 
 <?php //wc_print_notices(); ?>

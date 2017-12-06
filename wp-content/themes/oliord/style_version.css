@@ -555,11 +555,15 @@ min-width: auto;
 
 /*************Dharmik**************/
 .content-area {
-    min-height: 500px;
+    min-height: 900px;
 }
 .goto_more_offer_tab.button {
     display: none !important;
 }
 select.invalid {
   border: 1px solid red;
+}
+
+.review_link_data_wappers {
+    display: none;
 }

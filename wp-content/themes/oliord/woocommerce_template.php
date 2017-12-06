@@ -605,7 +605,8 @@ function wpse125952_redirect_to_request($redirect_to, $requested_redirect_to, $u
        //~ }
        
 ob_start();	
-$redirect_to	=	site_url();
+$redirect_to	=	site_url().'?t='.time();
+ob_end_flush();
 return $redirect_to;
 }
 
@@ -615,5 +616,130 @@ function jk_related_products_args( $args ) {
 	$args['posts_per_page'] = 10; // 4 related products
 	$args['columns'] = 2; // arranged in 2 columns
 	return $args;
+}
+
+add_filter( 'woocommerce_account_menu_items', 'add_my_menu_items', 99, 1 );
+
+function add_my_menu_items( $items ) {
+    $my_items = array(
+    //  endpoint   => label
+		'orders' => __( 'Orders', 'my_plugin' ),
+        'edit-address' => __( 'Contacts', 'my_plugin' ),
+    );
+
+    $my_items = array_slice( $items, 0, 1, true ) +
+        $my_items +
+        array_slice( $items, 1, count( $items ), true );
+
+    return $my_items;
+}
+
+/**
+ * To display additional field at My Account page 
+ * Once member login: edit account
+ */
+add_action( 'woocommerce_edit_account_form', 'my_woocommerce_edit_account_form' );
+ 
+function my_woocommerce_edit_account_form() {
+ 
+	$user_id = get_current_user_id();
+	
+	$attachment_url =  get_the_author_meta( 'cupp_upload_meta', $user_id ) ; 
+	
+	if($attachment_url !=""){
+		$image_id		= get_attachment_id( $attachment_url ); 
+		$attachment_url = wp_get_attachment_image_src($image_id, 'user_profile_img');
+		$attachment_url	=	$attachment_url[0];
+	}
+ 
+?>
+	<fieldset>
+		<div class="title-Password">
+			<h3 class="checkout-title"><span>Upload Profile</span></h3>
+		</div>
+    <?php 
+    if($attachment_url !=""){ ?>
+		<p>
+		<img src="<?php echo $attachment_url; ?>">
+		</p>
+	<?php }
+    ?>
+		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<input name="cupp_upload_meta" id="cupp_upload_meta" readonly="" value="" type="hidden">
+			<input class="btn btn-outline-primary text-uppercase" value="Upload Image" id="uploadimage" type="button">
+			<span class="description">Upload an additional image for your user profile.</span>
+			
+		</p>				
+							
+	</fieldset>
+	<br>
+	<div class="clear"></div>
+ 
+<?php
+ 
+} // end func
+ 
+ 
+/**
+ * This is to save user input into database
+ * hook: woocommerce_save_account_details
+ */
+add_action( 'woocommerce_save_account_details', 'my_woocommerce_save_account_details' );
+ 
+function my_woocommerce_save_account_details( $user_id ) {	
+	/*
+$filename	 =  $_FILES['cupp_upload_meta']['name'];
+$source      = 	$_FILES['cupp_upload_meta']['tmp_name'];
+
+// The ID of the post this attachment is for.
+$parent_post_id = 0;
+
+
+// Check the type of file. We'll use this as the 'post_mime_type'.
+$filetype = wp_check_filetype( basename( $filename ), null );
+
+// Get the path to the upload directory.
+$wp_upload_dir = wp_upload_dir();
+$uploads_dir	=	$wp_upload_dir['path']; 
+$destination = trailingslashit( $uploads_dir ) . $_FILES['cupp_upload_meta']['name'];
+move_uploaded_file( $source, $destination );	
+
+// Prepare an array of post data for the attachment.
+$attachment = array(
+	'guid'           => $wp_upload_dir['url'] . '/' . basename( $filename ), 
+	'post_mime_type' => $filetype['type'],
+	'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+	'post_content'   => '',
+	'post_status'    => 'inherit'
+);
+
+// Insert the attachment.
+$attach_id = wp_insert_attachment( $attachment, $filename, $parent_post_id );
+
+// Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
+require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+// Generate the metadata for the attachment, and update the database record.
+$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
+wp_update_attachment_metadata( $attach_id, $attach_data );
+
+set_post_thumbnail( $parent_post_id, $attach_id );
+update_user_meta( $user_id, 'cupp_upload_meta', esc_url( $wp_upload_dir['url'] . '/' . basename( $filename ) ) ); 
+
+*/
+
+ $profile_img = $_POST['cupp_upload_meta']; 
+ $attach_id = get_attachment_id($_POST['cupp_upload_meta']);
+ $filename = basename( $profile_img ); 
+ 
+
+ //~ echo $get_image = wp_get_attachment_image_src($image_id, 'beat_share'); echo "<br>";
+ //~ $profile_img = $get_image[0];
+
+	if(!empty($_POST['cupp_upload_meta'])){
+		update_usermeta( $user_id, 'cupp_upload_meta', $profile_img );
+	}
+	
+//~ echo $_POST['cupp_upload_meta']; exit;
 }
 ?>

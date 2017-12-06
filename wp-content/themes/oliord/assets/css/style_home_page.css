@@ -659,20 +659,17 @@
 .profile-ing .img-fluid {
   border-radius: 50%; }
 
-span.profile-name {
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: -5px; }
+.profile-user-icon {
+  padding: 0 10px;
+  line-height: 36px !important; }
 
 .header-right-part .user-profile {
-  background-position: 10px -19px; }
+  background-position: 10px 55px; }
 
-span.profile-user-icon {
-  position: absolute;
-  left: 10px;
-  right: 0;
-  margin: 0 auto;
-  top: -7px; }
+span.profile-name {
+  line-height: 38px !important; }
+
+header.header-scroll .header-right-part .user-profile span {
+  line-height: 49px; }
 
 /*# sourceMappingURL=style_home_page.css.map */

@@ -463,6 +463,7 @@ function filter_dealoftheday(){
 
 
 function get_attachment_id( $url ) {
+	
 	$attachment_id = 0;
 	$dir = wp_upload_dir();
 	if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
@@ -493,5 +494,36 @@ function get_attachment_id( $url ) {
 		}
 	}
 	return $attachment_id;
+	
+	
+	/*global $wpdb;	
+	
+	if(isset($image_url) && $image_url !=""){
+		$path_info = pathinfo($image_url);	
+		$basename	=	$path_info['basename'];			
+		$querystr = "SELECT ID FROM $wpdb->posts WHERE guid LIKE '%".$basename."%' AND post_type = 'attachment'";
+		$attachment = $wpdb->get_results($querystr,ARRAY_A);		
+		return $attachment[0]['ID'];
+	}else{
+		return 0;
+	}*/
+    
 }
 
+
+/*
+add_filter('wcmp_vendor_dashboard_nav', 'add_wcmp_vendor_dashboard_nav');
+
+function add_wcmp_vendor_dashboard_nav($nav) {
+	
+   $nav['custom_nav'] = array(
+       'label' => __('My Account', 'dc-woocommerce-multi-vendor'), 
+       'url' => wcmp_get_vendor_dashboard_endpoint_url(get_wcmp_vendor_settings('wcmp_vendor_myaccount_endpoint', 'vendor', 'general', 'vendor-myaccount')), 
+       'capability' => true,
+        'position' => 15,
+         'submenu' => array(),
+          'link_target' => '_blank',
+           'nav_icon' => 'dashicons dashicons-admin-users' // menu icon wordpress dashicons resource (https://developer.wordpress.org/resource/dashicons/)
+   );
+   return $nav;
+}*/

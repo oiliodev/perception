@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'woocommerce_before_account_navigation' );
 
 global $current_user;
-$attachment_url = esc_url( get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ); 
+$attachment_url =  get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ; 
 if($attachment_url != ''){
 	$image_id	= get_attachment_id( $attachment_url ); 
 	$attachment_url = wp_get_attachment_image_src($image_id, 'user_profile_img');

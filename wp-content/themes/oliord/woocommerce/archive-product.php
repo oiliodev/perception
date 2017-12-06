@@ -20,8 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-get_header( 'shop' ); ?>
-<div class="container">
+get_header( 'shop' );
+$class_shop	=	"";
+if( is_shop()){
+	$class_shop	=	"shop-page"; 
+}
+ ?>
+<div class="container <?php echo $class_shop; ?>">
 	<div class="row woocommerce">
 		<?php 
 			 if ( have_posts() ) : ?>
@@ -59,7 +64,7 @@ get_header( 'shop' ); ?>
 							do_action( 'woocommerce_shop_loop' );
 							$classes =	"product";
 							if(in_array($i,$coun_Arr)){
-								$classes =	"expand";						
+								$classes =	"product expand";						
 							}
 				
 						?>

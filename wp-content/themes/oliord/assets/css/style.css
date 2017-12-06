@@ -827,7 +827,11 @@ header.site-header {
 .menu-header li ul.sub-menu li:hover a {
   color: #fff; }
 
-/*.menu-header li.menu-item-has-children ul.sub-menu li.menu-item-has-children::before{background: url(images/dropdown-arrow.png) no-repeat 0 -44px;  right:4px; top:22px;}*/
+.menu-header li.menu-item-has-children ul.sub-menu li.menu-item-has-children::before {
+  background: url(../../images/dropdown-arrow.png) no-repeat 0 -44px;
+  right: 4px;
+  top: 22px; }
+
 .menu-header li.menu-item-has-children ul.sub-menu li.menu-item-has-children:hover::before {
   background-position: 0 0;
   top: 17px; }
@@ -1642,8 +1646,11 @@ body.header-scroll .deals-day-banner{margin-top: 196px;}  */
 
 .woocommerce .olio-tabs #reviews #comments ol.commentlist li .comment-text .star-rating {
   float: left;
-  margin-bottom: 15px;
-  width: 100%; }
+  margin-bottom: 15px; }
+
+.woocommerce #reviews #comments ol.commentlist li .comment-text p.meta {
+  width: 100%;
+  display: inline-block; }
 
 .woocommerce .olio-tabs #reviews #comments ol.commentlist li .comment-text .star-rating span:before {
   color: #06b6b6; }
@@ -3635,5 +3642,49 @@ h3#order_review_heading {
 .input-group .input-group-addon {
   border: 1px solid #ccc !important;
   border-left: 0 !important; }
+
+.checkout.woocommerce-checkout {
+  background: #fff;
+  padding: 25px;
+  margin-bottom: 30px; }
+
+.woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button {
+  background-color: #01a89e !important;
+  text-decoration: none;
+  background-image: none;
+  color: #fff !important; }
+
+.woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover {
+  background-color: #01a89e !important;
+  text-decoration: none;
+  background-image: none;
+  color: #fff !important; }
+
+.shop-page del {
+  display: none !important; }
+
+.shop-page .woocommerce .catlog_products ul.products li .second_div .price {
+  color: #000;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 6px;
+  text-decoration: none;
+  float: none;
+  background: #fff;
+  border: 1px solid #44b2a5;
+  border-radius: 2px;
+  padding: 8px 12px; }
+
+.shop-page .woocommerce .catlog_products ul.products li .second_div .price ins {
+  float: none !important;
+  border: none !important;
+  padding: 0 !important; }
+
+.shop-page {
+  padding: 15px 0; }
+
+.success {
+  color: #01a89e;
+  font-weight: bold; }
 
 /*# sourceMappingURL=style.css.map */

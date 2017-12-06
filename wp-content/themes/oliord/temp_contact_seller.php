@@ -72,9 +72,9 @@ $(document).ready(function() {
 });    
 </script>
 <div class="container woocommerce detail-part">
-	<?php if(isset($msg)){
-			echo $msg;
-		}
+	<?php if(isset($msg)){ ?>
+		<div class="success"> <?php echo $msg; ?> </div>
+	<?php	}
 	?>
 	<form method="post" enctype="multipart/form-data">
 	<div class="contact-seller product row">
