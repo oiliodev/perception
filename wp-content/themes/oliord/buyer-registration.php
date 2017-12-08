@@ -97,7 +97,8 @@ if ( isset( $_POST['seller_register_nonce'] ) && wp_verify_nonce( $_POST['seller
 			   }
 			   if ( isset( $billing_postcode ) ) {
 					update_user_meta( $sellerId, 'billing_postcode', sanitize_text_field( $billing_postcode));
-			   }			   
+			   }
+			   			   
 			   if ( isset( $juridicial_person_name )  && $juridicial_person_name != "" ) {
 					update_user_meta( $sellerId, 'juridicial_person_name', sanitize_text_field( $juridicial_person_name));
 			   }			   
@@ -266,8 +267,7 @@ if ( isset( $_POST['seller_register_nonce'] ) && wp_verify_nonce( $_POST['seller
 get_header('sellerlogin');
 global $woocommerce;
 $qrHash = preg_replace( "/[^0-9a-zA-Z ]/", "", $_GET['qrHash'] );
-?>	
-
+?>
 <link rel='stylesheet' id='jquery-ui-css'  href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css' type='text/css' media='all' />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
@@ -277,117 +277,124 @@ jQuery(function(){
 });
 
 
-$(document).ready(function(){
-	$('.datepicker').datepicker();
-    $('[data-toggle="tooltip"]').tooltip({html:true});    
-});
-
 
 $(window).load(function() {
   $(".loader").fadeOut("slow");
 })
 </script>
 <div class="row">
-	<div class="col-lg-1"></div>
-	<div class="col-lg-10">
-		<!-- Circles which indicates the steps of the form: -->
-		<div class="clearfix registration_progress">			
-			<span class="first_step finish">
-				<label class="d-block text-uppercase font-weight-semibold">&nbsp;</label>
-			</span>			
-			<span class="step step1">
-				<label class="d-block text-uppercase font-weight-semibold">register type</label>
-			</span>
-			<span class="step step2">
-				<label class="d-block text-uppercase font-weight-semibold">user info</label>
-			</span>
-			<span class="step step3">
-				<label class="d-block text-uppercase font-weight-semibold">Contact info</label>
-			</span>
-			<span id="seller_step">
-				<label class="d-block text-uppercase font-weight-semibold">Business info</label>
-			</span>
-		</div>
-	</div>
-	<div class="col-lg-1"></div>
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10">
+    <!-- Circles which indicates the steps of the form: -->
+    <div class="clearfix registration_progress"> <span class="first_step finish">
+      <label class="d-block text-uppercase font-weight-semibold">&nbsp;</label>
+      </span> <span class="step step1">
+      <label class="d-block text-uppercase font-weight-semibold">register type</label>
+      </span> <span class="step step2">
+      <label class="d-block text-uppercase font-weight-semibold">user info</label>
+      </span> <span class="step step3">
+      <label class="d-block text-uppercase font-weight-semibold">Contact info</label>
+      </span> <span id="seller_step">
+      <label class="d-block text-uppercase font-weight-semibold">Business info</label>
+      </span> </div>
+  </div>
+  <div class="col-lg-1"></div>
 </div>
 <div class="row">
-	<div class="col-lg-3 col-md-1"></div>
-	<div class="col-lg-6 col-md-10">
-		<div class="custom-form">
-			<div class="mt-3">
-				<div class="text-center theme-logo mb-5">
-		<?php
+  <div class="col-lg-3 col-md-1"></div>
+  <div class="col-lg-6 col-md-10">
+    <div class="custom-form">
+      <div class="mt-3">
+        <div class="text-center theme-logo mb-5">
+          <?php
 			$custom_logo_id = get_theme_mod( 'custom_logo' );
 			$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );							
 			echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
 		?>
-	</div>
-			</div>
-			<?php //wc_print_notices(); ?>
-			<?php 
+        </div>
+      </div>
+      <?php wc_print_notices(); ?>
+      <?php 
 			if($message != ""){ ?>
-				<h6 class="woocommerce-error"><?php echo $message; ?></h6>
-			<?php 	}  else { ?>
-			<h6 class="woocommerce-error" style="display:none;"></h6>
-			<?php } ?>
-			<form method="post" enctype="multipart/form-data" id="regForm" class="register">
-			<!-- One "tab" for each step in the form: -->
-			<div class="tab">
-				<fieldset class="form-group">
-					<div class="d-block text-center checkbox pl-sm-3 pr-sm-3">
-						<h4 class="mt-0 normal mb-4"><?php _e( 'Register Type', 'woocommerce' ); ?></h4>
-						<hr />
-						<div class="mt-4 mb-4">
-						   <input type="radio" class="register_type" name="register_type" id="buyer" <?php if ( isset( $_POST['register_type'] ) && $_POST['register_type'] == "Buyer" ) { echo "checked"; } else { echo "checked"; } ?> value="Buyer" /><label for="buyer" class="text-primary font-weight-semibold mr-5 cursor-pointer"> <span class="mr-2 align-middle"></span> Buyer </label>
-						   <input type="radio" class="register_type" name="register_type"  id="seller" <?php if ( isset( $_POST['register_type'] ) && $_POST['register_type'] == "Seller" ) { echo "checked"; } ?> value="Seller" /> <label for="seller" class="text-primary font-weight-semibold cursor-pointer"> <span class="mr-2 align-middle"></span> Seller </label>
-						</div>
-						<hr />
-					</div>
-			   	</fieldset>       
-			   <?php if(isset($qrHash) && $qrHash != "" ) { ?>
-				<input type="hidden" name="page" value="qr-login">
-				<input type="hidden" name="qrHash" value="<?php echo $qrHash; ?>">
-				<?php } ?>
-			</div>  
-			
-			<div class="tab pl-sm-3 pr-sm-3 user-info-tab">
-				<h4 class="mt-0 normal mb-3"><?php _e( 'User Information', 'woocommerce' ); ?></h4>
-				<hr class="mb-4 pb-2" />
-				<fieldset class="mb-4">
-				   <label for="reg_billing_first_name" class="name-form"><?php _e( 'Name :', 'woocommerce' ); ?> <span class="required">*</span></label>
-				   <input type="text" class="form-control" name="billing_first_name" id="reg_billing_first_name" value="<?php if ( ! empty( $_POST['billing_first_name'] ) ) esc_attr_e( $_POST['billing_first_name'] ); ?>" />
-			   </fieldset>			   
-			   <fieldset class="mb-4">
-					<label for="reg_username" class="name-form"><?php _e( 'Username :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input type="text" class="form-control" name="username" id="reg_username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( $_POST['username'] ) : ''; ?>" />
-				</fieldset>				
-				<fieldset class="mb-4">
-						<label for="reg_email" class="name-form"><?php _e( 'Email :', 'woocommerce' ); ?> <span class="required">*</span></label>
-						<input type="email" class="form-control" name="email" id="reg_email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( $_POST['email'] ) : ''; ?>" />
-				</fieldset>			
-				<fieldset class="mb-4">
-					<label for="reg_password" class="name-form"><?php _e( 'Password :', 'woocommerce' ); ?></label>
-					<div class="position-relative">
-						<input type="password" class="form-control" name="password" id="reg_password" />
-						<a href="#" class="position-absolute info-tip text-left" data-toggle="tooltip" title="Password length must be greater than or equal to 8 & use one or more uppercase,lowercase, numeric & special characters"></a>
-					</div>
-				</fieldset>				
-				<fieldset class="mb-4">
-					<label for="reg_password" class="name-form"><?php _e( 'Confirm Password :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input type="password" class="form-control" name="confirm_password" id="confirm_password" />
-					<div class="required text-right mt-1 mb-3 small">* Please fill up mandatory fields</div>
-				</fieldset>
-			</div>			
-			<div class="tab pl-sm-3 pr-sm-3">
-				<h4 class="mt-0 normal mb-3"><?php _e( 'Contact Information', 'woocommerce' ); ?></h4>
-				<hr class="mb-4 pb-2" />			
-				<fieldset class="mb-4">
-					<label for="reg_billing_address_1" class="name-form"><?php _e( 'Street Address :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input  type="text" class="form-control mb-2" name="billing_address_1" value="<?php if ( ! empty( $_POST['billing_address_1'] ) ) esc_attr_e( $_POST['billing_address_1'] ); ?>" />
-					<input type="text" class="form-control" name="billing_address_2" id="billing_address_2" value="<?php if ( ! empty( $_POST['billing_address_2'] ) ) esc_attr_e( $_POST['billing_address_2'] ); ?>" />
-				</fieldset>			
-			 <?php
+      <h6 class="woocommerce-error"><?php echo $message; ?></h6>
+      <?php 	}  else { ?>
+      <h6 class="woocommerce-error" style="display:none;"></h6>
+      <?php } ?>
+      <form method="post" enctype="multipart/form-data" id="regForm" class="register">
+        <!-- One "tab" for each step in the form: -->
+        <div class="tab">
+          <fieldset class="form-group">
+          <div class="d-block text-center checkbox pl-sm-3 pr-sm-3">
+            <h4 class="mt-0 normal mb-4">
+              <?php _e( 'Register Type', 'woocommerce' ); ?>
+            </h4>
+            <hr />
+            <div class="mt-4 mb-4">
+              <input type="radio" class="register_type" name="register_type" id="buyer" <?php if ( isset( $_POST['register_type'] ) && $_POST['register_type'] == "Buyer" ) { echo "checked"; } else { echo "checked"; } ?> value="Buyer" />
+              <label for="buyer" class="text-primary font-weight-semibold mr-5 cursor-pointer"> <span class="mr-2 align-middle"></span> Buyer </label>
+              <input type="radio" class="register_type" name="register_type"  id="seller" <?php if ( isset( $_POST['register_type'] ) && $_POST['register_type'] == "Seller" ) { echo "checked"; } ?> value="Seller" />
+              <label for="seller" class="text-primary font-weight-semibold cursor-pointer"> <span class="mr-2 align-middle"></span> Seller </label>
+            </div>
+            <hr />
+          </div>
+          </fieldset>
+          <?php if(isset($qrHash) && $qrHash != "" ) { ?>
+          <input type="hidden" name="page" value="qr-login">
+          <input type="hidden" name="qrHash" value="<?php echo $qrHash; ?>">
+          <?php } ?>
+        </div>
+        <div class="tab pl-sm-3 pr-sm-3 user-info-tab">
+          <h4 class="mt-0 normal mb-3">
+            <?php _e( 'User Information', 'woocommerce' ); ?>
+          </h4>
+          <hr class="mb-4 pb-2" />
+          <fieldset class="mb-4">
+          <label for="reg_billing_first_name" class="name-form">
+          <?php _e( 'Name :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input type="text" class="form-control" name="billing_first_name" id="reg_billing_first_name" value="<?php if ( ! empty( $_POST['billing_first_name'] ) ) esc_attr_e( $_POST['billing_first_name'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_username" class="name-form">
+          <?php _e( 'Username :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input type="text" class="form-control" name="username" id="reg_username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( $_POST['username'] ) : ''; ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_email" class="name-form">
+          <?php _e( 'Email :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input type="email" class="form-control" name="email" id="reg_email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( $_POST['email'] ) : ''; ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_password" class="name-form">
+          <?php _e( 'Password :', 'woocommerce' ); ?>
+          </label>
+          <div class="position-relative">
+            <input type="password" class="form-control" name="password" id="reg_password" />
+            <a href="#" class="position-absolute info-tip text-left" data-toggle="tooltip" title="Password length must be greater than or equal to 8 & use one or more uppercase,lowercase, numeric & special characters"></a> </div>
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_password" class="name-form">
+          <?php _e( 'Confirm Password :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input type="password" class="form-control" name="confirm_password" id="confirm_password" />
+          <div class="required text-right mt-1 mb-3 small">* Please fill up mandatory fields</div>
+          </fieldset>
+        </div>
+        <div class="tab pl-sm-3 pr-sm-3">
+          <h4 class="mt-0 normal mb-3">
+            <?php _e( 'Contact Information', 'woocommerce' ); ?>
+          </h4>
+          <hr class="mb-4 pb-2" />
+          <fieldset class="mb-4">
+          <label for="reg_billing_address_1" class="name-form">
+          <?php _e( 'Street Address :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input  type="text" class="form-control mb-2" name="billing_address_1" value="<?php if ( ! empty( $_POST['billing_address_1'] ) ) esc_attr_e( $_POST['billing_address_1'] ); ?>" />
+          <input type="text" class="form-control" name="billing_address_2" id="billing_address_2" value="<?php if ( ! empty( $_POST['billing_address_2'] ) ) esc_attr_e( $_POST['billing_address_2'] ); ?>" />
+          </fieldset>
+          <?php
 			wp_enqueue_script( 'wc-country-select' );
 			wp_enqueue_script( 'wc-state-select' );
 			
@@ -405,62 +412,71 @@ $(window).load(function() {
 			$default_country = $countries_obj->get_base_country();
 			$default_county_states = $countries_obj->get_states( $default_country );
 			?>
-			 <fieldset class="form-group billing_state" >
-				<label for="billing_state" class="name-form"><?php _e( 'State/Province :', 'woocommerce' ); ?></label>
-				<input type="text" class="form-control" name="billing_state" id="billing_state" value="<?php if ( ! empty( $_POST['billing_state'] ) ) esc_attr_e( $_POST['billing_state'] ); ?>" />
-			 </fieldset>   
-			
-			  <fieldset class="mb-4">
-				   <label for="reg_billing_city" class="name-form"><?php _e( 'City :', 'woocommerce' ); ?></label>
-				   <input type="text" class="form-control" name="billing_city" id="billing_city" value="<?php if ( ! empty( $_POST['billing_city'] ) ) esc_attr_e( $_POST['billing_city'] ); ?>" />
-			   </fieldset>			   
-				 <fieldset class="mb-4">
-				   <label for="reg_billing_postcode" class="name-form"><?php _e( 'Zip/Postal Code :', 'woocommerce' ); ?></label>
-				   <input type="text" class="form-control" name="billing_postcode" id="billing_postcode" value="<?php if ( ! empty( $_POST['billing_postcode'] ) ) esc_attr_e( $_POST['billing_postcode'] ); ?>" />
-			   </fieldset>			
-			   <fieldset class="mb-4">
-					<label for="reg_billing_phone" class="name-form"><?php _e( 'Mobile Number :', 'woocommerce' ); ?></label>
-					<input type="tel" maxlength="14" class="form-control" name="billing_phone"  placeholder="e.g. +1 702 123 4567" id="reg_billing_phone" value="<?php if ( ! empty( $_POST['billing_phone'] ) ) esc_attr_e( $_POST['billing_phone'] ); ?>" />
-			   </fieldset>
-			   
-			   <fieldset class="form-group buyer clearfix pt-3 mb-4"></fieldset>			   
-			</div>
-			
-			
-			<div class="seller_information pl-sm-3 pr-sm-3" id="seller_information">
-				<h4 class="mt-0 normal mb-3"><?php _e( 'Business Information', 'woocommerce' ); ?></h4>
-				<hr class="mb-4 pb-2" />
-				<fieldset class="business-information-radio checkbox mb-3">
-					<label for="juridicial_person_name" class="d-block w-100">Select Membership :</label>
-					<div class="information-radio d-inline-block position-relative mb-3">
-						<input autocomplete="off" type="radio" id="Yellow-Member" class="form-control membership" name="membership" value="Yellow Gold Member" />
-						<label for="Yellow-Member" class="text-primary font-weight-semibold cursor-pointer"><span class="mr-2 align-middle"></span><?php _e( 'Yellow Gold', 'woocommerce' ); ?></label>
-						<a href="#" class="d-inline-block align-middle info-tip info mr-3 tip-space" data-toggle="tooltip" title="
+          <fieldset class="form-group billing_state" >
+          <label for="billing_state" class="name-form">
+          <?php _e( 'State/Province :', 'woocommerce' ); ?>
+          </label>
+          <input type="text" class="form-control" name="billing_state" id="billing_state" value="<?php if ( ! empty( $_POST['billing_state'] ) ) esc_attr_e( $_POST['billing_state'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_billing_city" class="name-form">
+          <?php _e( 'City :', 'woocommerce' ); ?>
+          </label>
+          <input type="text" class="form-control" name="billing_city" id="billing_city" value="<?php if ( ! empty( $_POST['billing_city'] ) ) esc_attr_e( $_POST['billing_city'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_billing_postcode" class="name-form">
+          <?php _e( 'Zip/Postal Code :', 'woocommerce' ); ?>
+          </label>
+          <input type="text" class="form-control" name="billing_postcode" id="billing_postcode" value="<?php if ( ! empty( $_POST['billing_postcode'] ) ) esc_attr_e( $_POST['billing_postcode'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="reg_billing_phone" class="name-form">
+          <?php _e( 'Mobile Number :', 'woocommerce' ); ?>
+          </label>
+          <input type="tel" maxlength="14" class="form-control" name="billing_phone"  placeholder="e.g. +1 702 123 4567" id="reg_billing_phone" value="<?php if ( ! empty( $_POST['billing_phone'] ) ) esc_attr_e( $_POST['billing_phone'] ); ?>" />
+          </fieldset>
+          <fieldset class="form-group buyer clearfix pt-3 mb-4">
+          </fieldset>
+        </div>
+        <div class="seller_information pl-sm-3 pr-sm-3" id="seller_information">
+          <h4 class="mt-0 normal mb-3">
+            <?php _e( 'Business Information', 'woocommerce' ); ?>
+          </h4>
+          <hr class="mb-4 pb-2" />
+          <fieldset class="business-information-radio checkbox mb-3">
+          <label for="juridicial_person_name" class="d-block w-100">Select Membership :</label>
+          <div class="information-radio d-inline-block position-relative mb-3">
+            <input autocomplete="off" type="radio" id="Yellow-Member" checked class="form-control membership" name="membership" value="Yellow Gold Member" />
+            <label for="Yellow-Member" class="text-primary font-weight-semibold cursor-pointer"><span class="mr-2 align-middle"></span>
+            <?php _e( 'Yellow Gold', 'woocommerce' ); ?>
+            </label>
+            <a href="#" class="d-inline-block align-middle info-tip info mr-3 tip-space" data-toggle="tooltip" title="
 						<ul class='list-unstyled text-left mb-0'>
 							<li class='mb-1'>Free membership</li>
 							<li class='mb-1'>Can showcase upto 50 products</li>
 							<li class='mb-1'>Minimal fee of $39.99 after 50 products</li>
 							<li class='mb-1'>Video Production unavailable</li>
 							<li class='mb-1'>Paid($999) usage of online convention</li>
-						</ul>">
-						</a>
-					</div>	
-					<div class="information-radio d-inline-block position-relative mb-3">
-						<input autocomplete="off" type="radio" checked id="Gold-Member" class="form-control membership" name="membership" value="White Gold Member" />
-						<label for="Gold-Member" class="text-primary font-weight-semibold cursor-pointer"><span class="mr-2 align-middle"></span><?php _e( 'White Gold', 'woocommerce' ); ?></label>
-						<a href="#" class="d-inline-block align-middle info-tip info mr-3 tip-space" data-toggle="tooltip" title="
+						</ul>"> </a> </div>
+          <div class="information-radio d-inline-block position-relative mb-3">
+            <input autocomplete="off" type="radio" id="Gold-Member" class="form-control membership" name="membership" value="White Gold Member" />
+            <label for="Gold-Member" class="text-primary font-weight-semibold cursor-pointer"><span class="mr-2 align-middle"></span>
+            <?php _e( 'White Gold', 'woocommerce' ); ?>
+            </label>
+            <a href="#" class="d-inline-block align-middle info-tip info mr-3 tip-space" data-toggle="tooltip" title="
 						   <ul class='list-unstyled text-left mb-0'>
 							<li class='mb-1'>Membership fee is $2499/year</li>
 							<li class='mb-1'>Free usage of online convention for a single booth for six months</li>
 							<li class='mb-1'>Video production included</li>
 							<li class='mb-1'>Admin support</li>
-						   </ul>">
-						</a>
-					</div>
-					<div class="information-radio d-inline-block position-relative mb-3">
-						<input autocomplete="off" type="radio" id="Diamond-Member" class="form-control membership" name="membership" value="Diamond Member" />
-						<label for="Diamond-Member" class="text-primary font-weight-semibold cursor-pointer"><span class="mr-2 align-middle"></span><?php _e( 'Diamond', 'woocommerce' ); ?></label>
-						<a href="#" class="d-inline-block align-middle info-tip info tip-space" data-toggle="tooltip" title="
+						   </ul>"> </a> </div>
+          <div class="information-radio d-inline-block position-relative mb-3">
+            <input autocomplete="off" type="radio" id="Diamond-Member" class="form-control membership" name="membership" value="Diamond Member" />
+            <label for="Diamond-Member" class="text-primary font-weight-semibold cursor-pointer"><span class="mr-2 align-middle"></span>
+            <?php _e( 'Diamond', 'woocommerce' ); ?>
+            </label>
+            <a href="#" class="d-inline-block align-middle info-tip info tip-space" data-toggle="tooltip" title="
 						<ul class='list-unstyled text-left mb-0'>
 							<li class='mb-1'>Membership fee is $4999/year</li>
 							<li class='mb-1'>Premium listing of products on main page</li>
@@ -468,71 +484,166 @@ $(window).load(function() {
 							<li class='mb-1'>Video production included</li>
 							<li class='mb-1'>First preference to reserve online convention booth</li>
 							<li class='mb-1'>Full admin support</li>
-						</ul>">
-						</a>
-					</div>				
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="juridicial_person_name" class="name-form"><?php _e( 'Juridicial Person Name :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input autocomplete="off" type="text" class="form-control" name="juridicial_person_name" id="juridicial_person_name" value="<?php if ( ! empty( $_POST['juridicial_person_name'] ) ) esc_attr_e( $_POST['juridicial_person_name'] ); ?>" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="juridicial_person_email" class="name-form"><?php _e( 'Juridicial Person Email :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input autocomplete="off" type="email" class="form-control" name="juridicial_person_email" id="juridicial_person_email" value="<?php if ( ! empty( $_POST['juridicial_person_email'] ) ) esc_attr_e( $_POST['juridicial_person_email'] ); ?>" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="juridicial_person_photo" class="name-form"><?php _e( 'Juridicial Person’s Photo ID :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input type="file" class="form-control" name="juridicial_person_photo" id="juridicial_person_photo" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				   <label for="business_tax_id" class="name-form"><?php _e( 'Business tax id :', 'woocommerce' ); ?> <span class="required">*</span></label>
-				   <input autocomplete="off" maxlength="18" type="text" class="form-control" name="business_tax_id" id="business_tax_id" value="<?php if ( ! empty( $_POST['business_tax_id'] ) ) esc_attr_e( $_POST['business_tax_id'] ); ?>" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="business_license" class="name-form"><?php _e( 'Company’s business License :', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input type="file" class="form-control" name="business_license" id="business_license" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="expire_business_license" class="name-form"><?php _e( 'Expiration date of license :', 'woocommerce' ); ?></label>
-					<input type="text" class="form-control datepicker" readonly name="expire_business_license" id="expire_business_license" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="business_license_certified" class="name-form"><?php _e( 'Company’s business license certified translation :', 'woocommerce' ); ?></label>
-					<input type="file" class="form-control" name="business_license_certified" id="business_license_certified" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="import_export_business_enterprise" class="name-form"><?php _e( 'Import and Export Business Enterprise Qualification certificate :', 'woocommerce' ); ?></label>
-					<input type="file" class="form-control" name="import_export_business_enterprise" id="import_export_business_enterprise" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="import_export_business_certified" class="name-form"><?php _e( 'Import and Export Business certified translation :', 'woocommerce' ); ?></label>
-					<input type="file" class="form-control" name="import_export_business_certified" id="import_export_business_certified" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="expire_business_license" class="name-form"><?php _e( 'Expiration date of Import/Export :', 'woocommerce' ); ?></label>
-					<input type="text" class="form-control datepicker" readonly name="expire_import_export_business_certified" id="expire_import_export_business_certified" />
-				</fieldset>		
-				<fieldset class="mb-4">
-				<label for="insurance" class="name-form"><?php _e( 'Insurance :', 'woocommerce' ); ?></label>
-					<input type="file" class="form-control" name="insurance" id="insurance" />
-					<div class="required text-right mt-1 mb-3 small">* Please fill up mandatory fields</div>
-				</fieldset>
-				<fieldset class="mb-4">
-				   <label class="name-form">
-						<input class="mt-1 mb-4 mr-3 float-left" name="seller_agreement" id="seller_agreement" value="forever" type="checkbox" /> <span class="d-block"><?php _e( 'I have read and accepted the <a target="_blank" href="http://111.93.221.219/CMS/wp/b2b-e-commerce/wp-content/themes/oliord/images/olio_businessSolutionAgreement.pdf">terms and conditions</a> of the Olio business solution Agreement', 'woocommerce' ); ?></span>
-					</label>
-				</fieldset>		
-				<fieldset class="form-group seller">       
-			   </fieldset>
-			</div>
-			<div class="text-center mt-4 mb-4 mb-sm-4 pb-sm-4">
-				<?php wp_nonce_field( 'seller_register', 'seller_register_nonce' ); ?>		
-				<button type="button" id="prevBtn" class="btn btn-outline-primary text-uppercase font-weight-bold mr-sm-2" onclick="nextPrev(-1)">Previous</button>
-				<button type="button" id="nextBtn" class="btn btn-outline-primary text-uppercase font-weight-bold pl-4 pr-4 ml-sm-2"  onclick="nextPrev(1)">Next</button>
-			</div>			
-			</form>
-			<div class="loader"></div>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-1"></div>
+						</ul>"> </a> </div>
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="juridicial_person_name" class="name-form">
+          <?php _e( 'Juridicial Person Name :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input autocomplete="off" type="text" class="form-control" name="juridicial_person_name" id="juridicial_person_name" value="<?php if ( ! empty( $_POST['juridicial_person_name'] ) ) esc_attr_e( $_POST['juridicial_person_name'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="juridicial_person_email" class="name-form">
+          <?php _e( 'Juridicial Person Email :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input autocomplete="off" type="email" class="form-control" name="juridicial_person_email" id="juridicial_person_email" value="<?php if ( ! empty( $_POST['juridicial_person_email'] ) ) esc_attr_e( $_POST['juridicial_person_email'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="juridicial_person_photo" class="name-form">
+          <?php _e( 'Juridicial Person’s Photo ID :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input type="file" class="form-control" name="juridicial_person_photo" id="juridicial_person_photo" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="business_tax_id" class="name-form">
+          <?php _e( 'Business tax id :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input autocomplete="off" maxlength="18" type="text" class="form-control" name="business_tax_id" id="business_tax_id" value="<?php if ( ! empty( $_POST['business_tax_id'] ) ) esc_attr_e( $_POST['business_tax_id'] ); ?>" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="business_license" class="name-form">
+          <?php _e( 'Company’s business License :', 'woocommerce' ); ?>
+          <span class="required">*</span></label>
+          <input type="file" class="form-control" name="business_license" id="business_license" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="expire_business_license" class="name-form">
+          <?php _e( 'Expiration date of license :', 'woocommerce' ); ?>
+          </label>
+          <input type="text" class="form-control datepicker" readonly name="expire_business_license" id="expire_business_license" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="business_license_certified" class="name-form">
+          <?php _e( 'Company’s business license certified translation :', 'woocommerce' ); ?>
+          </label>
+          <input type="file" class="form-control" name="business_license_certified" id="business_license_certified" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="import_export_business_enterprise" class="name-form">
+          <?php _e( 'Import and Export Business Enterprise Qualification certificate :', 'woocommerce' ); ?>
+          </label>
+          <input type="file" class="form-control" name="import_export_business_enterprise" id="import_export_business_enterprise" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="import_export_business_certified" class="name-form">
+          <?php _e( 'Import and Export Business certified translation :', 'woocommerce' ); ?>
+          </label>
+          <input type="file" class="form-control" name="import_export_business_certified" id="import_export_business_certified" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="expire_business_license" class="name-form">
+          <?php _e( 'Expiration date of Import/Export :', 'woocommerce' ); ?>
+          </label>
+          <input type="text" class="form-control datepicker" readonly name="expire_import_export_business_certified" id="expire_import_export_business_certified" />
+          </fieldset>
+          <fieldset class="mb-4">
+          <label for="insurance" class="name-form">
+          <?php _e( 'Insurance :', 'woocommerce' ); ?>
+          </label>
+          <input type="file" class="form-control" name="insurance" id="insurance" />
+          <div class="required text-right mt-1 mb-3 small">* Please fill up mandatory fields</div>
+          </fieldset>
+          <fieldset class="mb-4">
+          
+          <input class="mt-1 mb-4 mr-3 float-left input-form-blog" name="seller_agreement" id="seller_agreement" value="forever" type="checkbox" />
+          <label class="name-form text-form-blog">
+		  <span class="d-block">
+          <?php _e('I have read and accepted the ','olio'); ?>
+          <a href="#" data-toggle="modal" data-target="#myTermConditionModal">
+          <?php _e( 'terms and conditions', 'olio' ); ?>
+          </a>
+          <?php _e(' of the Olio business solution Agreement','olio'); ?>
+          </span>
+          <!-- Modal -->
+          <div id="myTermConditionModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Olio Services Business Solutions Agreement</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="modal-container-body">
+                    <p>Olio Services Business Solutions Agreement 
+                      THIS OLIO SERVICES BUSINESS SOLUTIONS AGREEMENT(THE ‘AGREEMENT’) CONTAINS THE TERMS AND CONDITIONS 
+                      THAT GOVERN YOUR ACCESS TO AND USE OF THE SERVICES AND IS AN AGREEMENT BETWEEN YOU OR THE BUSINESS 
+                      YOU REPRESENT AND OLIO. BY REGISTERING FOR OR USING THE SERVICES, YOU ( ON BEHALF OF YOURSELF OR THE 
+                      BUSINESS YOU REPRESENT) AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT, INCLUDING THE SERVICE TERMS 
+                      AND PROGRAM POLICIES THAT APPLY FOR EACH COUNTRY FOR WHICH THE REGISTER OR ELECT TO USE A SERVICE (IN 
+                      EACH CASE, THE ‘ELECTED COUNTRY’).</p>
+                    <p>As used in this agreement, ‘we’, ‘us’, and ‘Olio’ means the applicable Olio Contracting Party and any of its applicable A
+                      ffi
+                      liates, and 
+                      ‘you’ means the applicant(if registering for or using a service as an individual), or the business employing the applicant(if registering 
+                      for using a service as a business) and any of its A
+                      ffi
+                      liates. If there is a conflict among terms in the sAgreement, the program Policies 
+                      will prevail over any applicable Service Terms and General Terms, and the applicable ServiceTerms will prevail over the General 
+                      Terms.</p>
+                    <h3>1. Enrollment </h3>
+                    <p>You must complete the registration process for one or more services.As part of the application, you must provide us with your (or 
+                      your business) legal name, address, phone number and e-mail address. We may at any time cease providing any or all of the 
+                      Services at our Sole discretion and without notice.</p>
+                    <h3>2. Terms and Termination</h3>
+                    <p>The term of this Agreement will start on the date of your completed registration for or use of a Service, whichever occur first, and 
+                      continue until terminated by us or you as provided in this Agreement (the ‘Term’). We may terminate or suspend this Agreement for 
+                      any reason at any time by notice to you.</p>
+                    <h3>3. License </h3>
+                    <p> You grant us a royalty-free, non-exclusive, worldwide, perpetual, irrevocable right and license to use, reproduce, perform, display, 
+                      distribute, adapt, modify, re-format, create derivative works of, and otherwise commercially or non-commercially exploit in any 
+                      manner, any and all of Your Materials, and to sublicense the foregoing rights to our A
+                      ffi
+                      liates and operators of Olio Associated 
+                      Properties.</p>
+                    <h3>4. Indemnification </h3>
+                    <p>You release us and agree to indemnify, defend, and hold harmless us, our A
+                      ffi
+                      liates, and our and their respective o
+                      ffi
+                      cers, directors, 
+                      employees, representatives, and agents against any claim, loss, damage, settlement, cost, expense, or other liability(including, 
+                      without limitation, attorney’s fees) (each, a ‘Claim’)arising from or related to: a) your actual or alleged breach of any obligations in 
+                      this Agreement; b) any of Your Sales Channels other than Olio Sites and Partners, Your Products(including their o
+                      ff
+                      er, sale, 
+                      performance, and fulfillment), Your Materials, any actual or alleged infringement of any Intellectual Property Rights by any of the 
+                      foregoing, and any personal injury, death, or property damage related thereto; c)Your Taxes. You may not consent to the entry of any 
+                      judgement or enter into any settlement of a claim without our prior written consent, which may not be unreasonably withheld.</p>
+					   <input class="mt-1 mb-4 mr-3 float-left" id="terms_agreement" value="forever" type="checkbox">
+                  <p>I have read and accepted the terms and conditions of the Olio business solution Agreement </p>
+                  </div>
+                 </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary accept_terms">Accept</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </label>
+          </fieldset>
+          <fieldset class="form-group seller">
+          </fieldset>
+        </div>
+        <div class="text-center mt-4 mb-4 mb-sm-4 pb-sm-4">
+          <?php wp_nonce_field( 'seller_register', 'seller_register_nonce' ); ?>
+          <button type="button" id="prevBtn" class="btn btn-outline-primary text-uppercase font-weight-bold mr-sm-2" onClick="nextPrev(-1)">Previous</button>
+          <button type="button" id="nextBtn" class="btn btn-outline-primary text-uppercase font-weight-bold pl-4 pr-4 ml-sm-2"  onclick="nextPrev(1)">Next</button>
+        </div>
+      </form>
+      <div class="loader"></div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-1"></div>
 </div>

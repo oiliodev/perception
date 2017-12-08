@@ -49,7 +49,7 @@ class NoPasswords {
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_qr_code_login_head' ) );
 		add_action( 'wp_ajax_nopriv_ajax-qrLogin', array( $this, 'ajax_check_logs_in' ) );
 		add_action( 'parse_request', array( $this, 'qrLoginOTP' ) );
-		add_action( 'admin_menu', array( $this, 'qrLogin_plugin_menu' ) );
+		//~ add_action( 'admin_menu', array( $this, 'qrLogin_plugin_menu' ) );
 		add_action( 'qr_three_clean', array( $this, 'qr_housecleaning' ) );
 		register_activation_hook( __FILE__, array( $this, 'qr_activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'qr_cron_deactivate' ) );
@@ -117,12 +117,12 @@ class NoPasswords {
 		$table_name  = $wpdb->base_prefix . $this->tbl_name;
 		$query       = $wpdb->prepare( "SELECT uname FROM $table_name WHERE hash = %s", $hash );
 		$qrUserLogin = $wpdb->get_results( $query );
-
+		
 		if ( count( $qrUserLogin ) == 1 && isset( $qrUserLogin[0]->uname ) ) {
 			return $qrUserLogin[0]->uname;
 		} else {
 			return false;
-		}
+		}		
 	}
 
 	/**
@@ -138,9 +138,11 @@ class NoPasswords {
 		$rows_affected = $wpdb->update( $table_name, array( 'hash' => 'used' ), array( 'uname' => $user_login ) );
 
 		if ( $rows_affected ) {
-			wp_set_current_user( $user_id, $user_login );
-			wp_set_auth_cookie( $user_id );
-			do_action( 'wp_login', $user_login );
+			if($user->roles[0] != "dc_pending_vendor"){
+				wp_set_current_user( $user_id, $user_login );
+				wp_set_auth_cookie( $user_id );
+				do_action( 'wp_login', $user_login );
+			}
 		}
 	}
 
@@ -150,6 +152,7 @@ class NoPasswords {
 	 *
 	 */
 	public function ajax_check_logs_in() {
+		ob_start();
 		$nonce = preg_replace( "/[^0-9a-zA-Z ]/", "", $_POST['QRnonce'] );
 		if ( ! wp_verify_nonce( $nonce, 'qrLogin-nonce' ) ) {
 			die( 'Busted!' );
@@ -161,27 +164,37 @@ class NoPasswords {
 		while ( ( time() - $time ) < 30 ) {
 			// get the submitted qrHash
 			$qrUserLogin = $this->get_user_by_qrHash( $qrHash );
-			if ( $qrUserLogin && $qrUserLogin != 'unused row' && username_exists( $qrUserLogin ) ) {
+			//~ echo $qrUserLogin.' && '.$qrUserLogin.' != unused row' ; echo "<br>";
+			//~ var_dump(username_exists( $qrUserLogin )); exit;
+			if ( $qrUserLogin && $qrUserLogin != 'unused row' && username_exists( $qrUserLogin ) ) {	
 				$this->log_user_in_with_login( $qrUserLogin );
+				
+				$user    	= 	get_user_by( 'login', $qrUserLogin );
+				$user_id	= 	$user->ID;
+				$role		=	$user->roles[0];
+				$arr =  array('qrHash' => $qrHash, 'role' => $role);
 				header( 'Access-Control-Allow-Origin: *' );
 				header( "Content-Type: application/json" );
-				echo json_encode( $qrHash );
+				echo json_encode( $arr );
 				exit();
 				break;
 			} elseif ( ! $qrUserLogin || $qrUserLogin == "" ) {
+				
 				$qrHash = $this->generateHash();
 				if ( $qrHash ) {
 					header( 'Access-Control-Allow-Origin: *' );
 					header( "Content-Type: application/json" );
-					echo json_encode( $qrHash );
+					$arr =  array('qrHash' => $qrHash);
+					echo json_encode( $arr );
 					exit();
 				}
 				break;
 			}
 
 			usleep( 1500000 );
-		}
+		}		
 		$this->qr_housecleaning();
+		ob_end_flush();
 		exit();
 	}
 
@@ -235,11 +248,21 @@ class NoPasswords {
 					}
 				}
 			} elseif ( isset( $_GET['qrHash'] ) ) {
+				
 				header( 'Access-Control-Allow-Origin: *' );
 				header( "Content-Type: application/json" );
 				$qrHash = preg_replace( "/[^0-9a-zA-Z ]/", "", $_GET['qrHash'] );
 				//QRcode::png( get_admin_url() . 'options-general.php?page=qr-login&qrHash=' . $qrHash, false, 'h', 3, 5, false );
-				QRcode::png( get_admin_url() . 'admin.php?page=qr-login&qrHash=' . $qrHash, false, 'h', 3, 5, false );
+				//~ QRcode::png( get_admin_url() . 'admin.php?page=qr-login&qrHash=' . $qrHash, false, 'h', 3, 5, false );
+				//~ QRcode::png( site_url().'/check_qr_code.php?page=qr-login&qrHash=' . $qrHash, false, 'h', 3, 5, false );
+				//~ QRcode::png( site_url(), false, 'h', 3, 5, false );
+				
+				//~ QRcode::test( site_url().'/check_qr_code.php?page=qr-login&qrHash=' . $qrHash,'180x180',get_template_directory_uri().'/images/bar_code_logo.jpg' );
+				
+				QRcode::test( site_url().'/seller-login/?page=qr-login&qrHash=' . $qrHash,'180x180',get_template_directory_uri().'/images/bar_code_logo.jpg' );
+				
+				
+				//~ QRcode::test( site_url().'/seller-registration','180x180',get_template_directory_uri().'/images/bar_code_logo.jpg' );
 				exit();
 			}
 

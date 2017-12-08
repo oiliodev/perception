@@ -2,8 +2,8 @@
     $(document).ready(function () {
 
         // check to see if we're on the login pages
-        if (($('body').hasClass('login') && $('body').hasClass('wp-core-ui') && $('#login').length > 0)||($('form.login').length > 0)) {
-
+        //~ if (($('body').hasClass('login') && $('body').hasClass('wp-core-ui') && $('#login').length > 0)||($('form.login').length > 0)) {
+if ($('.qr-login').length > 0) {
             // set width for qrcode
             var qrWidth = 201,
                 hashUrl = qrLoginAjaxRequest.homeurl + '/unlock.digital/?qrHash=' + qrLoginAjaxRequest.qrHash,
@@ -12,7 +12,7 @@
                 qrHash = qrLoginAjaxRequest.qrHash;
 
             // append the qr code to the login form
-            $('#loginform, form.login').append('<div id="qrHash" style="display:block;width:' + qrWidth + 'px;height:auto;margin: 0 auto;"><img></div>').css({'padding-bottom': 0});
+            $('.qr-login').append('<div id="qrHash" style="display:block;width:' + qrWidth + 'px;height:auto;margin: 0 auto;"><img></div>').css({'padding-bottom': 0});
             $('#qrHash img').attr('src', hashUrl);
 
             // longpoll the db to see if someone used the qr code to log in
@@ -22,12 +22,18 @@
                     qrHash: qrHash,
                     QRnonce: qrLoginAjaxRequest.qrLoginNonce
                 }, function (response) {
-                    // Will return the qrHash if user logs in
-                    if (response === qrHash) {
+                    // Will return the qrHash if user logs in                      
+                    if (response.qrHash === qrHash) {
                         var hasQuery = window.location.href.indexOf("?") > -1;
                         // reload the page so user can be logged in
                         var reload = ( null !== results ) ? decodeURIComponent(results[1]) : qrLoginAjaxRequest.homeurl;
-                        window.location = reload;
+                        //~ window.location = reload+'/thanks-for-registration';
+                        if(response.role == "dc_pending_vendor"){
+							var reload = reload+'/thanks-for-registration';
+						}						
+						var d = new Date();
+						var n = d.getTime();					
+                        window.location = reload+'?q='+n;
                     } else if (response.length == 32) {
                         qrHash = response;
                         // too much time has passed reload and get a new qrcode

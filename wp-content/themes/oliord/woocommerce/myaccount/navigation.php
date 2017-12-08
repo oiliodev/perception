@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 do_action( 'woocommerce_before_account_navigation' );
-
+wp_enqueue_media();
 global $current_user;
 $attachment_url =  get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ; 
 if($attachment_url != ''){
@@ -34,8 +34,12 @@ if($attachment_url != ''){
 ?>
 
 <nav class="woocommerce-MyAccount-navigation">
-	<span><img src="<?php echo $attachment_url; ?>"></span>
-	<ul>		
+	<span>
+		
+		<div class="uploadimage-user-img"> <img src="<?php echo $attachment_url; ?>"></div>
+		<div class="upload-profile-link"><input class="upload-profile" value="Change Photo" id="uploadimage-img" ></div>
+	</span>
+	<ul class="MyAccount-navigation">		
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
 			<li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
 				<a href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"><?php echo esc_html( $label ); ?></a>

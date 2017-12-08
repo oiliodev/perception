@@ -47,7 +47,7 @@ get_header('sellerlogin');
 					echo '<a href="'.get_site_url().'"><img src="'. get_template_directory_uri() .'/images/logo.png"></a>';
 				?>
 			</div>
-			<?php //wc_print_notices(); ?>
+			<?php wc_print_notices(); ?>
 			<h4 class="text-uppercase mb-0"><?php _e( 'Login', 'woocommerce' ); ?></h4>
 			<hr />
 			<form class="woocommerce-form woocommerce-form-login login" method="post">	

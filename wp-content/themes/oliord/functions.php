@@ -527,3 +527,128 @@ function add_wcmp_vendor_dashboard_nav($nav) {
    );
    return $nav;
 }*/
+
+
+add_filter('wcmp_vendor_dashboard_nav', 'add_wcmp_vendor_dashboard_nav');
+add_action('wcmp_vendor_dashboard_vendor-seller_account_endpoint', 'wcmp_vendor_dashboard_vendor_seller_account_endpoint');
+function wcmp_vendor_dashboard_vendor_seller_account_endpoint() {
+	get_template_part('dc-product-vendor/vendor-dashboard/form-edit-account');
+}
+
+add_action('wcmp_vendor_dashboard_vendor-business_information_endpoint', 'wcmp_vendor_dashboard_vendor_business_information_endpoint');
+function wcmp_vendor_dashboard_vendor_business_information_endpoint() {
+	get_template_part('dc-product-vendor/vendor-dashboard/business_information');
+}
+
+
+function add_wcmp_vendor_dashboard_nav($nav) {
+	
+	$nav['seller_account'] = array(
+				'label' => __('My Account', 'dc-woocommerce-multi-vendor')
+				, 'url' => wcmp_get_vendor_dashboard_endpoint_url(get_wcmp_vendor_settings('wcmp_vendor_seller_account_endpoint', 'vendor', 'general', 'vendor-seller_account'))
+				, 'capability' => apply_filters('wcmp_vendor_dashboard_menu_vendor_seller_account_capability', true)
+				, 'position' => 15
+				, 'submenu' => array()
+				, 'link_target' => '_self'
+				, 'nav_icon' => 'dashicons-migrate'
+			);
+				
+	 $nav['business_information'] = array(
+		'label' => __('Business Information', 'dc-woocommerce-multi-vendor')
+		, 'url' => wcmp_get_vendor_dashboard_endpoint_url(get_wcmp_vendor_settings('wcmp_vendor_business_information_endpoint', 'vendor', 'general', 'vendor-business_information'))
+		, 'capability' => apply_filters('wcmp_vendor_dashboard_menu_vendor_business_information_capability', true)
+		, 'position' => 16
+		, 'submenu' => array()
+		, 'link_target' => '_self'
+		, 'nav_icon' => 'dashicons-migrate'
+	);
+	
+   return $nav;
+}
+
+
+add_filter('wcmp_endpoints_query_vars', 'wcmp_endpoints_query_vars_fun');
+function wcmp_endpoints_query_vars_fun() {
+	global $WCMp;
+	
+	$arr	=	array(	
+            'vendor-announcements' => array(
+                'label' => __('Vendor Announcements', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_announcements_endpoint', 'vendor', 'general', 'vendor-announcements')
+            )
+            , 'shop-front' => array(
+                'label' => __('Shop Front', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_store_settings_endpoint', 'vendor', 'general', 'shop-front')
+            )
+            , 'vendor-billing' => array(
+                'label' => __('Vendor Billing', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_billing_endpoint', 'vendor', 'general', 'vendor-billing')
+            )
+            , 'vendor-policies' => array(
+                'label' => __('Vendor Policies', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_policies_endpoint', 'vendor', 'general', 'vendor-policies')
+            )
+            , 'vendor-shipping' => array(
+                'label' => __('Vendor Shipping', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_shipping_endpoint', 'vendor', 'general', 'vendor-shipping')
+            )
+            , 'vendor-report' => array(
+                'label' => __('Vendor Report', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_report_endpoint', 'vendor', 'general', 'vendor-report')
+            )
+            , 'vendor-orders' => array(
+                'label' => __('Vendor Orders', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_orders_endpoint', 'vendor', 'general', 'vendor-orders')
+            )
+            , 'vendor-withdrawal' => array(
+                'label' => __('Vendor Withdrawals', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_withdrawal_endpoint', 'vendor', 'general', 'vendor-withdrawal')
+            )
+            , 'transaction-details' => array(
+                'label' => __('Transaction Details', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_transaction_details_endpoint', 'vendor', 'general', 'transaction-details')
+            )
+            , 'vendor-knowledgebase' => array(
+                'label' => __('Vendor Knowledgebase', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_knowledgebase_endpoint', 'vendor', 'general', 'vendor-knowledgebase')
+            ),
+	'vendor-seller_account' => array(
+                'label' => __('Vendor seller_account', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_seller_account_endpoint', 'vendor', 'general', 'vendor-seller_account')
+            ),
+            'vendor-business_information' => array(
+                'label' => __('Vendor business_information', 'dc-woocommerce-multi-vendor'),
+                'endpoint' => get_wcmp_vendor_settings('wcmp_vendor_business_information_endpoint', 'vendor', 'general', 'vendor-business_information')
+            ));
+	
+	return $arr;
+}
+
+add_filter('wcmp_vendor_dashboard_header', 'wcmp_vendor_dashboard_header_fun');
+function wcmp_vendor_dashboard_header_fun() {
+	global $WCMp;
+	switch ($WCMp->endpoints->get_current_endpoint()) {
+		case 'vendor-seller_account':
+			echo '<ul>';
+			echo '<li>' . __('My Account', 'dc-woocommerce-multi-vendor') . '</li>';
+			echo '</ul>';
+			break;
+		case 'vendor-business_information':
+			echo '<ul>';
+			echo '<li>' . __('Business Information', 'dc-woocommerce-multi-vendor') . '</li>';
+			echo '</ul>';
+			break;
+		default :
+
+			break;
+	}
+}
+
+
+//~ if ( current_user_can('customer') && !current_user_can('upload_files') )
+//~ add_action('admin_init', 'allow_contributor_uploads');
+ 
+//~ function allow_contributor_uploads() {
+     //~ $contributor = get_role('customer');
+     //~ $contributor->add_cap('upload_files');
+//~ }

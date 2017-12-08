@@ -19,7 +19,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-wp_enqueue_media();
 
 do_action( 'woocommerce_before_edit_account_form' ); ?>
 

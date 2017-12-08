@@ -558,7 +558,7 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
 	ob_start();
 	
 			
-	if(! is_page_template('product-slider-page.php') ) { 
+	//if(! is_page_template('product-slider-page.php') ) { 
     
 	?>
 			<div class="product-cart count_cart_item float-left">						
@@ -571,12 +571,24 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
 				</a>
 			<?php } ?>
 			</div>
-	<?php }
+	<?php //}
 	
 	$fragments['.count_cart_item'] = ob_get_clean();
 	return $fragments;
 }
 /*************Modified cart itmes count in header*************/
+
+
+
+if( defined( 'YITH_WCWL' ) && ! function_exists( 'yith_wcwl_ajax_update_count' ) ){
+function yith_wcwl_ajax_update_count(){
+wp_send_json( array(
+'count' => yith_wcwl_count_all_products()
+) );
+}
+add_action( 'wp_ajax_yith_wcwl_update_wishlist_count', 'yith_wcwl_ajax_update_count' );
+add_action( 'wp_ajax_nopriv_yith_wcwl_update_wishlist_count', 'yith_wcwl_ajax_update_count' );
+}
 
 
 function do_anything() {
@@ -638,7 +650,7 @@ function add_my_menu_items( $items ) {
  * To display additional field at My Account page 
  * Once member login: edit account
  */
-add_action( 'woocommerce_edit_account_form', 'my_woocommerce_edit_account_form' );
+add_action( 'woocommerce_edit_account_form_start', 'my_woocommerce_edit_account_form' );
  
 function my_woocommerce_edit_account_form() {
  
@@ -667,8 +679,9 @@ function my_woocommerce_edit_account_form() {
 		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 			<input name="cupp_upload_meta" id="cupp_upload_meta" readonly="" value="" type="hidden">
 			<input class="btn btn-outline-primary text-uppercase" value="Upload Image" id="uploadimage" type="button">
+<!--
 			<span class="description">Upload an additional image for your user profile.</span>
-			
+-->			
 		</p>				
 							
 	</fieldset>

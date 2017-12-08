@@ -17,9 +17,13 @@
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets/css/intlTelInput.css">
 <script src="<?php echo get_template_directory_uri();?>/assets/js/intlTelInput.js"></script> 
+
+<script type="text/javascript" src="<?php echo get_template_directory_uri();?>/assets/js/bootstrap-datepicker.js"></script>		
+<link type="text/css" rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets/css/datepicker.css"  />	
+	
 <script type="text/javascript" src="<?php echo get_template_directory_uri();?>/assets/js/owl.carousel.js"></script>		
 	<link type="text/css" rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets/css/owl.carousel.css" />	
-	<link type="text/css" rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets//css/owl.theme.css"  />	
+	<link type="text/css" rel="stylesheet" href="<?php echo get_template_directory_uri();?>/assets/css/owl.theme.css"  />	
 	<script src="<?php echo get_template_directory_uri();?>/assets/js/custom.js"></script> 
 
 <script>

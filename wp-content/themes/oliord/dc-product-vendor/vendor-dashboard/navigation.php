@@ -21,9 +21,26 @@ if (!$vendor->image) {
     $vendor->image = $WCMp->plugin_url . 'assets/images/WP-stdavatar.png';
 }
 do_action('wcmp_before_vendor_dashboard_navigation');
+
+
+global $current_user;	
+						
+$attachment_url = esc_url( get_the_author_meta( 'cupp_upload_meta', $current_user->ID ) ); 
+ 
+if($attachment_url == ''){
+	$attachment_url	=	get_template_directory_uri() .'/images/sign-in-ico.png';
+	//echo '<span class="profile-name">'.substr($current_user->user_login,0,1).'</span>';
+}else{
+	$image_id	= get_attachment_id( $attachment_url ); 
+	$attachment_url = wp_get_attachment_image_src($image_id, 'member_product_big');
+	$attachment_url	=	$attachment_url[0];
+	//echo '<span  class="profile-ing"><img class="img-fluid" src="'. $attachment_url .'"></span>';
+}
+							
 ?>
 <div class="wcmp_side_menu">
-    <div class="wcmp_top_logo_div"> <img src="<?php echo $vendor->image; ?>" alt="vendordavatar">
+    <div class="wcmp_top_logo_div"> 
+		<img src="<?php echo $attachment_url; //$vendor->image; ?>" alt="vendordavatar">
         <h3>
             <?php echo get_user_meta(get_current_vendor_id(), '_vendor_page_title', true) ? get_user_meta(get_current_vendor_id(), '_vendor_page_title', true) : __('Shop Name', 'dc-woocommerce-multi-vendor'); ?>
         </h3>

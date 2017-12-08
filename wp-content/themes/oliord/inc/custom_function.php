@@ -81,12 +81,16 @@ $wc_query = new WP_Query($args);
                 $stock_quantity		=	$product->get_stock_quantity();
                 $mqr				=	get_post_meta( $product_id, '_wc_mmax_min'); 
 				$rating_count		=	$product->get_rating_count();
-				$review_count		=	$product->get_review_count();
-				$average			=	$product->get_average_rating();
-				
-				$rating_count		=	75;
-				$review_count		=	55;
-				$average			=	30;
+				//~ $review_count		=	$product->get_review_count();
+				//~ $average			=	$product->get_average_rating();			
+
+			//~ echo $product->rating_counts['5'];  echo "<br>"; 
+			//~ echo $product->rating_counts['3'];  echo "<br>";
+			//~ echo $product->rating_counts['2'];   echo "<br>";
+			
+				$rating_count	= $product->rating_counts['5'] / 5 * 100; //70	
+				$review_count	= $product->rating_counts['3'] / 5 * 100;	//50
+				$average	 	= $product->rating_counts['1'] / 5 * 100;	//10
 				
 				//~ $image 				= 	get_the_post_thumbnail_url($product_id,'medium');
 				if($i == 1 || $i == 4 || $i == 6  || $i == 7){
@@ -114,28 +118,16 @@ $wc_query = new WP_Query($args);
 			<div class="product-overlay">
 				<a href="<?php the_permalink(); ?>">
 					<img class="product-img" src="<?php echo $image;?>">					
-				</a>
-				<?php if( is_page( array( 'deals-of-the-day') )){ ?>
-				<span class="offer">50% off</span>
-				<?php } ?>
+				</a>				
 			</div>
 			<div class="product-content">
           <h3>
                <?php the_title(); ?>              
           </h3>     
           <div class="col-md-12 clearfix">
-          <div class="dimaond_product_price">
-			  
-			  <?php 
-			 if( is_page( array( 'deals-of-the-day') )){
-				echo "$34";
-				echo "<span>$70</span>"; 
-			 }else{
-			  echo $product->get_price_html();  
-			  //_e( 'Per Piece' ); 
-			}
-			  ?>
-			  </div>
+          <div class="dimaond_product_price">			  
+			 <?php echo $product->get_price_html(); ?>
+			</div>
           <div class="view-details"><a href="<?php the_permalink(); ?>"><?php _e( 'View Details' ); ?></a></div>
           </div>
           <div class="col-md-12 clearfix">	
@@ -146,22 +138,28 @@ $wc_query = new WP_Query($args);
 			</div>
 
 				<div class="progress-bar-r">	
+					<?php if($rating_count > 0) { ?>
 					<div class="progress-bar-rate">
 						<div class="progress-bar-custom position" data-percent="<?php echo $rating_count; ?>" data-duration="1000" data-color="#fff,#0e7c05" ></div>
 					</div>
+					<?php } ?>
+					<?php if($review_count > 0) { ?>
 					<div class="progress-bar-rate">
 						<div class="progress-bar-custom position" data-percent="<?php echo $review_count; ?>" data-duration="1000" data-color="#fff,#ff6a1f"></div>
 					</div>
+					<?php } ?>
+					<?php if($average > 0) { ?>
 					<div class="progress-bar-rate">
 						<div class="progress-bar-custom position" data-percent="<?php echo $average; ?>" data-duration="1000" data-color="#fff,#d11d05"></div>
 					</div>
+					<?php } ?>
 					<div class="progress-bar-rate">
 						<div class="<?php echo $class;?> progress-bar-custom position heart" data-percent="<?php echo '75'; ?>" data-type="heart" data-duration="1000" data-color="#fff,#00a99d" data-id="<?php echo get_the_ID(); ?>">
 							<?php //echo do_shortcode('[yith_wcwl_add_to_wishlist]');?>
 						</div>
 					</div>
 					<div class="progress-bar75">
-					75%
+					
 					</div>
 				</div>	
 				
@@ -257,7 +255,7 @@ $metakey_array = array(
 $args = array(
 		'post_type' => 'product',					
 		'post_status'    => 'publish',					
-		'posts_per_page' => 4,
+		'posts_per_page' => 10,
 		'meta_query' => array(
 			'relation' => 'AND',						
 			$metakey_array				
@@ -345,7 +343,7 @@ timer = setInterval(showRemaining, 1000);
 		if ( $products->have_posts() ) {
 		while ( $products->have_posts() ) : $products->the_post(); 
 		?>		
-				<li class="col-lg-3 col-md-4 col-sm-6 form-group">
+				<li class="form-group">
 					<div class="product-pad form-group">
 						<?php woocommerce_get_template_part( 'content', 'product' ); ?>
 					</div>

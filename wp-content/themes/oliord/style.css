@@ -470,7 +470,7 @@ input.search-field-custom.stoggle {border-width: 1px; width: 87%;}
 .header-full {display: flex; width: 100%;}
 .dimond-products .progress-bar-l{width:30%; float:left; margin-top: 5px;}
 .dimond-products .progress-bar-l .progress-bar-rate{float:left;}
-.dimond-products .progress-bar-r{width:70%; float:right; margin-top: 5px;}
+.dimond-products .progress-bar-r{float:right; margin-top: 5px;}
 .dimond-products .progress-bar-r .progress-bar-rate{float:left;}
 .dimond-products .progress-bar-r .progress-bar75 {color: #939393; float: right; font-size: 13px; margin-top: 3px;}
 .dimond-products-list .right-space.product_6,

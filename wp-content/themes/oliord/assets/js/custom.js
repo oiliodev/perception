@@ -5,6 +5,47 @@ window.onload = function() {
 };
 
 $(function(){
+	
+	
+$('.datepicker').datepicker();
+$('[data-toggle="tooltip"]').tooltip({html:true});    
+		
+jQuery('.accept_terms').click(function() {
+	
+	if(jQuery("#terms_agreement").prop("checked") == true){
+		jQuery('#myTermConditionModal').modal('toggle');
+	}else{
+		alert("Please check term & condition");		
+		return false;
+	}
+	
+	
+});
+
+	
+//For Counter update when do action on wishlist	
+$(document).on( 'added_to_wishlist removed_from_wishlist', function(){
+	var counter = $('.hart-button span');
+	$.ajax({
+	url: yith_wcwl_l10n.ajax_url,
+	data: {
+	action: 'yith_wcwl_update_wishlist_count'
+	},
+	dataType: 'json',
+	success: function( data ){
+	counter.html( data.count );
+	}
+	/*,
+	beforeSend: function(){	
+	counter.block();
+	},
+	complete: function(){
+	counter.unblock();
+	}*/
+
+	})
+} );
+
 		
 	var file_frame;
 	jQuery('#uploadimage').on('click', function( event ){
@@ -35,6 +76,43 @@ $(function(){
 	});
 
 
+	jQuery('#uploadimage-img').on('click', function( event ){
+		event.preventDefault();
+		// If the media frame already exists, reopen it.
+		if ( file_frame ) {
+			file_frame.open();
+			return;
+		}
+		// Create the media frame.
+		file_frame = wp.media.frames.file_frame = wp.media({
+		title: jQuery( this ).data( 'uploader_title' ),
+		button: {
+			text: jQuery( this ).data( 'uploader_button_text' ),
+		},
+			multiple: false  // Set to true to allow multiple files to be selected
+		});
+		// When an image is selected, run a callback.
+		file_frame.on( 'select', function() {
+		// We set multiple to false so only get one image from the uploader
+		attachment = file_frame.state().get('selection').first().toJSON();
+		var url = attachment['url'];
+		jQuery('#cupp_upload_meta').val(url);
+		// Do something with attachment.id and/or attachment.url here
+		});
+		// Finally, open the modal
+		file_frame.open();
+	});
+
+
+jQuery(".flash_deals ul.product").owlCarousel({
+autoPlay: true, //Set AutoPlay to 3 seconds
+items : 4,
+navigation : false,
+pagination : false,
+});
+
+
+
 	
 jQuery(".related_products ul.products").owlCarousel({
 autoPlay: true, //Set AutoPlay to 3 seconds
@@ -51,9 +129,9 @@ pagination : false,
 });
 
 	
-jQuery("#woozoom-gallery ul li a video").click(function() {
+jQuery("#woozoom-gallery ul li a .product-video-play").click(function() {
 	var video_link	=	jQuery(this).parent().data('video_link');	
-	var video_html	=	'<video width="400" controls><source src="'+video_link+'" type="video/mp4" >Your browser does not support HTML5 video.</video>';
+	var video_html	=	'<video width="400" autoplay controls><source src="'+video_link+'" type="video/mp4" >Your browser does not support HTML5 video.</video>';
 	jQuery(".main_product_image").html(video_html);
 	jQuery(window).trigger('resize');
 });
@@ -507,11 +585,20 @@ function validateForm() {
 			valid = false;
 		}
 		
+		
+		if(register_type == "Seller" && jQuery("#terms_agreement").prop("checked") == false){
+			
+			var content = 'Please read term & condition';
+			jQuery("#seller_agreement").addClass( "invalid" );
+			valid = false;
+		}
+		
 		if(register_type == "Seller" && jQuery("#seller_agreement").prop("checked") == false){
 			var content = 'Please check term & condition';
 			jQuery("#seller_agreement").addClass( "invalid" );
 			valid = false;
-		}
+		}		
+		
 		
 	}
   
